@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,14 +15,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class LauncherSub extends SubsystemBase {
   /** Creates a new launcher. */
   //motor up is higher than motor down
-  public CANSparkMax upLauncher;
   public CANSparkMax downLauncher;
+  public CANSparkMax upLauncher;
 
   public LauncherSub() {
-    this.upLauncher = new CANSparkMax(7, MotorType.kBrushless);
-    this.downLauncher = new CANSparkMax(14, MotorType.kBrushless);
+    this.upLauncher = new CANSparkMax(13, MotorType.kBrushless);
+    this.downLauncher = new CANSparkMax(15, MotorType.kBrushless);
 
-    upLauncher.follow(downLauncher);
   }
 
   // public Command getIntakeCommand() {
@@ -35,13 +35,24 @@ public class LauncherSub extends SubsystemBase {
   //     });
   // }
   public void setLaunchWheel(double speed) {
+    upLauncher.set(speed);
+    downLauncher.set(0);
+
+  }
+    public void setLaunchWheel2(double speed) {
+    upLauncher.set(speed);
     downLauncher.set(speed);
   }
   public void setFeedWheel(double speed) {
+    upLauncher.set(speed);
     downLauncher.set(speed);
+
+    
   }
   public void stop() {
     downLauncher.set(0);
+    upLauncher.set(0);
+
   }
   
   @Override

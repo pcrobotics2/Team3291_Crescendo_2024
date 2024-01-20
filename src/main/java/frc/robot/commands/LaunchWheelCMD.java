@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.LauncherSub;
@@ -16,11 +17,16 @@ public class LaunchWheelCMD extends Command {
     this.launcherSub = launcherSub;
     addRequirements(launcherSub);
   }
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     launcherSub.setLaunchWheel(Constants.launchSpeed);
+    try{Thread.sleep(1000);}
+    catch(InterruptedException e) {
+
+    }
+    launcherSub.setLaunchWheel2(Constants.launchSpeed);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
