@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ClimbCMD;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchWheelCMD;
@@ -19,6 +20,8 @@ import frc.robot.commands.SwerveDrive;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
+
 
 
 /**
@@ -35,6 +38,7 @@ public class RobotContainer {
   public LauncherSub launcherSub = new LauncherSub();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
+  public ClimbCMD ClimbCMD = new ClimbCMD(null);
   // The robot's subsystems and commands are definelad here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -54,6 +58,7 @@ public class RobotContainer {
 
     controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
     controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
+    controller5.button(Constants.buttonList.x).whileTrue(ClimbCMD);
 
   }
 
