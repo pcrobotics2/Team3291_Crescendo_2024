@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimberSubsystem; 
 
-public class Climb extends Command {
+public class ClimbCMD extends Command {
   /* Creates a new Climb. */
   public ClimberSubsystem climbersubsystem;
   public boolean status;
-  public Climb(ClimberSubsystem climsubsystem) {  
+  public ClimbCMD(ClimberSubsystem climsubsystem) {  
   status = false;
     climbersubsystem = climsubsystem;
     addRequirements(climsubsystem);
