@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
 
-  public CANSparkMax leftclimber = new CANSparkMax(1, MotorType.kBrushless);
-  public CANSparkMax rightclimber = new CANSparkMax(0, MotorType.kBrushless);
+  //public CANSparkMax leftclimber = new CANSparkMax(1, MotorType.kBrushless);
+  //public CANSparkMax rightclimber = new CANSparkMax(0, MotorType.kBrushless);
   
   public ClimberSubsystem() {
     

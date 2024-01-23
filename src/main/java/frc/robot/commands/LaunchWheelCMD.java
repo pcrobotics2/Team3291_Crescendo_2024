@@ -11,6 +11,7 @@ import frc.robot.subsystems.LauncherSub;
 
 public class LaunchWheelCMD extends Command {
   /** Creates a new LaunchWheelCMD. */
+  private final Timer timer = new Timer();
   LauncherSub launcherSub;
   public LaunchWheelCMD(LauncherSub launcherSub) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -21,9 +22,10 @@ public class LaunchWheelCMD extends Command {
   @Override
   public void initialize() {
     launcherSub.setLaunchWheel(Constants.launchSpeed);
-    try{Thread.sleep(1000);}
-    catch(InterruptedException e) {
-
+    timer.reset();
+    timer.start();
+    while (timer.get() < 0.25) {
+      //do nothing
     }
     launcherSub.setLaunchWheel2(Constants.launchSpeed);
 

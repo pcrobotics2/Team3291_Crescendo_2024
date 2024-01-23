@@ -31,7 +31,7 @@ public class RobotContainer {
 
 
 //careful setting the port for controller
-  public CommandJoystick controller5 = new CommandJoystick(5);
+  public CommandJoystick controller5 = new CommandJoystick(0);
   public LauncherSub launcherSub = new LauncherSub();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
