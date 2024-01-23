@@ -5,37 +5,35 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ClimberSubsystem; 
+import frc.robot.subsystems.ClimberSubsystem;
 
-public class Climb extends Command {
-  /* Creates a new Climb. */
-  public ClimberSubsystem climbersubsystem;
+public class Lower extends Command {
+  /** Creates a new Lower. */
+  public ClimberSubsystem climberSubsystem;
   public boolean status;
-  public Climb(ClimberSubsystem climsubsystem) {  
+  public Lower(ClimberSubsystem climbersub) {
   status = false;
-    climbersubsystem = climsubsystem;
-    addRequirements(climsubsystem);
+    climberSubsystem = climbersub;
+    addRequirements(climbersub);
   }
+  
+    // Use addRequirements() here to declare subsystem dependencies.
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-
-    
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    status = true;
-    climbersubsystem.stop();
+  status = true;
+  climberSubsystem.stop();
   }
-
+ 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
