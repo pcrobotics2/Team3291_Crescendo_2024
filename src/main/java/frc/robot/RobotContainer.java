@@ -4,13 +4,22 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.FeedWheelCMD;
+import frc.robot.commands.LaunchWheelCMD;
+import frc.robot.commands.SwerveDrive;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.LauncherSub;
+import frc.robot.subsystems.SwerveSubsystem;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,17 +28,33 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+
+
+//careful setting the port for controller
+  public CommandJoystick controller5 = new CommandJoystick(5);
+  public LauncherSub launcherSub = new LauncherSub();
+  public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
+  public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
+  // The robot's subsystems and commands are definelad here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  public final JoystickButton robotCentricButton = new JoystickButton(controller5.getHID(), Constants.buttonList.lb);
+
+  //subsystems
+  private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+
     configureBindings();
+
+    controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
+    controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
+
   }
 
   /**
@@ -46,9 +71,25 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
+    swerveSubsystem.setDefaultCommand(
+      new SwerveDrive(
+        swerveSubsystem,
+        () -> controller5.getRawAxis(1),
+        () -> controller5.getRawAxis(0),
+        () -> controller5.getRawAxis(4),
+        () -> robotCentricButton.getAsBoolean()
+      )
+    );
+
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+  }
+
+  public Command getAutonomousCommand() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getAutonomousCommand'");
   }
 
   /**
@@ -56,8 +97,5 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
-  }
+
 }
