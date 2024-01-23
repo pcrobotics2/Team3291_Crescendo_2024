@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
 
-  //public CANSparkMax leftclimber = new CANSparkMax(1, MotorType.kBrushless);
-  //public CANSparkMax rightclimber = new CANSparkMax(0, MotorType.kBrushless);
+  public CANSparkMax leftclimber;
+  public CANSparkMax rightclimber = new CANSparkMax(0, MotorType.kBrushless);
   
   public ClimberSubsystem() {
-    leftclimber.set(1);
-    rightclimber.set(-1);
+    this.leftclimber = new CANSparkMax(0, MotorType.kBrushless);
+    this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);
     
   }
 
@@ -24,8 +24,13 @@ public class ClimberSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+public void leftClimberUp(double speed) {
+ leftclimber.set(speed);
+}
 
-public void stop() {
+  
+
+  public void stop() {
   leftclimber.set(0);
   rightclimber.set(0);
     // TODO Auto-generated method stub
