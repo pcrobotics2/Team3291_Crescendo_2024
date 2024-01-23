@@ -24,7 +24,7 @@ public class LaunchWheelCMD extends Command {
     launcherSub.setLaunchWheel(Constants.launchSpeed);
     timer.reset();
     timer.start();
-    while (timer.get() < 0.25) {
+    while (timer.get() < Constants.timeToWait) {
       //do nothing
     }
     launcherSub.setLaunchWheel2(Constants.launchSpeed);
