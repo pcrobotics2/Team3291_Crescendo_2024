@@ -38,16 +38,16 @@ public class RobotContainer {
   public LauncherSub launcherSub = new LauncherSub();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
-  public ClimbCMD ClimbCMD = new ClimbCMD(null);
+  // public ClimbCMD ClimbCMD = new ClimbCMD(null);
   // The robot's subsystems and commands are definelad here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  // private final CommandXboxController m_driverController =
+  //    new CommandXboxController(OperatorConstants.kDriverControllerPort);
   public final JoystickButton robotCentricButton = new JoystickButton(controller5.getHID(), Constants.buttonList.lb);
 
-  //subsystems
+  //subsystems\\
   private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -58,7 +58,7 @@ public class RobotContainer {
 
     controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
     controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
-    controller5.button(Constants.buttonList.x).whileTrue(ClimbCMD);
+    //controller5.button(Constants.buttonList.x).whileTrue(ClimbCMD);
 
   }
 
@@ -88,10 +88,10 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
   }
-
+                                                                                             
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'getAutonomousCommand'");

@@ -11,6 +11,7 @@ public class ClimbCMD extends Command {
   /* Creates a new Climb. */
   public ClimberSubsystem climbersubsystem;
   public boolean status;
+  
   public ClimbCMD(ClimberSubsystem climsubsystem) {  
   status = false;
     climbersubsystem = climsubsystem;
