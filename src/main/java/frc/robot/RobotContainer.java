@@ -17,6 +17,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchWheelCMD;
 import frc.robot.commands.SwerveDrive;
+import frc.robot.commands.Auto.MildAuto;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -82,7 +83,7 @@ public class RobotContainer {
         () -> controller5.getRawAxis(1),
         () -> controller5.getRawAxis(0),
         () -> controller5.getRawAxis(4),
-        () -> robotCentricButton.getAsBoolean()
+        () -> !robotCentricButton.getAsBoolean()
       )
     );
 
@@ -93,8 +94,8 @@ public class RobotContainer {
   }
                                                                                              
   public Command getAutonomousCommand() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAutonomousCommand'");
+
+    return new MildAuto(swerveSubsystem);
   }
 
   /**

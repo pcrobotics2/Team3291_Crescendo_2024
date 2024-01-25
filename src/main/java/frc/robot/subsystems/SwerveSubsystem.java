@@ -14,6 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,15 +33,15 @@ public class SwerveSubsystem extends SubsystemBase {
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() {
-    gyro = new AHRS();
+    gyro = new AHRS(SerialPort.Port.kUSB);
 
     zeroGryo();
 
     mSwerveMods = new SwerveModule[] {
-        new SwerveModule(0, Swerve.Mod0.constants),
-        new SwerveModule(1, Swerve.Mod1.constants),
-        new SwerveModule(2, Swerve.Mod2.constants),
-        new SwerveModule(3, Swerve.Mod3.constants)
+      new SwerveModule(2, Swerve.Mod2.constants),
+      new SwerveModule(3, Swerve.Mod3.constants),
+      new SwerveModule(0, Swerve.Mod0.constants),
+      new SwerveModule(1, Swerve.Mod1.constants),
     };
 
     resetToAbsolute();
@@ -137,6 +138,7 @@ public class SwerveSubsystem extends SubsystemBase {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+      SmartDashboard.putNumber(("GYRO"), getYaw().getDegrees());
     }
   }
 }
