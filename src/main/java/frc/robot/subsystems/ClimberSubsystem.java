@@ -27,6 +27,17 @@ public class ClimberSubsystem extends SubsystemBase {
 public void leftClimberUp(double speed) {
  leftclimber.set(speed);
 }
+public void rightClimberUp(double speed) {
+  rightclimber.set(speed);
+}
+
+public void stopleftClimber() { 
+
+}
+public void stoprightClimber(){
+
+} 
+
 
 public void stop() {
  leftclimber.set(0);
