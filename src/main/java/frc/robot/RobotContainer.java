@@ -60,7 +60,7 @@ public class RobotContainer {
 
     controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
     controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
-    //controller5.button(Constants.buttonList.x).whileTrue(ClimbCMD);
+    controller5.button(Constants.buttonList.x).whileTrue(ClimbCMD);
 
   }
 

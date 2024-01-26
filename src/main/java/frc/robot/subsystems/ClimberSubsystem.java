@@ -25,25 +25,10 @@ public class ClimberSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-public void ClimberUp(double speed) {
- leftclimber.set(speed);
- rightclimber.set(-speed);
-}
-public void rightClimberUp(double speed) {
-  rightclimber.set(speed);
 public void setClimber(double speed) {
  leftclimber.set(speed); 
  rightclimber.set(-speed);
 }
-
-
-public void stopleftClimber() { 
-
-}
-public void stoprightClimber(){
-
-} 
-
 
 public void stop() {
  leftclimber.set(0);
