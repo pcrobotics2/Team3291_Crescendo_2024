@@ -5,21 +5,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ClimberSubsystem; 
 
 public class ClimbCMD extends Command {
   /* Creates a new Climb. */
   public ClimberSubsystem climbersubsystem;
   public boolean status;
-  public ClimbCMD(ClimberSubsystem climsubsystem) {  
+  public ClimbCMD(ClimberSubsystem climbersubsystem) {  
   status = false;
-    climbersubsystem = climsubsystem;
-    addRequirements(climsubsystem);
+    this.climbersubsystem = climbersubsystem;
+    addRequirements(climbersubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    climbersubsystem.setleftClimber(Constants.hangSpeed);
+    //climbersubsystem.setrightClimber(Constants.hangSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

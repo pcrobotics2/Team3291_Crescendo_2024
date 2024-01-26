@@ -36,9 +36,10 @@ public class RobotContainer {
 //careful setting the port for controller
   public CommandJoystick controller5 = new CommandJoystick(0);
   public LauncherSub launcherSub = new LauncherSub();
+  public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
-  public ClimbCMD ClimbCMD = new ClimbCMD(null);
+  public ClimbCMD ClimbCMD = new ClimbCMD(climberSubsystem);
   // The robot's subsystems and commands are definelad here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
