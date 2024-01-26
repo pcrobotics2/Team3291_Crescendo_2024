@@ -198,12 +198,12 @@ public class SwerveModule {
         
         // Calculate the PID value of -1 to 1 based on the degrees we calculated above
         
-        Double value = this.anglePid.calculate(getCanCoder().getDegrees(), desiredState.angle.getRadians());
+        Double value = this.anglePid.calculate(getCanCoder().getRadians(), desiredState.angle.getDegrees());
         SmartDashboard.putNumber("Value", value);
-        System.out.println("Hats");
+        //System.out.println("Hats");
     
         // Add turn the angular motor.
-       // this.angleMotor.set(value); 
+        this.angleMotor.set(value); 
             
         // Save the last angle we wanted to move too
         this.lastAngle = desiredAngle;
