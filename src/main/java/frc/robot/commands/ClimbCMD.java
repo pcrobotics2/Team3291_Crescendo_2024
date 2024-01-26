@@ -22,8 +22,7 @@ public class ClimbCMD extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    climbersubsystem.setleftClimber(Constants.hangSpeed);
-    //climbersubsystem.setrightClimber(Constants.hangSpeed);
+    climbersubsystem.setClimber(Constants.hangSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
