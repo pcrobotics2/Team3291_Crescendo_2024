@@ -30,15 +30,6 @@ public void setClimber(double speed) {
  rightclimber.set(-speed);
 }
 
-
-public void stopleftClimber() { 
-
-}
-public void stoprightClimber(){
-
-} 
-
-
 public void stop() {
  leftclimber.set(0);
  rightclimber.set(0);
