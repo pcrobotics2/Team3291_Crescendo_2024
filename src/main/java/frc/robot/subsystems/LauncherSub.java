@@ -20,7 +20,7 @@ public class LauncherSub extends SubsystemBase {
 
   public LauncherSub() {
     this.upLauncher = new CANSparkMax(7, MotorType.kBrushless); //7
-    this.downLauncher = new CANSparkMax(14, MotorType.kBrushless);//14
+    this.downLauncher = new CANSparkMax(0, MotorType.kBrushless);//14
 
   }
 
@@ -36,22 +36,21 @@ public class LauncherSub extends SubsystemBase {
   // }
   public void setLaunchWheel(double speed) {
     upLauncher.setVoltage(speed);
-    downLauncher.set(0);
 
   }
     public void setLaunchWheel2(double speed) {
-    upLauncher.setVoltage(speed);
-    downLauncher.setVoltage(speed);
+    upLauncher.set(speed);
+    downLauncher.set(speed);
   }
   public void setFeedWheel(double speed) {
-    upLauncher.setVoltage(speed);
-    downLauncher.setVoltage(speed);
+    upLauncher.set(speed);
+    downLauncher.set(speed);
 
     
   }
   public void stop() {
-    downLauncher.setVoltage(0);
-    upLauncher.setVoltage(0);
+    downLauncher.set(0);
+    upLauncher.set(0);
 
   }
   

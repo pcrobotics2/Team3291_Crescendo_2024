@@ -7,14 +7,17 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+ 
 
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
 
-  public CANSparkMax leftclimber = new CANSparkMax(1, MotorType.kBrushless);
-  public CANSparkMax rightclimber = new CANSparkMax(0, MotorType.kBrushless);
+  public CANSparkMax leftclimber;
+  public CANSparkMax rightclimber;
   
   public ClimberSubsystem() {
+    this.leftclimber = new CANSparkMax(20, MotorType.kBrushless);//
+    this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);//
     
   }
   
@@ -28,7 +31,11 @@ public void ClimberUp(double speed) {
 }
 public void rightClimberUp(double speed) {
   rightclimber.set(speed);
+public void setClimber(double speed) {
+ leftclimber.set(speed); 
+ rightclimber.set(-speed);
 }
+
 
 public void stopleftClimber() { 
 
@@ -42,6 +49,5 @@ public void stop() {
  leftclimber.set(0);
  rightclimber.set(0);
     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'stop'");
 }
 }

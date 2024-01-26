@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -20,7 +21,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-
+  // DutyCycleEncoder encoder;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -80,11 +81,17 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    // encoder = new DutyCycleEncoder(1);
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    // System.out.println("absolute pos" + encoder.getAbsolutePosition());
+    // System.out.println("get" + encoder.get());
+    // System.out.println("distance" + encoder.getDistance());
+
+  }
 
   @Override
   public void testInit() {
