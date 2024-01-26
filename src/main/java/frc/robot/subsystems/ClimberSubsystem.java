@@ -13,11 +13,11 @@ public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
 
   public CANSparkMax leftclimber;
-  //public CANSparkMax rightclimber;
+  public CANSparkMax rightclimber;
   
   public ClimberSubsystem() {
-    this.leftclimber = new CANSparkMax(20, MotorType.kBrushless);
-    //this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);
+    this.leftclimber = new CANSparkMax(20, MotorType.kBrushless);//
+    this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);//
     
   }
 
@@ -26,17 +26,14 @@ public class ClimberSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 public void setleftClimber(double speed) {
- leftclimber.set(speed);
+ leftclimber.set(speed); 
+ rightclimber.set(-speed);
 }
-// public void setrightClimber(double speed){
-//   rightclimber.set(-speed);
-// }
 
-  
 
   public void stop() {
   leftclimber.set(0);
-  //rightclimber.set(0);
+  rightclimber.set(0);
     // TODO Auto-generated method stub
 }
 }
