@@ -20,7 +20,7 @@ public class ClimberSubsystem extends SubsystemBase {
     this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);//
     
   }
-
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -31,9 +31,17 @@ public void setleftClimber(double speed) {
 }
 
 
-  public void stop() {
-  leftclimber.set(0);
-  rightclimber.set(0);
+public void stopleftClimber() { 
+
+}
+public void stoprightClimber(){
+
+} 
+
+
+public void stop() {
+ leftclimber.set(0);
+ rightclimber.set(0);
     // TODO Auto-generated method stub
 }
 }

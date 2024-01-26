@@ -12,10 +12,11 @@ public class ClimbCMD extends Command {
   /* Creates a new Climb. */
   public ClimberSubsystem climbersubsystem;
   public boolean status;
-  public ClimbCMD(ClimberSubsystem climbersubsystem) {  
+  
+  public ClimbCMD(ClimberSubsystem climsubsystem) {  
   status = false;
-    this.climbersubsystem = climbersubsystem;
-    addRequirements(climbersubsystem);
+    this.climbersubsystem = climsubsystem;
+    addRequirements(climsubsystem);
   }
 
   // Called when the command is initially scheduled.

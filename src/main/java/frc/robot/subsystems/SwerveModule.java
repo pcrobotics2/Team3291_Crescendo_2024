@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.config.CTREConfigs;
 import frc.lib.config.SwerveModuleConstants;
 import frc.lib.util.CANCoderUtil;
@@ -18,6 +19,7 @@ import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
+import frc.lib.Math.SwerveOpt;
 import frc.lib.config.*;
 
 public class SwerveModule {
@@ -79,6 +81,8 @@ public class SwerveModule {
             Swerve.angleKI,
             Swerve.angleKD
         );
+
+        //this.anglePid.enableContinuousInput(-Math.PI, Math.PI);
 
         // Initializing the CANCoder with the desired device ID
         this.angleEncoder = new CANCoder(moduleConstants.canCoderId);//CANcoder(moduleConstants.canCoderId);
@@ -190,17 +194,27 @@ public class SwerveModule {
         } else {
             desiredAngle = desiredState.angle;
         }
+
+        
+        // Calculate the PID value of -1 to 1 based on the degrees we calculated above
+        
+        Double value = this.anglePid.calculate(getCanCoder().getDegrees(), desiredState.angle.getRadians());
+        SmartDashboard.putNumber("Value", value);
+        System.out.println("Hats");
+    
+        // Add turn the angular motor.
+       // this.angleMotor.set(value); 
             
         // Save the last angle we wanted to move too
         this.lastAngle = desiredAngle;
     
-        Rotation2d currentAngle = this.getCanCoder();
+        /*Rotation2d currentAngle = this.getCanCoder();
 
         // Returns -180 to 180
         Double currentDegrees = currentAngle.getDegrees(); 
 
         // Returns -180 to 180 plus the angle offset constant we determined for this module
-        Double desiredDegrees = desiredAngle.getDegrees() + this.angleOffset.getDegrees(); 
+        Double desiredDegrees = desiredAngle.getDegrees() + this.angleOffset.getDegrees(); */
         
         /**
          * Calculate the difference between the current degrees and desired degrees.
@@ -208,18 +222,14 @@ public class SwerveModule {
          * Then convert back to -180 to 180
          * 
          * At least that's what I think it's doing.
-         */
-        Double diffDegrees = (currentDegrees - desiredDegrees + 180) % 360 - 180;
+         *//* 
+         Double diffDegrees = (currentDegrees - desiredDegrees + 180) % 360 - 180;
     
         if (diffDegrees < -180) {
             diffDegrees = diffDegrees + 360;
-        }
+        }*/
     
         // Calculate the PID value of -1 to 1 based on the degrees we calculated above
-        Double value = this.anglePid.calculate(diffDegrees, 0);
-    
-        // Add turn the angular motor.
-        this.angleMotor.set(value);
     }
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
@@ -255,6 +265,7 @@ public class SwerveModule {
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
+        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
     }

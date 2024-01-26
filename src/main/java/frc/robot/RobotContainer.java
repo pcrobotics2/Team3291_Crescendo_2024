@@ -17,6 +17,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchWheelCMD;
 import frc.robot.commands.SwerveDrive;
+import frc.robot.commands.Auto.MildAuto;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -44,11 +45,11 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  // private final CommandXboxController m_driverController =
+  //    new CommandXboxController(OperatorConstants.kDriverControllerPort);
   public final JoystickButton robotCentricButton = new JoystickButton(controller5.getHID(), Constants.buttonList.lb);
 
-  //subsystems
+  //subsystems\\
   private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -59,7 +60,7 @@ public class RobotContainer {
 
     controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
     controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
-    controller5.button(Constants.buttonList.x).whileTrue(ClimbCMD);
+    //controller5.button(Constants.buttonList.x).whileTrue(ClimbCMD);
 
   }
 
@@ -83,19 +84,19 @@ public class RobotContainer {
         () -> controller5.getRawAxis(1),
         () -> controller5.getRawAxis(0),
         () -> controller5.getRawAxis(4),
-        () -> robotCentricButton.getAsBoolean()
+        () -> !robotCentricButton.getAsBoolean()
       )
     );
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
   }
-
+                                                                                             
   public Command getAutonomousCommand() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAutonomousCommand'");
+
+    return new MildAuto(swerveSubsystem);
   }
 
   /**
