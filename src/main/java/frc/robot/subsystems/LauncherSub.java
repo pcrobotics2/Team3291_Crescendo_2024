@@ -19,8 +19,8 @@ public class LauncherSub extends SubsystemBase {
   public CANSparkMax upLauncher;
 
   public LauncherSub() {
-   // this.upLauncher = new CANSparkMax(18, MotorType.kBrushless); //7
-   // this.downLauncher = new CANSparkMax(14, MotorType.kBrushless);//14
+   this.upLauncher = new CANSparkMax(18, MotorType.kBrushless); //7
+   this.downLauncher = new CANSparkMax(14, MotorType.kBrushless);//14
 
   }
 
