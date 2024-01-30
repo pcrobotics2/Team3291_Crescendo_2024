@@ -42,6 +42,26 @@ public final class Constants {
     public static final int r3 = 10; 
 
   }
+  public static class intake {
+    public static class intakePID {
+    public static final double kp = 0.0001;
+    public static final double ki = 0.0;
+    public static final double kd = 0.0;
+
+  }
+  public static final int encoderID = 0;
+  public static final int IntakeID = 20;
+  public static final int PivotID = 19;
+  public static final int intakeLimitSwitchID = 21;
+
+  public static final double k_pivotEncoderOffset = 0.0;
+
+  public static final double groundAngle = 0;
+  public static final double stowAngle = 0;
+  public static final double sourceAngle = 0;
+  public static final double ampAngle = 0;
+  }
+
 
   public static class Swerve {
     public static final double stickDeadband = 0.1;//configure and mess around with later
