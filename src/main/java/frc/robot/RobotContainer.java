@@ -86,7 +86,7 @@ public class RobotContainer {
         () -> controller5.getRawAxis(1),
         () -> controller5.getRawAxis(0),
         () -> controller5.getRawAxis(4),
-        () -> !robotCentricButton.getAsBoolean()
+        () -> robotCentricButton.getAsBoolean()
       )
     );
 
