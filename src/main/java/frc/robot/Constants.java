@@ -43,23 +43,25 @@ public final class Constants {
 
   }
   public static class intake {
+
     public static class intakePID {
     public static final double kp = 0.0001;
     public static final double ki = 0.0;
     public static final double kd = 0.0;
+    }
+    //ids
+    public static final int encoderID = 0;
+    public static final int IntakeID = 55;
+    public static final int PivotID = 20;
+    public static final int intakeLimitSwitchID = 9;
 
-  }
-  public static final int encoderID = 0;
-  public static final int IntakeID = 20;
-  public static final int PivotID = 19;
-  public static final int intakeLimitSwitchID = 21;
+    public static final double k_pivotEncoderOffset = 0.0;
 
-  public static final double k_pivotEncoderOffset = 0.0;
-
-  public static final double groundAngle = 0;
-  public static final double stowAngle = 0;
-  public static final double sourceAngle = 0;
-  public static final double ampAngle = 0;
+    //angles
+    public static final double groundAngle = 50;
+    public static final double stowAngle = 100;
+    public static final double sourceAngle = 150;
+    public static final double ampAngle = 0;
   }
 
 
