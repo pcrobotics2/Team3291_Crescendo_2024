@@ -29,6 +29,9 @@ public final class Constants {
   public static final double launchSpeed = 0.90; //1.00 originally
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
+  public static final int upLauncherID = 18; //18
+  public static final int downLauncherID = 14; //14
+
   public static class buttonList {
     public static final int a = 1;
     public static final int b = 2; 
@@ -45,14 +48,15 @@ public final class Constants {
   public static class intake {
 
     public static class intakePID {
-    public static final double kp = 0.0001;
+    public static final double kp = 0.001;
     public static final double ki = 0.0;
     public static final double kd = 0.0;
     }
+
     //ids
-    public static final int encoderID = 0;
+    public static final int encoderID = 4;
     public static final int IntakeID = 55;
-    public static final int PivotID = 20;
+    public static final int PivotID = 21;
     public static final int intakeLimitSwitchID = 9;
 
     public static final double k_pivotEncoderOffset = 0.0;
@@ -180,7 +184,7 @@ public final class Constants {
       public static final int driveMotorID = 12;
 
       // SparkMAX CAN Device ID
-      public static final int angleMotorID = 13;
+      public static final int angleMotorID = 13; //13
 
       // CANCoder CAN Device ID
       public static final int canCoderID = 1;

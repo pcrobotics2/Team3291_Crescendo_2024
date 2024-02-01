@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class LauncherSub extends SubsystemBase {
   /** Creates a new launcher. */
@@ -19,8 +20,8 @@ public class LauncherSub extends SubsystemBase {
   public CANSparkMax upLauncher;
 
   public LauncherSub() {
-   this.upLauncher = new CANSparkMax(18, MotorType.kBrushless); //7
-   this.downLauncher = new CANSparkMax(14, MotorType.kBrushless);//14
+   this.upLauncher = new CANSparkMax(Constants.upLauncherID, MotorType.kBrushless); //7
+   this.downLauncher = new CANSparkMax(Constants.downLauncherID, MotorType.kBrushless);//14
 
   }
 
@@ -35,7 +36,7 @@ public class LauncherSub extends SubsystemBase {
   //     });
   // }
   public void setLaunchWheel(double speed) {
-    upLauncher.setVoltage(speed);
+    upLauncher.set(speed);
 
   }
     public void setLaunchWheel2(double speed) {

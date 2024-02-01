@@ -33,7 +33,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
   
   public ClimberSubsystem() {
-    this.leftclimber = new CANSparkMax(20, MotorType.kBrushless);//
+    this.leftclimber = new CANSparkMax(1, MotorType.kBrushless);//
     this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);//
    final TrapezoidProfile.Constraints m_constraints =
     new TrapezoidProfile.Constraints(kMaxVelocity, kMaxAcceleration);
