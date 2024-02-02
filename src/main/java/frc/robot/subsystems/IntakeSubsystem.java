@@ -10,14 +10,14 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
-  public CANSparkMax downLauncher;
-  public CANSparkMax upLauncher;
+
   public DutyCycleEncoder intakeEncoder;
   public DigitalInput intakeLimitSwitch;
   public PIDController pidController;
@@ -74,6 +74,9 @@ public class IntakeSubsystem extends SubsystemBase {
     if (intakeEncoder.get() == 0.0) {
       intake_pivot_voltage = 0.0;
     }
+    if (intake_pivot_voltage > 10) {
+      intake_pivot_voltage = 10;
+    }
     return intake_pivot_voltage;
   }
 /* 
@@ -115,8 +118,8 @@ public class IntakeSubsystem extends SubsystemBase {
     double value = intakeEncoder.getAbsolutePosition() -
         Constants.intake.k_pivotEncoderOffset + 0.5;
   
- 
-    return value * 360;
+    value *= 360;
+    return value;
   }
 
   public boolean getIntakeHasNote() {
@@ -128,21 +131,25 @@ public class IntakeSubsystem extends SubsystemBase {
   public void goToGround() {
     pivot_target = PivotTarget.GROUND;
     double pivot_angle = pivotTargetToAngle(pivot_target);
+    SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
     pivotMotor.setVoltage(giveVoltage(pivot_angle));
   }
   public void goToSource() {
     pivot_target = PivotTarget.SOURCE;
     double pivot_angle = pivotTargetToAngle(pivot_target);
+    SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
     pivotMotor.setVoltage(giveVoltage(pivot_angle));
   }
   public void goToAmp() {
     pivot_target = PivotTarget.AMP;
     double pivot_angle = pivotTargetToAngle(pivot_target);
+    SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
     pivotMotor.setVoltage(giveVoltage(pivot_angle));
   }
   public void goToStow() {
     pivot_target = PivotTarget.STOW;
     double pivot_angle = pivotTargetToAngle(pivot_target);
+    SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
     pivotMotor.setVoltage(giveVoltage(pivot_angle));
   }
 
