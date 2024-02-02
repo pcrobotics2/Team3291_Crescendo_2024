@@ -5,8 +5,11 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import frc.robot.Constants;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -18,38 +21,52 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
 
+  public CommandJoystick controller5 = new CommandJoystick(0);
   public CANSparkMax leftclimber;
   public CANSparkMax rightclimber;
-  private static double kDt = 0.02;
-  private static double kMaxVelocity = 1.75;
-  private static double kMaxAcceleration = 0.75;
-  private static double kP = 0.0;
-  private static double kI = 0.0;
-  private static double kD = 0.0;
-  private static double kS = 1.1;
-  private static double kG = 1.2;
-  private static double kV = 1.3;
-  private final Encoder Encoder = new Encoder(1, 2);
+  // private static double kDt = 0.02;
+  // private static double kMaxVelocity = 0.1;
+  // private static double kMaxAcceleration = 1.0;
+  // private static double kP = 0.0001;
+  // private static double kI = 0.0;// keep as 0 because it is not very useful for robotics
+  // private static double kD = 0.0001;
+  // private static double kS = 1.1;
+  // private static double kG = 1.2;
+  // private static double kV = 1.3;
+  // private final Encoder Encoder = new Encoder(1, 2);
+  // private final Joystick m_joystick = new Joystick(0);
+  // final TrapezoidProfile.Constraints m_constraints =
+  //   new TrapezoidProfile.Constraints(kMaxVelocity, kMaxAcceleration);
+  // final ProfiledPIDController leftclimbController =
+  //   new ProfiledPIDController(kP, kI, kD, m_constraints);
+  // final ElevatorFeedforward feedforward = new ElevatorFeedforward(kS, kG, kV);
+ // private final RelativeEncoder MotorEncoder = leftclimber.getEncoder();
 
-  
   public ClimberSubsystem() {
     this.leftclimber = new CANSparkMax(20, MotorType.kBrushless);//
-    this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);//
-   final TrapezoidProfile.Constraints m_constraints =
-    new TrapezoidProfile.Constraints(kMaxVelocity, kMaxAcceleration);
-final ProfiledPIDController leftclimbController =
-    new ProfiledPIDController(kP, kI, kD, m_constraints, kDt);
-final ElevatorFeedforward feedforward = new ElevatorFeedforward(kS, kG, kV);
-    
-  }
+   // this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);//
   
+  }
+   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+     // if (controller5.button(Constants.buttonList.x) != null) {
+    //   leftclimbController.setGoal(5);
+    // } else if (m_joystick.getRawButtonPressed(3)) {
+    //   leftclimbController.setGoal(0);
+    // }
   }
+  
 public void setClimber(double speed) {
- leftclimber.setVoltage(speed); 
- rightclimber.set(-speed);
+ leftclimber.set(speed); 
+ //rightclimber.set(-speed);
+// final TrapezoidProfile.Constraints m_constraints =
+  //  new TrapezoidProfile.Constraints(kMaxVelocity, kMaxAcceleration);
+ //leftclimber.setVoltage(leftclimbController.calculate(Encoder.getDistance())
+ //  + feedforward.calculate(leftclimbController.getSetpoint().velocity));
+  // double PIDValue = leftclimbController.calculate(MotorEncoder.getVelocity(),speed);
+ // leftclimber.set(PIDValue);
 }
 
 public void stop() {
