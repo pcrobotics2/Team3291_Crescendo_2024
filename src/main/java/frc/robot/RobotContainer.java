@@ -42,11 +42,11 @@ public class RobotContainer {
   //careful setting the port for controller
   public CommandJoystick controller5 = new CommandJoystick(0);
   public LauncherSub launcherSub = new LauncherSub();
-  public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+  // public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
-  public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
-  public ClimbCMD climbCMD = new ClimbCMD(climberSubsystem);
+  // public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
+  // public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
+  // public ClimbCMD climbCMD = new ClimbCMD(climberSubsystem);
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
@@ -69,19 +69,24 @@ public class RobotContainer {
 
     configureBindings();
 
-    controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
-    controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
-    controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
+    // controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
+    // controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
+    // controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
     //intake
-    controller5.button(Constants.buttonList.l3).toggleOnTrue(stowCMD);
-    controller5.button(Constants.buttonList.r3).toggleOnTrue(groundCMD);
-    controller5.button(Constants.buttonList.start).toggleOnTrue(sourceCMD);
-    controller5.button(Constants.buttonList.rb).toggleOnTrue(ampCMD);
+    // controller5.button(Constants.buttonList.l3).toggleOnTrue(stowCMD);
+    // controller5.button(Constants.buttonList.r3).toggleOnTrue(groundCMD);
+    // controller5.button(Constants.buttonList.start).toggleOnTrue(sourceCMD);
+    // controller5.button(Constants.buttonList.rb).toggleOnTrue(ampCMD);
 
-    controller5.povDown().toggleOnTrue(ampCMD);
-    controller5.povUp().toggleOnTrue(stowCMD);
-    controller5.povDown().toggleOnTrue(ampCMD);
-    controller5.povUp().toggleOnTrue(stowCMD);
+    // controller5.povDown().toggleOnTrue(ampCMD);
+    // controller5.povUp().toggleOnTrue(stowCMD);
+    // controller5.povDown().toggleOnTrue(ampCMD);
+    // controller5.povUp().toggleOnTrue(stowCMD);
+
+    controller5.button(Constants.buttonList.a).toggleOnTrue(stowCMD);
+    controller5.button(Constants.buttonList.b).toggleOnTrue(groundCMD);
+    controller5.button(Constants.buttonList.x).toggleOnTrue(sourceCMD);
+    controller5.button(Constants.buttonList.y).toggleOnTrue(ampCMD);
   }
 
   /**
