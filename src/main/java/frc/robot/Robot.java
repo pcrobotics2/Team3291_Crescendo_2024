@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.config.CTREConfigs;
@@ -82,6 +83,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     // encoder = new DutyCycleEncoder(1);
+    SmartDashboard.putNumber("key", Constants.intake.intakePID.kp);
+    
   }
 
   /** This function is called periodically during operator control. */

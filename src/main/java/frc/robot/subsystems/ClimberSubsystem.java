@@ -36,7 +36,7 @@ public class ClimberSubsystem extends SubsystemBase {
   private static double kS = 1.1;
   private static double kG = 1.2;
   private static double kV = 1.3;
-  private final DutyCycleEncoder Encoder = new DutyCycleEncoder(0);
+  private final DutyCycleEncoder encoder = new DutyCycleEncoder(0);
   private final Joystick m_joystick = new Joystick(0);
   final TrapezoidProfile.Constraints m_constraints =
     new TrapezoidProfile.Constraints(kMaxVelocity, kMaxAcceleration);
@@ -47,7 +47,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public ClimberSubsystem() {
     
-    this.leftclimber = new CANSparkMax(88, MotorType.kBrushless);//
+    this.leftclimber = new CANSparkMax(25, MotorType.kBrushless);//
    // this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);//
    
    
@@ -61,8 +61,8 @@ public class ClimberSubsystem extends SubsystemBase {
     } else if (m_joystick.getRawButtonPressed(3)) {
       leftclimbController.setGoal(0);
     }
-  double encoderValue = Encoder.getAbsolutePosition();
-  SmartDashboard.putNumber("encoder", encoderValue);
+  //double encoderValue = Encoder.getAbsolutePosition();
+  //SmartDashboard.putNumber("encoder", encoderValue);
   
   }
   

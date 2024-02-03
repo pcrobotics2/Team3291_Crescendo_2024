@@ -54,18 +54,18 @@ public final class Constants {
     }
 
     //ids
-    public static final int encoderID = 4;
-    public static final int IntakeID = 21;
-    public static final int PivotID = 54;
+    public static final int encoderID = 0; //Changed due to rewire
+    public static final int IntakeID = 33; //not using intake
+    public static final int PivotID = 21; //using pivot
     public static final int intakeLimitSwitchID = 9;
 
     public static final double k_pivotEncoderOffset = 0.0;
 
     //angles
     public static final double groundAngle = 50;
-    public static final double stowAngle = 100;
-    public static final double sourceAngle = 150;
-    public static final double ampAngle = 0;
+    public static final double stowAngle = 60;
+    public static final double sourceAngle = 80;
+    public static final double ampAngle = 150;
   }
 
 

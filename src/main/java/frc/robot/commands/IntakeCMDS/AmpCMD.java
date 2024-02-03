@@ -5,7 +5,9 @@
 package frc.robot.commands.IntakeCMDS;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeSubsystem.PivotTarget;
 
 public class AmpCMD extends Command {
   /** Creates a new AmpCMD. */
@@ -18,18 +20,32 @@ public class AmpCMD extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    intakeSubsystem.pivot_target = PivotTarget.AMP;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.goToAmp();
+    //intakeSubsystem.goToAmp();
+    double pivot_angle = intakeSubsystem.pivotTargetToAngle(intakeSubsystem.pivot_target);
+    System.out.println("amp angle target: " + pivot_angle);
+
+    double value = intakeSubsystem.intakeEncoder.getAbsolutePosition() - Constants.intake.k_pivotEncoderOffset;
+    value *= 360;
+    double voltage = intakeSubsystem.giveVoltage(pivot_angle, value);
+
+    System.out.println("final voltage: " + voltage + "\n\n");
+
+    intakeSubsystem.pivotMotor.setVoltage(voltage);
+    System.out.println("s");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intakeSubsystem.stopIntake();
+    
   }
 
   // Returns true when the command should end.
