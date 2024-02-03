@@ -83,7 +83,6 @@ private final SendableChooser<Command> autoChooser;
     // controller5.button(Constants.buttonList.start).toggleOnTrue(sourceCMD);
     // controller5.button(Constants.buttonList.rb).toggleOnTrue(ampCMD);
 
-<<<<<<< HEAD
     // controller5.povDown().toggleOnTrue(ampCMD);
     // controller5.povUp().toggleOnTrue(stowCMD);
     // controller5.povDown().toggleOnTrue(ampCMD);
@@ -93,7 +92,6 @@ private final SendableChooser<Command> autoChooser;
     controller5.button(Constants.buttonList.b).toggleOnTrue(groundCMD);
     controller5.button(Constants.buttonList.x).toggleOnTrue(sourceCMD);
     controller5.button(Constants.buttonList.y).toggleOnTrue(ampCMD);
-=======
 
   autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -102,7 +100,6 @@ private final SendableChooser<Command> autoChooser;
     controller5.povUp().toggleOnTrue(stowCMD);
     controller5.povDown().toggleOnTrue(ampCMD);
     controller5.povUp().toggleOnTrue(stowCMD);
->>>>>>> c6bbb2d379ae5f4d7f6a4edf2c43d7fa800da7d4
   }
 
   /**
