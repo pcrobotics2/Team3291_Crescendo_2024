@@ -14,6 +14,7 @@ import frc.robot.Constants;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -23,6 +24,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
+
+  
+
 
   public CommandJoystick controller5 = new CommandJoystick(0);
   public CANSparkMax leftclimber;
@@ -43,8 +47,9 @@ public class ClimberSubsystem extends SubsystemBase {
   final ProfiledPIDController leftclimbController =
     new ProfiledPIDController(kP, kI, kD, m_constraints);
   final ElevatorFeedforward feedforward = new ElevatorFeedforward(kS, kG, kV);
-//  private final RelativeEncoder MotorEncoder = leftclimber.getEncoder();
-
+  private final RelativeEncoder motorEncoder = leftclimber.getEncoder();
+ public double encoderPosition = motorEncoder.getPosition();
+ 
   public ClimberSubsystem() {
     
     this.leftclimber = new CANSparkMax(25, MotorType.kBrushless);//
@@ -56,16 +61,14 @@ public class ClimberSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-     if (controller5.button(Constants.buttonList.x) != null) {
-      leftclimbController.setGoal(1);
-    } else if (m_joystick.getRawButtonPressed(3)) {
-      leftclimbController.setGoal(0);
-    }
   //double encoderValue = Encoder.getAbsolutePosition();
   //SmartDashboard.putNumber("encoder", encoderValue);
   
   }
-  
+public void setGoal(){
+
+}
+
 public void setClimber(double velocity) {
  //leftclimber.set(speed); 
  //rightclimber.set(-speed);
@@ -75,6 +78,12 @@ public void setClimber(double velocity) {
 //+ feedforward.calculate(leftclimbController.getSetpoint().velocity));
 //double PIDValue = leftclimbController.calculate(MotorEncoder.getVelocity(),speed);
 // leftclimber.set(PIDValue);
+leftclimbController.setGoal(1);
+State goal = leftclimbController.getGoal();
+double kPIDValue = leftclimbController.calculate(encoderPosition, goal.position);
+ kPIDValue = kPIDValue > 10 ? 10 : kPIDValue;
+ kPIDValue = kPIDValue < -10 ? -10 : kPIDValue;
+leftclimber.setVoltage(kPIDValue);
 }
 
 public void stop() {
@@ -82,4 +91,6 @@ public void stop() {
  //rightclimber.set(0);
     // TODO Auto-generated method stub
 }
+
+
 }
