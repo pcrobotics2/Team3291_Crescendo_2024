@@ -5,6 +5,10 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,6 +18,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +34,8 @@ public class SwerveSubsystem extends SubsystemBase {
   private SwerveModule[] mSwerveMods;
 
   private Field2d field;
+
+  public AutoBuilder autoBuilder;
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() {
@@ -54,8 +61,44 @@ public class SwerveSubsystem extends SubsystemBase {
     field = new Field2d();
 
     SmartDashboard.putData("Field", field);
-  }
 
+     AutoBuilder.configureHolonomic(
+            this::getPose, // Robot pose supplier
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+                    4.5, // Max module speed, in m/s
+                    0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                    new ReplanningConfig() // Default path replanning config. See the API for the options here
+            ),
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this
+     );
+  }
+      
+  
+
+  public void driveRobotRelative(ChassisSpeeds Speeds){
+    SwerveModuleState[] states = Swerve.swerveKinematics.toSwerveModuleStates(Speeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, Swerve.maxSpeed);
+
+    for (SwerveModule mod : mSwerveMods) {
+      mod.setDesiredState(states[mod.moduleNumber], true);
+    }
+  }
   public void drive(
     Translation2d translation,
     double rotation,
@@ -126,7 +169,14 @@ public class SwerveSubsystem extends SubsystemBase {
     }
   }
 
+public ChassisSpeeds getSpeeds() {
+  SwerveModuleState[] states = new SwerveModuleState[4];
+  for (int i = 0; i < 4; i++) {
+    states[i] = mSwerveMods[i].getState();
+  }
 
+      return Swerve.swerveKinematics.toChassisSpeeds(states);
+    }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -138,5 +188,11 @@ public class SwerveSubsystem extends SubsystemBase {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
+
+    
+  
+
+  
+
   }
 }
