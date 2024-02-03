@@ -53,6 +53,7 @@ public class SwerveDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     SmartDashboard.putNumber("Translation Supplier", translationSupplier.getAsDouble());
     SmartDashboard.putNumber("Strafe Supplier", strafeSupplier.getAsDouble());
     SmartDashboard.putNumber("Rotation Supplier", rotationSupplier.getAsDouble());
@@ -67,13 +68,14 @@ public class SwerveDrive extends Command {
     swerveSubsystem.drive(
       new Translation2d(translationVal, strafeVal).times(Swerve.maxSpeed), 
       rotationVal * Swerve.maxAngularVelocity, 
-      !robotCentricSupplier.getAsBoolean(),
+      robotCentricSupplier.getAsBoolean(),
       true
     );
 
     SmartDashboard.putNumber("Translation Val", translationVal);
     SmartDashboard.putNumber("Strafe Val", strafeVal);
     SmartDashboard.putNumber("Rotation Val", rotationVal);
+    SmartDashboard.putBoolean("Field centric", robotCentricSupplier.getAsBoolean());
   }
 
   // Called once the command ends or is interrupted.

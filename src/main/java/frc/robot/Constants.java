@@ -25,9 +25,12 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   
-  public static final double feedSpeed = 0.40 * 12;   //0.40
-  public static final double launchSpeed = 0.90 * 12; //1.00 originally
+  public static final double feedSpeed = 0.40;   //0.40
+  public static final double launchSpeed = 0.90; //1.00 originally
   public static final double timeToWait = 0.25;
+  public static final double hangSpeed = 0.5;
+  public static final int upLauncherID = 18; //18
+  public static final int downLauncherID = 14; //14
 
   public static class buttonList {
     public static final int a = 1;
@@ -42,6 +45,29 @@ public final class Constants {
     public static final int r3 = 10; 
 
   }
+  public static class intake {
+
+    public static class intakePID {
+    public static final double kp = 0.01;
+    public static final double ki = 0.0;
+    public static final double kd = 0.0;
+    }
+
+    //ids
+    public static final int encoderID = 4;
+    public static final int IntakeID = 21;
+    public static final int PivotID = 54;
+    public static final int intakeLimitSwitchID = 9;
+
+    public static final double k_pivotEncoderOffset = 0.0;
+
+    //angles
+    public static final double groundAngle = 50;
+    public static final double stowAngle = 100;
+    public static final double sourceAngle = 150;
+    public static final double ampAngle = 0;
+  }
+
 
   public static class Swerve {
     public static final double stickDeadband = 0.1;//configure and mess around with later
@@ -158,7 +184,7 @@ public final class Constants {
       public static final int driveMotorID = 12;
 
       // SparkMAX CAN Device ID
-      public static final int angleMotorID = 13;
+      public static final int angleMotorID = 13; //13
 
       // CANCoder CAN Device ID
       public static final int canCoderID = 1;
@@ -190,10 +216,10 @@ public final class Constants {
   }
 
     public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3; 
+    public static final double kMaxSpeedMetersPerSecond = 4.4196; 
     public static final double kMaxAccelerationMetersPerSecondSquared = 5;
-    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+    public static final double kMaxAngularSpeedRadiansPerSecond = 11.5;
+    public static final double kMaxAngularSpeedRadiansPerSecondSquared = 11.5 * 11.5;
     public static final double kPXController = 0.5;
     public static final double kPYController = 0.5;
     public static final double kPThetaController = 0.5;
