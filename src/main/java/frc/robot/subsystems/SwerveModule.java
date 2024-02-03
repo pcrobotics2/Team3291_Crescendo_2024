@@ -187,39 +187,32 @@ public class SwerveModule {
      */
     private boolean setAngle(SwerveModuleState desiredState) {
         boolean invertDriveMotor = false;
-        Rotation2d desiredAngle;
-        
-        // Prevent rotating module if speed is less then 1%. Prevents jittering.
-        if ((Math.abs(desiredState.speedMetersPerSecond) / Swerve.maxSpeed) < 0.01) {
-            desiredAngle = this.lastAngle;
-        } else {
-            desiredAngle = desiredState.angle;
-        }
-            
-        // Save the last angle we wanted to move too
-        this.lastAngle = desiredAngle;
-    
-        Rotation2d currentAngle = this.getCanCoder();
-
+        // Get the current state of the swerve module (i.e. What direction is it facing?)
         SwerveModuleState currentState = this.getState();
 
-        // Returns -180 to 180
+        // What is the current direction (in degrees) the swerve module is facing?
         double currentDegrees = (currentState.angle.getDegrees() - this.angleOffset.getDegrees());
-
-        // Returns -180 to 180 plus the angle offset constant we determined for this module
-        Double desiredDegrees = desiredState.angle.getDegrees(); 
         
-        /**
-         * Calculate the difference between the current degrees and desired degrees.
-         * Adding 180 to convert it back to 360 degress
-         * Then convert back to -180 to 180
-         * 
-         * At least that's what I think it's doing.
-         */
-         Double diff = (currentDegrees - desiredDegrees + 180) % 360 - 180;
-    
-         diff = diff < -180 ? diff + 360 : diff;
-         diff = diff > 180 ? diff - 360 : diff;
+        // We want the current degrees between [-180, 180]. When looking at a circle
+        // -190 is equivalent to 170 so the below ternaries convert numbers less than -180
+        // or greater than 180 into [-180,180] 
+        currentDegrees = currentDegrees < -180 ? currentDegrees + 360 : currentDegrees;
+        currentDegrees = currentDegrees > 180 ? currentDegrees - 360 : currentDegrees;
+
+        // Next figure out the what direction the service module should be pointing. We mode the number
+        // (% 360) to make sure the number is between [-360,360]
+        double desiredDegrees = desiredState.angle.getDegrees() % 360;
+        // The following logic calculates the the different between the desired angle of the
+        // swerve module to the desired angle. The final result will be some number
+        // in the range [-180, 180]
+        double diff = (currentDegrees - desiredDegrees + 180) % 360 - 180;
+        diff = diff < -180 ? diff + 360 : diff;
+        diff = diff > 180 ? diff - 360 : diff;
+
+        // In theory, we could turn the swerve to this "diff" angle and everything would work but its
+        // possible to be more efficient. For example, if the operator pushes the joystick forward,
+        // then pulls it full back, the code above will turn the swerve module 180 degrees when
+        // instead we could just reverse the direction of the drive motor.
 
         // If the `diff` is greater than 90 or less than -90 then invert the drive motor
         // and change the diff.
@@ -234,28 +227,27 @@ public class SwerveModule {
             }
         }
 
-        // Calculate the PID value of -1 to 1 based on the degrees we calculated above
-        
-        Double value = this.anglePid.calculate(diff, 0);
+        // If we are a degree or less off, the turning motor will not do anything, else, calculate the pid
+        // values based off the diff and 0.
+        double turningMotorValue = Math.abs(diff) < 1 ? 0 : anglePid.calculate(diff, 0);
+        // Motors can only take a value in the range [-1,1] but the PID may output a value outside
+        // this range, thus we "clamp" the output of the PID such that -1.5 would just be -1.
+        turningMotorValue = turningMotorValue > 1 ? 1 : turningMotorValue;
+        turningMotorValue = turningMotorValue < -1 ? -1 : turningMotorValue;
 
-        //just in case the pid value goes over the designated limit, bam 
-        value = value > 1 ? 1 : value;
-        value = value < -1 ? -1 : value;
+        // Turn the motor to the desired position
+        angleMotor.set(turningMotorValue);
 
-        SmartDashboard.putNumber("Value", value);
-        //System.out.println("Hats");
-    
-        // Add turn the angular motor.
-        this.angleMotor.set(value); 
-
-        //returns the drive motors direction
+        // Return the direction the drive motor is expected to go.
         return invertDriveMotor;
     }
+
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop, boolean invertDriveMotor) {
         // If we are in open loop mode, set the drive motor to the desired speed
         // if (isOpenLoop) {
-            this.driveMotor.set(desiredState.speedMetersPerSecond / Swerve.maxSpeed);
+            double driveValue = (desiredState.speedMetersPerSecond / Swerve.maxSpeed);
+            this.driveMotor.set(invertDriveMotor ? driveValue * -1 : driveValue);
         // } else {
         //     // If we are in closed loop mode, set the drive motor to the desired speed
         //     this.driveMotor.set(
