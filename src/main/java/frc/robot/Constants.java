@@ -55,7 +55,7 @@ public final class Constants {
 
     //ids
     public static final int encoderID = 4;
-    public static final int IntakeID = 55;
+    public static final int IntakeID = 21;
     public static final int PivotID = 54;
     public static final int intakeLimitSwitchID = 9;
 
