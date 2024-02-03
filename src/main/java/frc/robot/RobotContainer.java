@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -38,6 +42,7 @@ import frc.robot.subsystems.ClimberSubsystem;
  */
 public class RobotContainer {
 
+private final SendableChooser<Command> autoChooser;
 
   //careful setting the port for controller
   public CommandJoystick controller5 = new CommandJoystick(0);
@@ -78,6 +83,7 @@ public class RobotContainer {
     // controller5.button(Constants.buttonList.start).toggleOnTrue(sourceCMD);
     // controller5.button(Constants.buttonList.rb).toggleOnTrue(ampCMD);
 
+<<<<<<< HEAD
     // controller5.povDown().toggleOnTrue(ampCMD);
     // controller5.povUp().toggleOnTrue(stowCMD);
     // controller5.povDown().toggleOnTrue(ampCMD);
@@ -87,6 +93,16 @@ public class RobotContainer {
     controller5.button(Constants.buttonList.b).toggleOnTrue(groundCMD);
     controller5.button(Constants.buttonList.x).toggleOnTrue(sourceCMD);
     controller5.button(Constants.buttonList.y).toggleOnTrue(ampCMD);
+=======
+
+  autoChooser = AutoBuilder.buildAutoChooser();
+
+  SmartDashboard.putData("Auto Chooser", autoChooser);
+    controller5.povDown().toggleOnTrue(ampCMD);
+    controller5.povUp().toggleOnTrue(stowCMD);
+    controller5.povDown().toggleOnTrue(ampCMD);
+    controller5.povUp().toggleOnTrue(stowCMD);
+>>>>>>> c6bbb2d379ae5f4d7f6a4edf2c43d7fa800da7d4
   }
 
   /**
@@ -120,14 +136,17 @@ public class RobotContainer {
   }
                                                                                              
   public Command getAutonomousCommand() {
-
-    return new MildAuto(swerveSubsystem);
+    // TODO Auto-generated method stub
+    
+    //return new PathPlannerAuto("Test Auto");
+    return autoChooser.getSelected();
   }
 
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-
+   
 }
