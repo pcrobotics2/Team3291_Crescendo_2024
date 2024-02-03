@@ -77,6 +77,10 @@ public class IntakeSubsystem extends SubsystemBase {
     if (intake_pivot_voltage > 10) {
       intake_pivot_voltage = 10;
     }
+    if (intake_pivot_voltage < -10) {
+      intake_pivot_voltage = -10;
+    }
+    SmartDashboard.putNumber("intake_pivot_voltage", intake_pivot_voltage);
     return intake_pivot_voltage;
   }
 /* 
@@ -115,10 +119,13 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 */
   public double getPivotAngleDegrees() {
+    SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
     double value = intakeEncoder.getAbsolutePosition() -
         Constants.intake.k_pivotEncoderOffset + 0.5;
-  
+
+
     value *= 360;
+    SmartDashboard.putNumber("value", value);
     return value;
   }
 
@@ -132,24 +139,29 @@ public class IntakeSubsystem extends SubsystemBase {
     pivot_target = PivotTarget.GROUND;
     double pivot_angle = pivotTargetToAngle(pivot_target);
     SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
+    SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
+
     pivotMotor.setVoltage(giveVoltage(pivot_angle));
   }
   public void goToSource() {
     pivot_target = PivotTarget.SOURCE;
     double pivot_angle = pivotTargetToAngle(pivot_target);
     SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
+    SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
     pivotMotor.setVoltage(giveVoltage(pivot_angle));
   }
   public void goToAmp() {
     pivot_target = PivotTarget.AMP;
     double pivot_angle = pivotTargetToAngle(pivot_target);
     SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
+    SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
     pivotMotor.setVoltage(giveVoltage(pivot_angle));
   }
   public void goToStow() {
     pivot_target = PivotTarget.STOW;
     double pivot_angle = pivotTargetToAngle(pivot_target);
     SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
+    SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
     pivotMotor.setVoltage(giveVoltage(pivot_angle));
   }
 
