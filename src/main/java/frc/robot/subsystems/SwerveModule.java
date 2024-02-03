@@ -185,7 +185,8 @@ public class SwerveModule {
      * 
      * @param desiredState
      */
-    private void setAngle(SwerveModuleState desiredState) {
+    private boolean setAngle(SwerveModuleState desiredState) {
+        boolean invertDriveMotor = false;
         Rotation2d desiredAngle;
         
         // Prevent rotating module if speed is less then 1%. Prevents jittering.
@@ -200,11 +201,13 @@ public class SwerveModule {
     
         Rotation2d currentAngle = this.getCanCoder();
 
+        SwerveModuleState currentState = this.getState();
+
         // Returns -180 to 180
-        Double currentDegrees = currentAngle.getDegrees(); 
+        double currentDegrees = (currentState.angle.getDegrees() - this.angleOffset.getDegrees());
 
         // Returns -180 to 180 plus the angle offset constant we determined for this module
-        Double desiredDegrees = desiredAngle.getDegrees() + this.angleOffset.getDegrees(); 
+        Double desiredDegrees = desiredState.angle.getDegrees(); 
         
         /**
          * Calculate the difference between the current degrees and desired degrees.
@@ -213,25 +216,43 @@ public class SwerveModule {
          * 
          * At least that's what I think it's doing.
          */
-         Double diffDegrees = (currentDegrees - desiredDegrees + 180) % 360 - 180;
+         Double diff = (currentDegrees - desiredDegrees + 180) % 360 - 180;
     
-        if (diffDegrees < -180) {
-            diffDegrees = diffDegrees + 360;
+         diff = diff < -180 ? diff + 360 : diff;
+         diff = diff > 180 ? diff - 360 : diff;
+
+        // If the `diff` is greater than 90 or less than -90 then invert the drive motor
+        // and change the diff.
+        // -120 is equivalent to 60 with an inverted drive direction.
+        // 120 is equivalent to -60 with an inverted drive direction.
+        if (Math.abs(diff) > 90) {
+            invertDriveMotor = true;
+            if (diff < 0) {
+                diff += 180;
+            } else {
+                diff -= 180;
+            }
         }
 
         // Calculate the PID value of -1 to 1 based on the degrees we calculated above
         
-        Double value = this.anglePid.calculate(diffDegrees, 0);
+        Double value = this.anglePid.calculate(diff, 0);
+
+        //just in case the pid value goes over the designated limit, bam 
+        value = value > 1 ? 1 : value;
+        value = value < -1 ? -1 : value;
+
         SmartDashboard.putNumber("Value", value);
         //System.out.println("Hats");
     
         // Add turn the angular motor.
         this.angleMotor.set(value); 
-    
-        // Calculate the PID value of -1 to 1 based on the degrees we calculated above
+
+        //returns the drive motors direction
+        return invertDriveMotor;
     }
 
-    private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
+    private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop, boolean invertDriveMotor) {
         // If we are in open loop mode, set the drive motor to the desired speed
         // if (isOpenLoop) {
             this.driveMotor.set(desiredState.speedMetersPerSecond / Swerve.maxSpeed);
@@ -266,7 +287,8 @@ public class SwerveModule {
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
         //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
         setAngle(desiredState);
-        setSpeed(desiredState, isOpenLoop);
+        boolean invertDriveMotor = setAngle(desiredState);
+        setSpeed(desiredState, isOpenLoop, invertDriveMotor);
     }
 
 
