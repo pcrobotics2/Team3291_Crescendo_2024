@@ -71,7 +71,7 @@ public class IntakeSubsystem extends SubsystemBase {
     //SmartDashboard.putNumber("intake_pivot_voltage", intake_pivot_voltage);
     System.out.println("error" + intake_pivot_voltage);
     //double adjustedIntakePivotVoltage = 10 - Math.abs(intake_pivot_voltage);
-    double adjustedIntakePivotVoltage = 1/intake_pivot_voltage; //error reversed for voltage
+    double adjustedIntakePivotVoltage = intake_pivot_voltage; //error reversed for voltage
     if (intakeEncoder.get() == 0.0) {
       adjustedIntakePivotVoltage = 0.0;
     }
