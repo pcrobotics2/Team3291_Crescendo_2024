@@ -126,7 +126,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
   }
 
-  private void zeroGryo() {
+  public void zeroGryo() {
     gyro.reset();
   }
 
@@ -190,11 +190,5 @@ public ChassisSpeeds getSpeeds() {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
       SmartDashboard.putNumber(("GYRO"), getYaw().getDegrees());
     }
-
-    
-  
-
-  
-
   }
 }
