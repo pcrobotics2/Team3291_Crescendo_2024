@@ -38,8 +38,8 @@ public class SwerveDrive extends Command {
     this.swerveSubsystem = swerveSubsystem;
     addRequirements(swerveSubsystem);
 
-    this.translationSupplier = translationSupplier;
-    this.strafeSupplier = strafeSupplier;
+    this.translationSupplier = strafeSupplier;//oh god what have I done
+    this.strafeSupplier = translationSupplier;
     this.rotationSupplier = rotationSupplier;
     this.robotCentricSupplier = robotCentricSupplier;
   }
@@ -66,7 +66,7 @@ public class SwerveDrive extends Command {
       MathUtil.applyDeadband(rotationSupplier.getAsDouble()/2.2, Swerve.stickDeadband));
 
     swerveSubsystem.drive(
-      new Translation2d(translationVal, strafeVal).times(Swerve.maxSpeed), 
+      new Translation2d(translationVal, -strafeVal).times(Swerve.maxSpeed), 
       rotationVal * Swerve.maxAngularVelocity, 
       robotCentricSupplier.getAsBoolean(),
       true
