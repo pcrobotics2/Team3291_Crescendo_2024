@@ -198,8 +198,8 @@ public class IntakeSubsystem extends SubsystemBase {
     System.out.println("s");
   }
 
-  public void moveIntakeMotor (double speed) {
-    intakeMotor.set(speed);
+  public void moveIntakeMotor (double positiveSpeed, double negativeSpeed) {
+    intakeMotor.set(positiveSpeed - negativeSpeed);
   }
 
   @Override
