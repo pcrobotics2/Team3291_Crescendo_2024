@@ -4,18 +4,29 @@
 
 package frc.robot.commands.IntakeCMDS;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class MoveIntakeMotorCMD extends Command {
   /** Creates a new MoveIntakeMotorCMD. */
   IntakeSubsystem intakeSubsystem;
+  DoubleSupplier positiveSupplier;
+  DoubleSupplier negativeSupplier;
   public MoveIntakeMotorCMD(
-    IntakeSubsystem intakeSubsystem
+    IntakeSubsystem intakeSubsystem,
+    DoubleSupplier positiveSupplier,
+    DoubleSupplier negativeSupplier
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
     addRequirements(intakeSubsystem);
+
+    this.positiveSupplier = positiveSupplier;
+    this.negativeSupplier = negativeSupplier;
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +38,9 @@ public class MoveIntakeMotorCMD extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.moveIntakeMotor(0);
+    double positiveSpeed = positiveSupplier.getAsDouble();
+    double negativeSpeed = negativeSupplier.getAsDouble();
+    intakeSubsystem.moveIntakeMotor(positiveSpeed, negativeSpeed);
   }
 
   // Called once the command ends or is interrupted.

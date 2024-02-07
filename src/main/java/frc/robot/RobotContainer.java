@@ -55,14 +55,14 @@ private final SendableChooser<Command> autoChooser;
   public LauncherSub launcherSub = new LauncherSub();
   // public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  // public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
-  // public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
+  public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
+  public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
   // public ClimbCMD climbCMD = new ClimbCMD(climberSubsystem);
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
-  public MoveIntakeMotorCMD moveIntakeMotorCMD = new MoveIntakeMotorCMD(intakeSubsystem);
+//  public MoveIntakeMotorCMD moveIntakeMotorCMD = new MoveIntakeMotorCMD(intakeSubsystem);
   // The robot's subsystems and commands are definelad here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -70,7 +70,6 @@ private final SendableChooser<Command> autoChooser;
   // private final CommandXboxController m_driverController =
   //    new CommandXboxController(OperatorConstants.kDriverControllerPort);
   public final JoystickButton robotCentricButton = new JoystickButton(controller5.getHID(), Constants.buttonList.lb);
-
 
   //subsystems\\
   private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
@@ -132,13 +131,13 @@ private final SendableChooser<Command> autoChooser;
         () -> robotCentricButton.getAsBoolean()
       )
     );
-    // intakeSubsystem.setDefaultCommand(
-    //   new MoveIntakeMotorCMD(
-    //     intakeSubsystem,
-    //     () -> controller5.getRawAxis(2),
-    //     () -> controller5.getRawAxis(3)
-    //   )
-    // );
+    intakeSubsystem.setDefaultCommand(
+      new MoveIntakeMotorCMD(
+        intakeSubsystem,
+        () -> controller5.getRawAxis(2),
+        () -> controller5.getRawAxis(3)
+      )
+    );
     
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
