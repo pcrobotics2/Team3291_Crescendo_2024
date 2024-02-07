@@ -9,21 +9,22 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class MoveIntakeMotorCMD extends Command {
   /** Creates a new MoveIntakeMotorCMD. */
-  IntakeSubsystem intakeSubsystem;
+  IntakeMotorSubsystem intakeMotorSubsystem;
   DoubleSupplier positiveSupplier;
   DoubleSupplier negativeSupplier;
   public MoveIntakeMotorCMD(
-    IntakeSubsystem intakeSubsystem,
+    IntakeMotorSubsystem intakeMotorSubsystem,
     DoubleSupplier positiveSupplier,
     DoubleSupplier negativeSupplier
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.intakeSubsystem = intakeSubsystem;
-    addRequirements(intakeSubsystem);
+    this.intakeMotorSubsystem = intakeMotorSubsystem;
+    addRequirements(intakeMotorSubsystem);
 
     this.positiveSupplier = positiveSupplier;
     this.negativeSupplier = negativeSupplier;
@@ -40,7 +41,7 @@ public class MoveIntakeMotorCMD extends Command {
   public void execute() {
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
-    intakeSubsystem.moveIntakeMotor(positiveSpeed, negativeSpeed);
+    intakeMotorSubsystem.moveIntakeMotor(positiveSpeed, negativeSpeed);
   }
 
   // Called once the command ends or is interrupted.

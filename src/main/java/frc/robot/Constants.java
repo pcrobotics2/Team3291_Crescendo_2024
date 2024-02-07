@@ -49,23 +49,25 @@ public final class Constants {
 
     public static class intakePID {
     public static final double kp = 0.1;
-    public static final double ki = 0.0;
+    public static final double ki = 0.01;
     public static final double kd = 0.0;
     }
 
     //ids
     public static final int encoderID = 0; //Changed due to rewire
-    public static final int IntakeID = 21; //not using intake
-    public static final int PivotID = 30; //using pivot
+    public static final int IntakeID = 21; 
+    public static final int PivotID = 19; 
     public static final int intakeLimitSwitchID = 9;
 
-    public static final double k_pivotEncoderOffset = 0.0;
+    public static final double k_pivotEncoderOffset = 60;
 
     //angles
-    public static final double groundAngle = 0;
+    public static final double groundAngle = 330;
     public static final double stowAngle = 123;
     public static final double sourceAngle = 55;
     public static final double ampAngle = 30;
+
+    
   }
 
 

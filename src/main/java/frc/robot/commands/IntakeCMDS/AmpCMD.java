@@ -21,24 +21,14 @@ public class AmpCMD extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakeSubsystem.pivot_target = PivotTarget.AMP;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //intakeSubsystem.goToAmp();
-    double pivot_angle = intakeSubsystem.pivotTargetToAngle(intakeSubsystem.pivot_target);
-    System.out.println("amp angle target: " + pivot_angle);
+    intakeSubsystem.goToAmp();
 
-    double value = intakeSubsystem.intakeEncoder.getAbsolutePosition() - Constants.intake.k_pivotEncoderOffset;
-    value *= 360;
-    double voltage = intakeSubsystem.giveVoltage(pivot_angle, value);
-
-    System.out.println("final voltage: " + voltage + "\n\n");
-
-    intakeSubsystem.pivotMotor.setVoltage(voltage);
-    System.out.println("s");
   }
 
   // Called once the command ends or is interrupted.

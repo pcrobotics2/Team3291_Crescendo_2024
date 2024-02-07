@@ -33,6 +33,7 @@ import frc.robot.commands.IntakeCMDS.MoveIntakeMotorCMD;
 import frc.robot.commands.IntakeCMDS.SourceCMD;
 import frc.robot.commands.IntakeCMDS.StowCMD;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -55,6 +56,7 @@ private final SendableChooser<Command> autoChooser;
   public LauncherSub launcherSub = new LauncherSub();
   // public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
   // public ClimbCMD climbCMD = new ClimbCMD(climberSubsystem);
@@ -131,13 +133,14 @@ private final SendableChooser<Command> autoChooser;
         () -> robotCentricButton.getAsBoolean()
       )
     );
-    intakeSubsystem.setDefaultCommand(
+    intakeMotorSubsystem.setDefaultCommand(
       new MoveIntakeMotorCMD(
-        intakeSubsystem,
+        intakeMotorSubsystem,
         () -> controller5.getRawAxis(2),
         () -> controller5.getRawAxis(3)
       )
     );
+    
     
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
