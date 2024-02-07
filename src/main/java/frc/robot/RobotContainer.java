@@ -6,7 +6,12 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -95,7 +100,7 @@ private final SendableChooser<Command> autoChooser;
 
   autoChooser = AutoBuilder.buildAutoChooser();
 
-  SmartDashboard.putData("Auto Chooser", autoChooser);
+  SmartDashboard.putData("Test Auto", autoChooser);
     controller5.povDown().toggleOnTrue(ampCMD);
     controller5.povUp().toggleOnTrue(stowCMD);
     controller5.povDown().toggleOnTrue(ampCMD);
@@ -129,6 +134,8 @@ private final SendableChooser<Command> autoChooser;
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+    SmartDashboard.putData("Test Auto", new PathPlannerAuto("Test Auto"));
 
   }
                                                                                              
