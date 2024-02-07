@@ -7,6 +7,8 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -62,6 +64,10 @@ public class SwerveModule {
      * degrees to percentage of power.
      */
     private PIDController anglePid;
+    private PIDController drivePid;
+
+    //feedforward - def for auto maybe for teleop
+    private final SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(Swerve.ffkS, Swerve.ffkV, Swerve.ffkA);
 
     /**
      * 
@@ -82,6 +88,12 @@ public class SwerveModule {
             Swerve.angleKD
         );
 
+        this.drivePid = new PIDController(
+            Swerve.driveKP,
+            Swerve.driveKI,
+            Swerve.driveKD
+        );
+
         //this.anglePid.enableContinuousInput(-Math.PI, Math.PI);
 
         // Initializing the CANCoder with the desired device ID
@@ -91,7 +103,7 @@ public class SwerveModule {
         //configuring and initalizing drive motors and encoders
         this.driveMotor = new CANSparkMax(moduleConstants.driveMotorId, MotorType.kBrushless);
         this.driveEncoder = driveMotor.getEncoder();
-        // this.driveController = driveMotor.getPIDController();
+        //this.driveController = driveMotor.getPIDController();
         this.configDriveMotor();
 
         //configuring and initalizing angle motors and encoders
@@ -247,7 +259,10 @@ public class SwerveModule {
         // If we are in open loop mode, set the drive motor to the desired speed
         // if (isOpenLoop) {
             double driveValue = (desiredState.speedMetersPerSecond / Swerve.maxSpeed);
-            this.driveMotor.set(invertDriveMotor ? driveValue * -1 : driveValue);
+            drivePid.calculate(driveValue,0);
+            //driveValue = feedForward.calculate(desiredState.speedMetersPerSecond) + drivePid.calculate(driveEncoder.getVelocity(), desiredState.speedMetersPerSecond);
+            driveValue = invertDriveMotor ? driveValue * -1 : driveValue;
+            driveMotor.set(driveValue);
         // } else {
         //     // If we are in closed loop mode, set the drive motor to the desired speed
         //     this.driveMotor.set(
