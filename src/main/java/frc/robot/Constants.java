@@ -48,7 +48,7 @@ public final class Constants {
   public static class intake {
 
     public static class intakePID {
-    public static final double kp = 0.01;
+    public static final double kp = 0.1;
     public static final double ki = 0.0;
     public static final double kd = 0.0;
     }
@@ -62,10 +62,10 @@ public final class Constants {
     public static final double k_pivotEncoderOffset = 0.0;
 
     //angles
-    public static final double groundAngle = 50;
-    public static final double stowAngle = 60;
-    public static final double sourceAngle = 80;
-    public static final double ampAngle = 150;
+    public static final double groundAngle = 0;
+    public static final double stowAngle = 123;
+    public static final double sourceAngle = 55;
+    public static final double ampAngle = 30;
   }
 
 
