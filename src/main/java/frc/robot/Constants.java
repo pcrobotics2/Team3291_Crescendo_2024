@@ -48,7 +48,7 @@ public final class Constants {
   public static class intake {
 
     public static class intakePID {
-    public static final double kp = 0.01;
+    public static final double kp = 0.1;
     public static final double ki = 0.0;
     public static final double kd = 0.0;
     }
@@ -62,10 +62,10 @@ public final class Constants {
     public static final double k_pivotEncoderOffset = 0.0;
 
     //angles
-    public static final double groundAngle = 50;
-    public static final double stowAngle = 60;
-    public static final double sourceAngle = 80;
-    public static final double ampAngle = 150;
+    public static final double groundAngle = 0;
+    public static final double stowAngle = 123;
+    public static final double sourceAngle = 55;
+    public static final double ampAngle = 30;
   }
 
 
@@ -84,16 +84,16 @@ public final class Constants {
     public static final double kMaxStrafeAcceleration = 3.0; //meters per second squared
     public static final double kMaxRotationAcceleration = 3.0; //radians per second squared
 
-    // Swerve Kinematics
+    // inematics
     public static final SwerveDriveKinematics swerveKinematics =
         new SwerveDriveKinematics(
-            //front left
+            //front left ++ 
             new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-            //front right
+            //front right +-
             new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
-            //back left
+            //back left -+
             new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-            //Back right
+            //Back right --
             new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
 
     /* Swerve Profiling Values */
@@ -160,7 +160,7 @@ public final class Constants {
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
-    // Back Right Module - Module 1
+    // Back Right Module - Module 1 //then left back
     public static final class Mod1 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 6;

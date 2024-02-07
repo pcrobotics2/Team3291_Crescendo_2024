@@ -45,9 +45,9 @@ public class SwerveSubsystem extends SubsystemBase {
     zeroGryo();
 
     mSwerveMods = new SwerveModule[] {
-      new SwerveModule(2, Swerve.Mod2.constants),//test to see if its modul number that denotes position, reguardless of position 
+      new SwerveModule(0, Swerve.Mod0.constants),//test to see if its modul number that denotes position, reguardless of position 
+      new SwerveModule(2, Swerve.Mod2.constants),
       new SwerveModule(3, Swerve.Mod3.constants),
-      new SwerveModule(0, Swerve.Mod0.constants),
       new SwerveModule(1, Swerve.Mod1.constants),
     };
 
@@ -126,7 +126,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
   }
 
-  private void zeroGryo() {
+  public void zeroGryo() {
     gyro.reset();
   }
 
@@ -190,11 +190,5 @@ public ChassisSpeeds getSpeeds() {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
       SmartDashboard.putNumber(("GYRO"), getYaw().getDegrees());
     }
-
-    
-  
-
-  
-
   }
 }
