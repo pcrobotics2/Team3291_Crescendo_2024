@@ -132,8 +132,8 @@ private final SendableChooser<Command> autoChooser;
     climberSubsystem.setDefaultCommand(
       new ClimbCMD(
         climberSubsystem,
-        () -> controller5.getRawAxis(2),
-        () -> controller5.getRawAxis(3)
+        () -> controller0.getRawAxis(2),
+        () -> controller0.getRawAxis(3)
       )
     );
   
