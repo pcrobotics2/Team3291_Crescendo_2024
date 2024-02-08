@@ -85,29 +85,23 @@ private final SendableChooser<Command> autoChooser;
     // controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
     // controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
     // controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
+   
     //intake
-    // controller5.button(Constants.buttonList.l3).toggleOnTrue(stowCMD);
-    // controller5.button(Constants.buttonList.r3).toggleOnTrue(groundCMD);
-    // controller5.button(Constants.buttonList.start).toggleOnTrue(sourceCMD);
-    // controller5.button(Constants.buttonList.rb).toggleOnTrue(ampCMD);
 
-    // controller5.povDown().toggleOnTrue(ampCMD);
-    // controller5.povUp().toggleOnTrue(stowCMD);
-    // controller5.povDown().toggleOnTrue(ampCMD);
-    // controller5.povUp().toggleOnTrue(stowCMD);
+    // controller5.button(Constants.buttonList.x).toggleOnTrue(stowCMD);
+    // controller5.button(Constants.buttonList.a).toggleOnTrue(groundCMD);
+    // controller5.button(Constants.buttonList.y).toggleOnTrue(sourceCMD);
+    // controller5.button(Constants.buttonList.b).toggleOnTrue(ampCMD);
 
-    controller5.button(Constants.buttonList.a).toggleOnTrue(stowCMD);
-    controller5.button(Constants.buttonList.b).toggleOnTrue(groundCMD);
-    controller5.button(Constants.buttonList.x).toggleOnTrue(sourceCMD);
-    controller5.button(Constants.buttonList.y).toggleOnTrue(ampCMD);
+    controller5.povLeft().toggleOnTrue(ampCMD);
+    controller5.povUp().toggleOnTrue(stowCMD);
+    controller5.povRight().toggleOnTrue(sourceCMD);
+    controller5.povDown().toggleOnTrue(groundCMD);
 
+    //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
 
   SmartDashboard.putData("Test Auto", autoChooser);
-    controller5.povDown().toggleOnTrue(ampCMD);
-    controller5.povUp().toggleOnTrue(stowCMD);
-    controller5.povDown().toggleOnTrue(ampCMD);
-    controller5.povUp().toggleOnTrue(stowCMD);
   }
 
   /**
