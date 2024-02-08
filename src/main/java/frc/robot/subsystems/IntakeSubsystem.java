@@ -51,7 +51,7 @@ public class IntakeSubsystem extends SubsystemBase {
     this.intakeLimitSwitch = new DigitalInput(Constants.intake.intakeLimitSwitchID);
 
     this.pidController = new PIDController(Constants.intake.intakePID.kp, Constants.intake.intakePID.ki, Constants.intake.intakePID.kd);
-    this.pidController.enableContinuousInput(0, 360);
+    //this.pidController.enableContinuousInput(0, 360);
     
 
     this.pivotMotor = new CANSparkMax(Constants.intake.PivotID, CANSparkLowLevel.MotorType.kBrushless);

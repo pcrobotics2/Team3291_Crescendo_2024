@@ -59,13 +59,13 @@ public final class Constants {
     public static final int PivotID = 19; 
     public static final int intakeLimitSwitchID = 9;
 
-    public static final double k_pivotEncoderOffset = 60;
+    public static final double k_pivotEncoderOffset = 30;
 
     //angles
-    public static final double groundAngle = 330;
-    public static final double stowAngle = 123;
-    public static final double sourceAngle = 55;
-    public static final double ampAngle = 30;
+    public static final double groundAngle = 0;
+    public static final double stowAngle = 153;
+    public static final double sourceAngle = 85;
+    public static final double ampAngle = 60;
 
     
   }
