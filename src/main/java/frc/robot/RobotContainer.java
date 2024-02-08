@@ -46,7 +46,7 @@ public class RobotContainer {
 private final SendableChooser<Command> autoChooser;
 
   //careful setting the port for controller
-  public CommandJoystick controller5 = new CommandJoystick(0);
+  public CommandJoystick controller0 = new CommandJoystick(0);
   public LauncherSub launcherSub = new LauncherSub();
   // public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
