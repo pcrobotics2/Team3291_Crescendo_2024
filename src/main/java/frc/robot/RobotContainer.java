@@ -51,7 +51,7 @@ public class RobotContainer {
 private final SendableChooser<Command> autoChooser;
 
   //careful setting the port for controller
-  public CommandJoystick controller5 = new CommandJoystick(0);
+  public CommandJoystick controller0 = new CommandJoystick(0);
   public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -69,7 +69,7 @@ private final SendableChooser<Command> autoChooser;
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
   //    new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  public final JoystickButton robotCentricButton = new JoystickButton(controller5.getHID(), Constants.buttonList.lb);
+  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.lb);
 
   //subsystems\\
   private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
@@ -91,15 +91,19 @@ private final SendableChooser<Command> autoChooser;
     // controller5.button(Constants.buttonList.y).toggleOnTrue(sourceCMD);
     // controller5.button(Constants.buttonList.b).toggleOnTrue(ampCMD);
 
-    controller5.povLeft().toggleOnTrue(ampCMD);
-    controller5.povUp().toggleOnTrue(stowCMD);
-    controller5.povRight().toggleOnTrue(sourceCMD);
-    controller5.povDown().toggleOnTrue(groundCMD);
+    controller0.button(Constants.buttonList.a).toggleOnTrue(stowCMD);
+    controller0.button(Constants.buttonList.b).toggleOnTrue(groundCMD);
+    controller0.button(Constants.buttonList.x).toggleOnTrue(sourceCMD);
+    controller0.button(Constants.buttonList.y).toggleOnTrue(ampCMD);
 
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
 
-  SmartDashboard.putData("Test Auto", autoChooser);
+  SmartDashboard.putData("Auto Chooser", autoChooser);
+    controller0.povDown().toggleOnTrue(ampCMD);
+    controller0.povUp().toggleOnTrue(stowCMD);
+    controller0.povDown().toggleOnTrue(ampCMD);
+    controller0.povUp().toggleOnTrue(stowCMD);
   }
 
   /**
@@ -119,9 +123,9 @@ private final SendableChooser<Command> autoChooser;
     swerveSubsystem.setDefaultCommand(
       new SwerveDrive(
         swerveSubsystem,
-        () -> controller5.getRawAxis(1),
-        () -> controller5.getRawAxis(0),
-        () -> controller5.getRawAxis(4),
+        () -> controller0.getRawAxis(1),
+        () -> controller0.getRawAxis(0),
+        () -> controller0.getRawAxis(4),
         () -> robotCentricButton.getAsBoolean()
       )
     );
@@ -132,6 +136,7 @@ private final SendableChooser<Command> autoChooser;
         () -> controller5.getRawAxis(3)
       )
     );
+  
     
     
 
