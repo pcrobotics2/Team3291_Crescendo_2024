@@ -1,22 +1,32 @@
+package frc.robot.commands;
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.subsystems.ClimberSubsystem; 
+import frc.robot.subsystems.ClimberSubsystem;
+
 
 public class ClimbCMD extends Command {
-  /* Creates a new Climb. */
-  public ClimberSubsystem climbersubsystem;
-  public boolean status;
-  
-  public ClimbCMD(ClimberSubsystem climsubsystem) {  
-  status = false;
-    this.climbersubsystem = climsubsystem;
-    addRequirements(climsubsystem);
+  /** Creates a new MoveIntakeMotorCMD. */
+  ClimberSubsystem climberSubsystem;
+  DoubleSupplier positiveSupplier;
+  DoubleSupplier negativeSupplier;
+  public ClimbCMD(
+  ClimberSubsystem climberSubsystem,
+    DoubleSupplier positiveSupplier,
+    DoubleSupplier negativeSupplier
+  ) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.climberSubsystem = climberSubsystem;
+    addRequirements(climberSubsystem);
+
+    this.positiveSupplier = positiveSupplier;
+    this.negativeSupplier = negativeSupplier;
   }
 
   // Called when the command is initially scheduled.
@@ -28,16 +38,15 @@ public class ClimbCMD extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-       
-climbersubsystem.setClimber(Constants.hangSpeed * 7200);
-    
+    double positiveSpeed = positiveSupplier.getAsDouble();
+    double negativeSpeed = negativeSupplier.getAsDouble();
+    climberSubsystem.setClimber(positiveSpeed, negativeSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    status = true;
-    climbersubsystem.stop();
+    climberSubsystem.stop();
   }
 
   // Returns true when the command should end.

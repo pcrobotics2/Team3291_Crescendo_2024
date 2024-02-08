@@ -25,6 +25,9 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   
+  public static final int leftClimberID = 40;
+  public static final int rightClimberID = 41;
+
   public static final double feedSpeed = 0.40;   //0.40
   public static final double launchSpeed = 0.90; //1.00 originally
   public static final double timeToWait = 0.25;

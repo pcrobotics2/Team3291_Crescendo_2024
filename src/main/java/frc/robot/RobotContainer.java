@@ -29,7 +29,6 @@ import frc.robot.commands.SwerveDrive;
 import frc.robot.commands.Auto.MildAuto;
 import frc.robot.commands.IntakeCMDS.AmpCMD;
 import frc.robot.commands.IntakeCMDS.GroundCMD;
-import frc.robot.commands.IntakeCMDS.MoveIntakeMotorCMD;
 import frc.robot.commands.IntakeCMDS.SourceCMD;
 import frc.robot.commands.IntakeCMDS.StowCMD;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -54,7 +53,7 @@ private final SendableChooser<Command> autoChooser;
   //careful setting the port for controller
   public CommandJoystick controller5 = new CommandJoystick(0);
   public LauncherSub launcherSub = new LauncherSub();
-  // public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+  public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
@@ -64,7 +63,6 @@ private final SendableChooser<Command> autoChooser;
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
-//  public MoveIntakeMotorCMD moveIntakeMotorCMD = new MoveIntakeMotorCMD(intakeSubsystem);
   // The robot's subsystems and commands are definelad here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -127,9 +125,9 @@ private final SendableChooser<Command> autoChooser;
         () -> robotCentricButton.getAsBoolean()
       )
     );
-    intakeMotorSubsystem.setDefaultCommand(
-      new MoveIntakeMotorCMD(
-        intakeMotorSubsystem,
+    climberSubsystem.setDefaultCommand(
+      new ClimbCMD(
+        climberSubsystem,
         () -> controller5.getRawAxis(2),
         () -> controller5.getRawAxis(3)
       )
