@@ -6,7 +6,12 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,6 +33,7 @@ import frc.robot.commands.IntakeCMDS.MoveIntakeMotorCMD;
 import frc.robot.commands.IntakeCMDS.SourceCMD;
 import frc.robot.commands.IntakeCMDS.StowCMD;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -50,14 +56,15 @@ private final SendableChooser<Command> autoChooser;
   public LauncherSub launcherSub = new LauncherSub();
   // public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  // public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
-  // public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
+  public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
+  public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
+  public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
   // public ClimbCMD climbCMD = new ClimbCMD(climberSubsystem);
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
-  public MoveIntakeMotorCMD moveIntakeMotorCMD = new MoveIntakeMotorCMD(intakeSubsystem);
+//  public MoveIntakeMotorCMD moveIntakeMotorCMD = new MoveIntakeMotorCMD(intakeSubsystem);
   // The robot's subsystems and commands are definelad here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -65,7 +72,6 @@ private final SendableChooser<Command> autoChooser;
   // private final CommandXboxController m_driverController =
   //    new CommandXboxController(OperatorConstants.kDriverControllerPort);
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.lb);
-
 
   //subsystems\\
   private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
@@ -79,22 +85,20 @@ private final SendableChooser<Command> autoChooser;
     // controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
     // controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
     // controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
+   
     //intake
-    // controller5.button(Constants.buttonList.l3).toggleOnTrue(stowCMD);
-    // controller5.button(Constants.buttonList.r3).toggleOnTrue(groundCMD);
-    // controller5.button(Constants.buttonList.start).toggleOnTrue(sourceCMD);
-    // controller5.button(Constants.buttonList.rb).toggleOnTrue(ampCMD);
 
-    // controller5.povDown().toggleOnTrue(ampCMD);
-    // controller5.povUp().toggleOnTrue(stowCMD);
-    // controller5.povDown().toggleOnTrue(ampCMD);
-    // controller5.povUp().toggleOnTrue(stowCMD);
+    // controller5.button(Constants.buttonList.x).toggleOnTrue(stowCMD);
+    // controller5.button(Constants.buttonList.a).toggleOnTrue(groundCMD);
+    // controller5.button(Constants.buttonList.y).toggleOnTrue(sourceCMD);
+    // controller5.button(Constants.buttonList.b).toggleOnTrue(ampCMD);
 
     controller0.button(Constants.buttonList.a).toggleOnTrue(stowCMD);
     controller0.button(Constants.buttonList.b).toggleOnTrue(groundCMD);
     controller0.button(Constants.buttonList.x).toggleOnTrue(sourceCMD);
     controller0.button(Constants.buttonList.y).toggleOnTrue(ampCMD);
 
+    //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
 
   SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -127,26 +131,32 @@ private final SendableChooser<Command> autoChooser;
         () -> robotCentricButton.getAsBoolean()
       )
     );
-    // intakeSubsystem.setDefaultCommand(
-    //   new MoveIntakeMotorCMD(
-    //     intakeSubsystem,
-    //     () -> controller5.getRawAxis(2),
-    //     () -> controller5.getRawAxis(3)
-    //   )
-    // );
+    /*
+    intakeMotorSubsystem.setDefaultCommand(
+      new MoveIntakeMotorCMD(
+        intakeMotorSubsystem,
+        () -> controller5.getRawAxis(2),
+        () -> controller5.getRawAxis(3)
+      )
+    );
+    */
+    
     
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
+    SmartDashboard.putData("Test Auto", new PathPlannerAuto("Test Auto"));
+
   }
                                                                                              
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    //return new PathPlannerAuto("Test Auto");
-    return autoChooser.getSelected();
+    return new PathPlannerAuto("Test Auto");
+    //return autoChooser.getSelected();
+    //return new MildAuto(swerveSubsystem);
   }
 
   

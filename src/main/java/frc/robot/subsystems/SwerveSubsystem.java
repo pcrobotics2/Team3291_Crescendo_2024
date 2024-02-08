@@ -159,7 +159,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void resetOdometry(Pose2d pose) {
-    swerveOdometry.resetPosition(getYaw(), getModulePositions(), getPose());
+    swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -178,6 +178,7 @@ public ChassisSpeeds getSpeeds() {
 
       return Swerve.swerveKinematics.toChassisSpeeds(states);
     }
+    
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

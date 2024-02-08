@@ -49,23 +49,25 @@ public final class Constants {
 
     public static class intakePID {
     public static final double kp = 0.1;
-    public static final double ki = 0.0;
+    public static final double ki = 0.01;
     public static final double kd = 0.0;
     }
 
     //ids
     public static final int encoderID = 0; //Changed due to rewire
-    public static final int IntakeID = 33; //not using intake
-    public static final int PivotID = 21; //using pivot
+    public static final int IntakeID = 21; 
+    public static final int PivotID = 19; 
     public static final int intakeLimitSwitchID = 9;
 
-    public static final double k_pivotEncoderOffset = 0.0;
+    public static final double k_pivotEncoderOffset = 40;
 
     //angles
-    public static final double groundAngle = 0;
-    public static final double stowAngle = 123;
-    public static final double sourceAngle = 55;
-    public static final double ampAngle = 30;
+    public static final double groundAngle = 10;//doesn't like 0
+    public static final double stowAngle = 163;
+    public static final double sourceAngle = 95;
+    public static final double ampAngle = 70;
+
+    
   }
 
 
@@ -138,6 +140,16 @@ public final class Constants {
     public static final double angleKI = 0.0000001;
     public static final double angleKD = 0.0001;
     public static final double angleKFF = 0.0;
+
+    // Drive Motor PID Values
+    public static final double driveKP = 0.0001;
+    public static final double driveKI = 0.0;
+    public static final double driveKD = 0.0;
+
+    //feedforward constants
+    public static final double ffkS = 0.667;
+    public static final double ffkV = 2.44;
+    public static final double ffkA = 0.27;
 
     /**************************
      * Module Specific Constants

@@ -84,6 +84,7 @@ double kPIDValue = leftclimbController.calculate(encoderPosition, goal.position)
  kPIDValue = kPIDValue > 10 ? 10 : kPIDValue;
  kPIDValue = kPIDValue < -10 ? -10 : kPIDValue;
 leftclimber.setVoltage(kPIDValue);
+
 }
 
 public void stop() {
