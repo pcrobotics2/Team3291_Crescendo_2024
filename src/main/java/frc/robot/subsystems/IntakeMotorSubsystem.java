@@ -18,8 +18,8 @@ public class IntakeMotorSubsystem extends SubsystemBase {
     this.intakeMotor = new CANSparkMax(Constants.intake.IntakeID, CANSparkLowLevel.MotorType.kBrushless); 
 
   }
-  public void moveIntakeMotor (double positiveSpeed, double negativeSpeed) {
-    intakeMotor.set(positiveSpeed - negativeSpeed);
+  public void moveIntakeMotor (double speed) {
+    intakeMotor.set(speed);
   }
   @Override
   public void periodic() {

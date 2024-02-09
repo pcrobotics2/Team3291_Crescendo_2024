@@ -31,6 +31,8 @@ import frc.robot.commands.IntakeCMDS.AmpCMD;
 import frc.robot.commands.IntakeCMDS.GroundCMD;
 import frc.robot.commands.IntakeCMDS.SourceCMD;
 import frc.robot.commands.IntakeCMDS.StowCMD;
+import frc.robot.commands.IntakeCMDS.IntakeMotor.EjectCMD;
+import frc.robot.commands.IntakeCMDS.IntakeMotor.IntakeMotorCMD;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -63,6 +65,8 @@ private final SendableChooser<Command> autoChooser;
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
+  public EjectCMD ejectCMD = new EjectCMD(intakeMotorSubsystem);
+  public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem); 
   // The robot's subsystems and commands are definelad here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -86,24 +90,19 @@ private final SendableChooser<Command> autoChooser;
    
     //intake
 
-    // controller5.button(Constants.buttonList.x).toggleOnTrue(stowCMD);
-    // controller5.button(Constants.buttonList.a).toggleOnTrue(groundCMD);
-    // controller5.button(Constants.buttonList.y).toggleOnTrue(sourceCMD);
-    // controller5.button(Constants.buttonList.b).toggleOnTrue(ampCMD);
+    controller0.povDown().toggleOnTrue(ampCMD);
+    controller0.povUp().toggleOnTrue(stowCMD);
+    controller0.povDown().toggleOnTrue(ampCMD);
+    controller0.povUp().toggleOnTrue(stowCMD);
 
-    controller0.button(Constants.buttonList.a).toggleOnTrue(stowCMD);
-    controller0.button(Constants.buttonList.b).toggleOnTrue(groundCMD);
-    controller0.button(Constants.buttonList.x).toggleOnTrue(sourceCMD);
-    controller0.button(Constants.buttonList.y).toggleOnTrue(ampCMD);
+    controller0.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
+    controller0.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
 
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
 
   SmartDashboard.putData("Auto Chooser", autoChooser);
-    controller0.povDown().toggleOnTrue(ampCMD);
-    controller0.povUp().toggleOnTrue(stowCMD);
-    controller0.povDown().toggleOnTrue(ampCMD);
-    controller0.povUp().toggleOnTrue(stowCMD);
+
   }
 
   /**
