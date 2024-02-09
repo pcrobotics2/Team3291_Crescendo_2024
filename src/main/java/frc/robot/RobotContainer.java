@@ -52,6 +52,7 @@ private final SendableChooser<Command> autoChooser;
 
   //careful setting the port for controller
   public CommandJoystick controller0 = new CommandJoystick(0);
+  public CommandJoystick controller1 = new CommandJoystick(1);
   public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -80,17 +81,13 @@ private final SendableChooser<Command> autoChooser;
 
     configureBindings();
 
-    // controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
-    // controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
-    // controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
+    // controller5.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
+    // controller5.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
    
+   
+    // controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
+
     //intake
-
-    // controller5.button(Constants.buttonList.x).toggleOnTrue(stowCMD);
-    // controller5.button(Constants.buttonList.a).toggleOnTrue(groundCMD);
-    // controller5.button(Constants.buttonList.y).toggleOnTrue(sourceCMD);
-    // controller5.button(Constants.buttonList.b).toggleOnTrue(ampCMD);
-
     controller0.button(Constants.buttonList.a).toggleOnTrue(stowCMD);
     controller0.button(Constants.buttonList.b).toggleOnTrue(groundCMD);
     controller0.button(Constants.buttonList.x).toggleOnTrue(sourceCMD);
