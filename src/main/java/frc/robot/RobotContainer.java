@@ -61,7 +61,6 @@ private final SendableChooser<Command> autoChooser;
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
-  // public ClimbCMD climbCMD = new ClimbCMD(climberSubsystem);
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
@@ -85,18 +84,19 @@ private final SendableChooser<Command> autoChooser;
 
     configureBindings();
 
-    // controller5.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
-    // controller5.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+    controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
+    controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
    
-   
-    // controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
 
     //intake
 
-    controller0.povDown().toggleOnTrue(ampCMD);
-    controller0.povUp().toggleOnTrue(stowCMD);
-    controller0.povDown().toggleOnTrue(ampCMD);
-    controller0.povUp().toggleOnTrue(stowCMD);
+    controller1.povDown().toggleOnTrue(groundCMD);
+    controller1.povUp().toggleOnTrue(stowCMD);
+    controller1.povLeft().toggleOnTrue(sourceCMD);
+    controller1.povRight().toggleOnTrue(ampCMD);
+
+    controller1.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
+    controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
 
     controller0.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
     controller0.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
