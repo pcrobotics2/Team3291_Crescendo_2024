@@ -15,6 +15,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -51,11 +52,10 @@ import frc.robot.subsystems.ClimberSubsystem;
 public class RobotContainer {
 
 private final SendableChooser<Command> autoChooser;
-
   //careful setting the port for controller
   public CommandJoystick controller0 = new CommandJoystick(0);
   public CommandJoystick controller1 = new CommandJoystick(1);
-  public LauncherSub launcherSub = new LauncherSub();
+    public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
@@ -83,10 +83,14 @@ private final SendableChooser<Command> autoChooser;
   public RobotContainer() {
     // Configure the trigger bindings
 
+   // NamedCommands.registerCommand("FeedWheelCMD", launcherSub.FeedWheelCMD()); 
+    NamedCommands.registerCommand("FeedWheelCMD", Commands.print("FeedWheelCMD"));
+
+
     configureBindings();
 
-    // controller5.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
-    // controller5.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+    controller0.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
+    controller0.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
    
    
     // controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
@@ -98,8 +102,8 @@ private final SendableChooser<Command> autoChooser;
     controller0.povDown().toggleOnTrue(ampCMD);
     controller0.povUp().toggleOnTrue(stowCMD);
 
-    controller0.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
-    controller0.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
+    controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
+    controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
 
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
