@@ -15,6 +15,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -51,17 +52,15 @@ import frc.robot.subsystems.ClimberSubsystem;
 public class RobotContainer {
 
 private final SendableChooser<Command> autoChooser;
-
   //careful setting the port for controller
   public CommandJoystick controller0 = new CommandJoystick(0);
   public CommandJoystick controller1 = new CommandJoystick(1);
-  public LauncherSub launcherSub = new LauncherSub();
+    public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
-  // public ClimbCMD climbCMD = new ClimbCMD(climberSubsystem);
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
@@ -83,23 +82,31 @@ private final SendableChooser<Command> autoChooser;
   public RobotContainer() {
     // Configure the trigger bindings
 
+   // NamedCommands.registerCommand("FeedWheelCMD", launcherSub.FeedWheelCMD()); 
+    NamedCommands.registerCommand("testCMD", Commands.print("IT WORKS"));
+
+
     configureBindings();
 
-    // controller5.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
-    // controller5.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+    controller0.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
+    controller0.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+    
+    controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
+    controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
    
-   
-    // controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
 
     //intake
 
-    controller0.povDown().toggleOnTrue(ampCMD);
-    controller0.povUp().toggleOnTrue(stowCMD);
-    controller0.povDown().toggleOnTrue(ampCMD);
-    controller0.povUp().toggleOnTrue(stowCMD);
+    controller1.povDown().toggleOnTrue(groundCMD);
+    controller1.povUp().toggleOnTrue(stowCMD);
+    controller1.povLeft().toggleOnTrue(sourceCMD);
+    controller1.povRight().toggleOnTrue(ampCMD);
 
-    controller0.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
-    controller0.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
+    controller1.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
+    controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
+
+    controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
+    controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
 
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
@@ -146,14 +153,14 @@ private final SendableChooser<Command> autoChooser;
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-    SmartDashboard.putData("Test Auto", new PathPlannerAuto("Test Auto"));
+    SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
 
   }
                                                                                              
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("Test Auto");
+    return new PathPlannerAuto("TestAuto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }
