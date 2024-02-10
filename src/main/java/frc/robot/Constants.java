@@ -25,8 +25,8 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   
-  public static final int leftClimberID = 19;
-  public static final int rightClimberID = 22;
+  public static final int leftClimberID = 23;
+  public static final int rightClimberID = 37;
 
   public static final double feedSpeed = 0.40;   //0.40
   public static final double launchSpeed = 0.90; //1.00 originally
@@ -59,7 +59,7 @@ public final class Constants {
     //ids
     public static final int encoderID = 0; //Changed due to rewire
     public static final int IntakeID = 21; 
-    public static final int PivotID = 25;//19 
+    public static final int PivotID = 19;//19 
     public static final int intakeLimitSwitchID = 9;
 
     public static final double k_pivotEncoderOffset = 40;
