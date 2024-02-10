@@ -56,7 +56,6 @@ private final SendableChooser<Command> autoChooser;
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
-  //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
@@ -133,13 +132,13 @@ private final SendableChooser<Command> autoChooser;
       )
     );
   
-    SmartDashboard.putData("TestAuto", new PathPlannerAuto("LaunchAuto"));
+    SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
   }
                                                                                              
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("LaunchAuto");
+    return new PathPlannerAuto("TestAuto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }

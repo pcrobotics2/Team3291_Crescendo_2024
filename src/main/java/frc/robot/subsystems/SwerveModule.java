@@ -263,7 +263,7 @@ public class SwerveModule {
             drivePid.calculate(driveValue,0);
             //driveValue = feedForward.calculate(desiredState.speedMetersPerSecond) + drivePid.calculate(driveEncoder.getVelocity(), desiredState.speedMetersPerSecond);
             driveValue = invertDriveMotor ? driveValue * -1 : driveValue;
-            driveMotor.set(1);
+            driveMotor.set(driveValue);
         // } else {
         //     // If we are in closed loop mode, set the drive motor to the desired speed
         //     this.driveMotor.set(
