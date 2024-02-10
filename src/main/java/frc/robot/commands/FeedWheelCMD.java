@@ -25,7 +25,7 @@ public class FeedWheelCMD extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    launcherSub.setFeedWheel(Constants.feedSpeed * -1);
+    //launcherSub.setFeedWheel(Constants.feedSpeed * -1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
