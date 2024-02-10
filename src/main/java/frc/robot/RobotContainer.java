@@ -83,13 +83,14 @@ private final SendableChooser<Command> autoChooser;
     // Configure the trigger bindings
 
    // NamedCommands.registerCommand("FeedWheelCMD", launcherSub.FeedWheelCMD()); 
-    NamedCommands.registerCommand("FeedWheelCMD", Commands.print("FeedWheelCMD"));
+    NamedCommands.registerCommand("testCMD", Commands.print("IT WORKS"));
 
 
     configureBindings();
 
     controller0.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller0.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+    
     controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
    
@@ -152,14 +153,14 @@ private final SendableChooser<Command> autoChooser;
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-    SmartDashboard.putData("Test Auto", new PathPlannerAuto("Test Auto"));
+    SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
 
   }
                                                                                              
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("Test Auto");
+    return new PathPlannerAuto("TestAuto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }
