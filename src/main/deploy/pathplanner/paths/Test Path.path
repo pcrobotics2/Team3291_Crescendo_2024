@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 2.0,
-        "y": 7.08
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9999999999999998,
-        "y": 6.34
+        "x": 3.9999999999999996,
+        "y": 7.0
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 5.08
+        "x": 4.0,
+        "y": 7.0
       },
       "prevControl": {
-        "x": 2.0000000000000004,
-        "y": 7.142633836304167
+        "x": 2.0,
+        "y": 7.0
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,28 +30,10 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.85,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "testCMD"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.1,
-    "maxAcceleration": 0.010000000000000002,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 11.5,
     "maxAngularAcceleration": 132.25
   },

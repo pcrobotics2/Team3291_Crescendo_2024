@@ -91,8 +91,8 @@ public class SwerveSubsystem extends SubsystemBase {
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                     new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
                     new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-                    4.5, // Max module speed, in m/s
-                    0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                    2.5, // Max module speed, in m/s
+                    0.38166088514508, // Drive base radius in meters. Distance from robot center to furthest module.
                     new ReplanningConfig() // Default path replanning config. See the API for the options here
             ),
             () -> {
@@ -156,10 +156,10 @@ public class SwerveSubsystem extends SubsystemBase {
     gyro.reset();
   }
 
-
+  
   public void getAcceleration(){
     //accelerometer.getWorldLinearAccelX();
-  }
+      }
 
 
   public void resetToAbsolute() {
@@ -239,7 +239,7 @@ public ChassisSpeeds getSpeeds() {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
       SmartDashboard.putNumber(("GYRO"), getroll().getDegrees());
-      //SmartDashboard.putNumber("filterGyro", filterGyro().getDegrees());
+      SmartDashboard.putNumber("filterGyro", filterGyro().getDegrees());
     }
   }
 }

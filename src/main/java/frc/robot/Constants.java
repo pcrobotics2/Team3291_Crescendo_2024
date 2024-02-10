@@ -91,7 +91,7 @@ public final class Constants {
     public static final double kMaxStrafeAcceleration = 3.0; //meters per second squared
     public static final double kMaxRotationAcceleration = 3.0; //radians per second squared
 
-    // inematics
+    // Kinematics
     public static final SwerveDriveKinematics swerveKinematics =
         new SwerveDriveKinematics(
             //front left ++ 
