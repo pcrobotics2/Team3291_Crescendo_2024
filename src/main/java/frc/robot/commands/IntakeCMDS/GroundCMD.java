@@ -9,7 +9,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class GroundCMD extends Command {
   /** Creates a new GroundCMD. */
-  IntakeSubsystem intakeSubsystem;
+  private final IntakeSubsystem intakeSubsystem;
+  private boolean stowed; //checks for note then stows
   public GroundCMD(IntakeSubsystem intakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
@@ -20,13 +21,21 @@ public class GroundCMD extends Command {
   @Override
   public void initialize() {
     intakeSubsystem.goToGround();
+    this.stowed = false;
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (intakeSubsystem.getIntakeHasNote() == false && this.stowed == false) {
     intakeSubsystem.goToGround();
+    }
+    else {
 
+      intakeSubsystem.goToStow();
+      this.stowed = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
