@@ -35,8 +35,7 @@ import frc.robot.subsystems.SwerveModule;
 
 public class SwerveSubsystem extends SubsystemBase {
   private final AHRS gyro;
-  //private final AHRS accelerometer;
-  //public double angle = 0;
+  public double angle = 0;
 
 
   private SwerveDriveOdometry swerveOdometry;
@@ -179,10 +178,10 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
 
-  /*public Rotation2d filterGyro(){
-    angle = (0.97402597402)*(angle + (getroll().getDegrees()*0.0262)) + (0.02597402597)*(accelerometer.getWorldLinearAccelX());
+  public Rotation2d filterGyro(){
+    angle = (0.97402597402)*(angle + (getroll().getDegrees()*0.0262)) + (0.02597402597)*(gyro.getWorldLinearAccelX());
     return Rotation2d.fromDegrees(angle);
-  }*/
+  }
 
 
   private SwerveModulePosition[] getModulePositions() {
