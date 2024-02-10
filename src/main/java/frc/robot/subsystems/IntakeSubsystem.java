@@ -60,6 +60,7 @@ public class IntakeSubsystem extends SubsystemBase {
    
 
   public double giveVoltage(double pivot_angle, double current_angle) {
+    SmartDashboard.putBoolean("limitSwitch", getIntakeHasNote());
     // Pivot control
     SmartDashboard.putNumber("originalAngle", current_angle);
     //double pivot_angle = pivotTargetToAngle(pivot_target);
@@ -140,7 +141,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
    
   public void goToGround() {
-    pivot_target = PivotTarget.GROUND;
+    if (getIntakeHasNote()) {
+    pivot_target = PivotTarget.STOW;
+    } else {
+      pivot_target = PivotTarget.GROUND;
+    }
     pidController.setP(SmartDashboard.getNumber("key", Constants.intake.intakePID.kp));
     double pivot_angle = pivotTargetToAngle(pivot_target);
     System.out.println("stow angle target: " + pivot_angle);

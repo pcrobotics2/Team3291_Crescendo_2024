@@ -35,8 +35,8 @@ import frc.robot.subsystems.SwerveModule;
 
 public class SwerveSubsystem extends SubsystemBase {
   private final AHRS gyro;
-  private final AHRS accelerometer;
-  public double angle = 0;
+  //private final AHRS accelerometer;
+  //public double angle = 0;
 
 
   private SwerveDriveOdometry swerveOdometry;
@@ -55,7 +55,7 @@ public class SwerveSubsystem extends SubsystemBase {
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() {
     gyro = new AHRS(SerialPort.Port.kUSB);
-    accelerometer = new AHRS(SerialPort.Port.kUSB);
+    //accelerometer = new AHRS(SerialPort.Port.kUSB);
 
     zeroGryo();
 
@@ -158,9 +158,9 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
 
-  /*public void getAcceleration(){
-    accelerometer.getWorldLinearAccelX();
-  }*/
+  public void getAcceleration(){
+    //accelerometer.getWorldLinearAccelX();
+  }
 
 
   public void resetToAbsolute() {
