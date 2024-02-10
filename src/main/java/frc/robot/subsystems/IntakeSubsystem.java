@@ -60,7 +60,6 @@ public class IntakeSubsystem extends SubsystemBase {
    
 
   public double giveVoltage(double pivot_angle, double current_angle) {
-    SmartDashboard.putBoolean("limitSwitch", getIntakeHasNote());
     // Pivot control
     SmartDashboard.putNumber("originalAngle", current_angle);
     //double pivot_angle = pivotTargetToAngle(pivot_target);
@@ -135,17 +134,16 @@ public class IntakeSubsystem extends SubsystemBase {
   // }
 
   public boolean getIntakeHasNote() {
-    // NOTE: this is intentionally inverted, because the limit switch is normally
-    // closed
+    //must be inverted
     return !intakeLimitSwitch.get();
   }
    
   public void goToGround() {
-    if (getIntakeHasNote()) {
-    pivot_target = PivotTarget.STOW;
-    } else {
-      pivot_target = PivotTarget.GROUND;
+
+     if (getIntakeHasNote()) {
+      goToStow();
     }
+    pivot_target = PivotTarget.GROUND;
     pidController.setP(SmartDashboard.getNumber("key", Constants.intake.intakePID.kp));
     double pivot_angle = pivotTargetToAngle(pivot_target);
     System.out.println("stow angle target: " + pivot_angle);
@@ -226,5 +224,6 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("limitSwitch", getIntakeHasNote());
   }
 }

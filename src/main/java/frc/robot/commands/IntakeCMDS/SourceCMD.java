@@ -10,6 +10,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class SourceCMD extends Command {
   /** Creates a new SourceCMD. */
   IntakeSubsystem intakeSubsystem;
+  boolean stowed; //checks for note then stows
   public SourceCMD(IntakeSubsystem intakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
@@ -18,13 +19,20 @@ public class SourceCMD extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    this.stowed = false;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.goToSource();
-
+    if (intakeSubsystem.getIntakeHasNote() == false && this.stowed == false) {
+      intakeSubsystem.goToSource();
+    }
+    else {
+      intakeSubsystem.goToStow();
+      this.stowed = true;
+    }
   }
 
   // Called once the command ends or is interrupted.

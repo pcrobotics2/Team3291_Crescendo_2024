@@ -54,7 +54,7 @@ public class RobotContainer {
 private final SendableChooser<Command> autoChooser;
   //careful setting the port for controller
   public CommandJoystick controller0 = new CommandJoystick(0);
-  public CommandJoystick controller1 = new CommandJoystick(1);
+  public CommandJoystick controller1 = new CommandJoystick(0); //same for testing
     public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -81,8 +81,8 @@ private final SendableChooser<Command> autoChooser;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-
-   // NamedCommands.registerCommand("FeedWheelCMD", launcherSub.FeedWheelCMD()); 
+    launcherSub = new LauncherSub();
+    NamedCommands.registerCommand("feedWheelCMD", new FeedWheelCMD(launcherSub)); 
     NamedCommands.registerCommand("testCMD", Commands.print("IT WORKS"));
 
 
@@ -97,10 +97,10 @@ private final SendableChooser<Command> autoChooser;
 
     //intake
 
-    controller1.povDown().toggleOnTrue(groundCMD);
-    controller1.povUp().toggleOnTrue(stowCMD);
-    controller1.povLeft().toggleOnTrue(sourceCMD);
-    controller1.povRight().toggleOnTrue(ampCMD);
+    controller1.povDown().whileTrue(groundCMD);
+    controller1.povUp().whileTrue(stowCMD);
+    controller1.povLeft().whileTrue(sourceCMD);
+    controller1.povRight().whileTrue(ampCMD);
 
     controller1.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
     controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
