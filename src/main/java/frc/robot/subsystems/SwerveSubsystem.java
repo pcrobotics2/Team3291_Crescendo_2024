@@ -10,6 +10,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.estimator.KalmanFilter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -30,6 +31,8 @@ import frc.robot.subsystems.SwerveModule;
 
 public class SwerveSubsystem extends SubsystemBase {
   private final AHRS gyro;
+  private final AHRS accelerometer;
+  public double angle = 0;
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
@@ -38,9 +41,16 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public AutoBuilder autoBuilder;
 
+  private KalmanFilter filter;
+
+  private AHRS ahrs;
+
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() {
     gyro = new AHRS(SerialPort.Port.kUSB);
+    accelerometer = new AHRS(SerialPort.Port.kUSB);
+
+    filter = new KalmanFilter<>(null, null, null, null, null, 0);
 
     zeroGryo();
 
@@ -55,7 +65,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     swerveOdometry = new SwerveDriveOdometry(
       Swerve.swerveKinematics, 
-      getYaw(), 
+      getroll(), 
       getModulePositions()
     );
 
@@ -112,7 +122,7 @@ public class SwerveSubsystem extends SubsystemBase {
           translation.getX(),
           translation.getY(), 
           rotation,
-          getYaw())
+          getroll())
         : new ChassisSpeeds(
           translation.getX(),
           translation.getY(), 
@@ -130,18 +140,27 @@ public class SwerveSubsystem extends SubsystemBase {
     gyro.reset();
   }
 
+  public void getAcceleration(){
+    accelerometer.getWorldLinearAccelX();
+  }
+
   public void resetToAbsolute() {
     for (SwerveModule mod : mSwerveMods) {
       mod.resetToAbsolute();
     }
   }
 
-  private Rotation2d getYaw() {
+  private Rotation2d getroll() {
     if (Swerve.invertGyro) {
-      return Rotation2d.fromDegrees(360 - gyro.getYaw());
+      return Rotation2d.fromDegrees(360 - gyro.getRoll());
     } else {
-      return Rotation2d.fromDegrees(gyro.getYaw());
+      return Rotation2d.fromDegrees(gyro.getRoll());
     }
+  }
+
+  public Rotation2d filterGyro(){
+    angle = (0.97402597402)*(angle + (getroll().getDegrees()*0.0262)) + (0.02597402597)*(accelerometer.getWorldLinearAccelX());
+    return Rotation2d.fromDegrees(angle);
   }
 
   private SwerveModulePosition[] getModulePositions() {
@@ -159,7 +178,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void resetOdometry(Pose2d pose) {
-    swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
+    swerveOdometry.resetPosition(getroll(), getModulePositions(), pose);
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -182,14 +201,15 @@ public ChassisSpeeds getSpeeds() {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    swerveOdometry.update(getYaw(), getModulePositions());
+    swerveOdometry.update(getroll(), getModulePositions());
     field.setRobotPose(swerveOdometry.getPoseMeters());
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-      SmartDashboard.putNumber(("GYRO"), getYaw().getDegrees());
+      SmartDashboard.putNumber(("GYRO"), getroll().getDegrees());
+      SmartDashboard.putNumber("filterGyro", filterGyro().getDegrees());
     }
   }
 }
