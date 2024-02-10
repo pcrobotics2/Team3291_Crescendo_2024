@@ -133,13 +133,13 @@ private final SendableChooser<Command> autoChooser;
       )
     );
   
-    SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
+    SmartDashboard.putData("TestAuto", new PathPlannerAuto("LaunchAuto"));
   }
                                                                                              
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("TestAuto");
+    return new PathPlannerAuto("LaunchAuto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }
