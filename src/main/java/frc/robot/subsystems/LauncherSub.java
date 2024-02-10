@@ -24,7 +24,6 @@ public class LauncherSub extends SubsystemBase {
    this.downLauncher = new CANSparkMax(Constants.downLauncherID, MotorType.kBrushless);//14
 
   }
-
   // public Command getIntakeCommand() {
   //   return this.startEnd(
   //     () -> {
@@ -46,13 +45,10 @@ public class LauncherSub extends SubsystemBase {
   public void setFeedWheel(double speed) {
     upLauncher.set(speed);
     downLauncher.set(speed);
-
-    
   }
   public void stop() {
     downLauncher.set(0);
     upLauncher.set(0);
-
   }
   
   @Override
