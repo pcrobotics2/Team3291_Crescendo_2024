@@ -21,6 +21,7 @@ import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
+import frc.robot.Constants.Swerve.Mod0;
 import frc.lib.Math.SwerveOpt;
 import frc.lib.config.*;
 
@@ -295,6 +296,10 @@ public class SwerveModule {
         //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
         boolean invertDriveMotor = setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop, invertDriveMotor);
+    }
+
+    public void shwomp(){
+        driveMotor.set(1);
     }
 
 

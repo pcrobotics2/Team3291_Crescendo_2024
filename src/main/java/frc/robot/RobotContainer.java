@@ -6,12 +6,11 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ClimbCMD;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchWheelCMD;
 import frc.robot.commands.SwerveDrive;
@@ -34,7 +32,6 @@ import frc.robot.commands.IntakeCMDS.SourceCMD;
 import frc.robot.commands.IntakeCMDS.StowCMD;
 import frc.robot.commands.IntakeCMDS.IntakeMotor.EjectCMD;
 import frc.robot.commands.IntakeCMDS.IntakeMotor.IntakeMotorCMD;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
@@ -55,8 +52,8 @@ public class RobotContainer {
 private final SendableChooser<Command> autoChooser;
   //careful setting the port for controller
   public CommandJoystick controller0 = new CommandJoystick(0);
-  public CommandJoystick controller1 = new CommandJoystick(1);
-    public LauncherSub launcherSub = new LauncherSub();
+  public CommandJoystick controller1 = new CommandJoystick(0); //same for testing
+  public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
@@ -70,7 +67,7 @@ private final SendableChooser<Command> autoChooser;
   public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem);
   public ColorChanger lightingSubsystem = new ColorChanger(); 
   // The robot's subsystems and commands are definelad here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+ // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
@@ -83,10 +80,9 @@ private final SendableChooser<Command> autoChooser;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-
-   // NamedCommands.registerCommand("FeedWheelCMD", launcherSub.FeedWheelCMD()); 
+    launcherSub = new LauncherSub();
+    NamedCommands.registerCommand("feedWheelCMD", new FeedWheelCMD(launcherSub)); 
     NamedCommands.registerCommand("testCMD", Commands.print("IT WORKS"));
-
 
     configureBindings();
 
@@ -96,13 +92,12 @@ private final SendableChooser<Command> autoChooser;
     controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
    
-
     //intake
 
-    controller1.povDown().toggleOnTrue(groundCMD);
-    controller1.povUp().toggleOnTrue(stowCMD);
-    controller1.povLeft().toggleOnTrue(sourceCMD);
-    controller1.povRight().toggleOnTrue(ampCMD);
+    controller1.povDown().whileTrue(groundCMD);
+    controller1.povUp().whileTrue(stowCMD);
+    controller1.povLeft().whileTrue(sourceCMD);
+    controller1.povRight().whileTrue(ampCMD);
 
     controller1.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
     controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
@@ -114,7 +109,6 @@ private final SendableChooser<Command> autoChooser;
   autoChooser = AutoBuilder.buildAutoChooser();
 
   SmartDashboard.putData("Auto Chooser", autoChooser);
-
   }
 
   /**
@@ -128,9 +122,6 @@ private final SendableChooser<Command> autoChooser;
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
     swerveSubsystem.setDefaultCommand(
       new SwerveDrive(
         swerveSubsystem,
@@ -148,15 +139,7 @@ private final SendableChooser<Command> autoChooser;
       )
     );
   
-    
-    
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-
     SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
-
   }
                                                                                              
   public Command getAutonomousCommand() {
@@ -166,12 +149,9 @@ private final SendableChooser<Command> autoChooser;
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }
-
-  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-   
 }

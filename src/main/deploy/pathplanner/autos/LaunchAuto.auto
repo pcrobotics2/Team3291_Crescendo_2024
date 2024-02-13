@@ -6,9 +6,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Test Path"
+            "name": "feedWheelCMD"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
           }
         }
       ]
