@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.Swerve;
 import frc.robot.commands.ClimbCMD;
 import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchWheelCMD;
@@ -79,10 +80,11 @@ private final SendableChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
-    launcherSub = new LauncherSub();
-    NamedCommands.registerCommand("feedWheelCMD", new FeedWheelCMD(launcherSub)); 
-    NamedCommands.registerCommand("testCMD", Commands.print("IT WORKS"));
+ // Subsystem initialization
+        intakeMotorSubsystem = new IntakeMotorSubsystem();
+
+        // Register Named Commands
+        NamedCommands.registerCommand("test", intakeMotorSubsystem.TestStartEndCommand(0.1));
 
     configureBindings();
 
@@ -104,7 +106,8 @@ private final SendableChooser<Command> autoChooser;
 
     controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
     controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
-
+    
+    
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -138,14 +141,25 @@ private final SendableChooser<Command> autoChooser;
         () -> controller0.getRawAxis(3)
       )
     );
-  
+    
+    controller0.button(Constants.buttonList.y).whileTrue(
+      intakeMotorSubsystem.startEnd(
+        ()->{
+          intakeMotorSubsystem.moveIntakeMotor(0.3);
+        }, 
+        ()->{
+          intakeMotorSubsystem.moveIntakeMotor(0);
+        }
+      )
+    );
+
     SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
   }
                                                                                              
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("TestAuto");
+    return new PathPlannerAuto("TestMotorAuto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }

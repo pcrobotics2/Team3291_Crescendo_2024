@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -21,6 +23,11 @@ public class IntakeMotorSubsystem extends SubsystemBase {
   public void moveIntakeMotor (double speed) {
     intakeMotor.set(speed);
   }
+
+  public Command TestStartEndCommand(double speed) {
+  // implicitly require `this`
+  return new StartEndCommand(() -> this.moveIntakeMotor(speed), () -> this.moveIntakeMotor(0), this);
+}
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
