@@ -37,7 +37,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.ColorChanger;
 
 
 
@@ -57,6 +56,7 @@ private final SendableChooser<Command> autoChooser;
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
+  //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
@@ -64,14 +64,8 @@ private final SendableChooser<Command> autoChooser;
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
   public EjectCMD ejectCMD = new EjectCMD(intakeMotorSubsystem);
-  public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem);
-  public ColorChanger lightingSubsystem = new ColorChanger(); 
-  // The robot's subsystems and commands are definelad here...
- // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  // private final CommandXboxController m_driverController =
-  //    new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem); 
+  
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.lb);
 
   //subsystems\\
@@ -139,13 +133,13 @@ private final SendableChooser<Command> autoChooser;
       )
     );
   
-    SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
+    SmartDashboard.putData("TestAuto", new PathPlannerAuto("LaunchAuto"));
   }
                                                                                              
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("TestAuto");
+    return new PathPlannerAuto("LaunchAuto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }
