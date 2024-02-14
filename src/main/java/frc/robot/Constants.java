@@ -34,6 +34,7 @@ public final class Constants {
   public static final double hangSpeed = 0.5;
   public static final int upLauncherID = 18; //18
   public static final int downLauncherID = 14; //14
+  public static final int LEDColors = null;
 
   public static class buttonList {
     public static final int a = 1;
@@ -250,7 +251,7 @@ public final class Constants {
   public final static class Lighting {
     public final static int lightingPort = 1;
 
-    public enum Colors {
+    public static enum Colors {
      RAINBOWRAINBOW  ("Rainbow Palette", -0.99),
      RAINBOWPARTY ("Rainbow Party Palette", -0.97),
      RAINBOWOCEAN ("Rainbow Ocean Palette", -0.95),
