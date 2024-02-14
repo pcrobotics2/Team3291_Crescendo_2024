@@ -4,23 +4,28 @@
 
 package frc.robot.commands.IntakeCMDS.IntakeMotor;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeMotorSubsystem;
 
 public class EjectCMD extends Command {
   IntakeMotorSubsystem intakeMotorSubsystem;
+ // double startTime = Timer.getFPGATimestamp();
   /** Creates a new Eject. */ 
   public EjectCMD(IntakeMotorSubsystem intakeMotorSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeMotorSubsystem = intakeMotorSubsystem;
     addRequirements(intakeMotorSubsystem);
+    //this.startTime = startTime;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     intakeMotorSubsystem.moveIntakeMotor(Constants.intake.ejectSpeed);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,4 +46,4 @@ public class EjectCMD extends Command {
   public boolean isFinished() {
     return false;
   }
-}
+ }
