@@ -208,12 +208,7 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("limitSwitch", getIntakeHasNote());
-    
-    public void ColorChanger() {
-      ColorChanger.set(Constants.Lighting.disableColor.getColorValue());
-      ColorChanger.set(Constants.Lighting.Colors.GOLD.getColorValue());
   }
-    }
+}
   
 

@@ -34,7 +34,7 @@ public final class Constants {
   public static final double hangSpeed = 0.5;
   public static final int upLauncherID = 18; //18
   public static final int downLauncherID = 14; //14
-  public static final int LEDColors = null;
+  public static final int LEDColors = 1;
 
   public static class buttonList {
     public static final int a = 1;
