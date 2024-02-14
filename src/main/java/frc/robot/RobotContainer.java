@@ -147,7 +147,7 @@ private final SendableChooser<Command> autoChooser;
         climberSubsystem,
         () -> controller0.getRawAxis(2),
         () -> controller0.getRawAxis(3),
-        () -> robotCentricButton.getAsBoolean()
+        () -> aToggleButton.getAsBoolean()
       )
     );
     

@@ -44,12 +44,19 @@ public class ClimbCMD extends Command {
   public void execute() {
     boolean isAToggled = aToggle.getAsBoolean();
     if (isAToggled) {
-      boolean switchIt = true;
-    }
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
-    climberSubsystem.setClimber(positiveSpeed, negativeSpeed);
-  }
+    climberSubsystem.setClimberTogether(positiveSpeed, negativeSpeed);
+    }
+    else {
+    double positiveSpeed = positiveSupplier.getAsDouble();
+    double negativeSpeed = negativeSupplier.getAsDouble();
+    climberSubsystem.setClimberIndividual(positiveSpeed, negativeSpeed);
+    }
+    
+}
+
+  
 
   // Called once the command ends or is interrupted.
   @Override
