@@ -68,6 +68,8 @@ private final SendableChooser<Command> autoChooser;
   public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem); 
   
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.lb);
+  public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
+
 
   //subsystems\\
   private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
@@ -85,6 +87,10 @@ private final SendableChooser<Command> autoChooser;
         NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub).withTimeout(1));
         NamedCommands.registerCommand("FeedWheelCMD", new FeedWheelCMD(launcherSub).withTimeout(1));
         NamedCommands.registerCommand("AmpCMD", new AmpCMD(intakeSubsystem).until(intakeSubsystem::ampAtAngle));
+        NamedCommands.registerCommand("SourceCMD", new SourceCMD(intakeSubsystem).until(intakeSubsystem::sourceAtAngle));
+        NamedCommands.registerCommand("GroundCMD", new GroundCMD(intakeSubsystem).until(intakeSubsystem::groundAtAngle));
+        NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
+
 
 
 
@@ -140,7 +146,8 @@ private final SendableChooser<Command> autoChooser;
       new ClimbCMD(
         climberSubsystem,
         () -> controller0.getRawAxis(2),
-        () -> controller0.getRawAxis(3)
+        () -> controller0.getRawAxis(3),
+        () -> robotCentricButton.getAsBoolean()
       )
     );
     

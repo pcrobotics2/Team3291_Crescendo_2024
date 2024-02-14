@@ -153,6 +153,27 @@ public class IntakeSubsystem extends SubsystemBase {
     }
     return value;
   }
+  public boolean groundAtAngle() {
+    boolean value = false;
+    if (getCurrentAngle() < Constants.intake.groundAngle + 1 && getCurrentAngle() > Constants.intake.groundAngle - 1) {
+      value = true;
+    }
+    return value;
+  }
+  public boolean stowAtAngle() {
+    boolean value = false;
+    if (getCurrentAngle() < Constants.intake.stowAngle + 1 && getCurrentAngle() > Constants.intake.stowAngle - 1) {
+      value = true;
+    }
+    return value;
+  }
+  public boolean sourceAtAngle() {
+    boolean value = false;
+    if (getCurrentAngle() < Constants.intake.sourceAngle + 1 && getCurrentAngle() > Constants.intake.sourceAngle - 1) {
+      value = true;
+    }
+    return value;
+  }
 
   public void goToGround() {
 
