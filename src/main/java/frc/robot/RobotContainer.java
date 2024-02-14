@@ -75,10 +75,13 @@ private final SendableChooser<Command> autoChooser;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
  // Subsystem initialization
-        intakeMotorSubsystem = new IntakeMotorSubsystem();
+        // intakeMotorSubsystem = new IntakeMotorSubsystem();
 
-        // Register Named Commands
-        NamedCommands.registerCommand("test", intakeMotorSubsystem.TestStartEndCommand(0.1));
+        // // Register Named Commands
+        // NamedCommands.registerCommand("test", intakeMotorSubsystem.TestStartEndCommand(-0.1));
+        // NamedCommands.registerCommand("testStop", intakeMotorSubsystem.TestStartEndCommand(0.5));
+        NamedCommands.registerCommand("command", new EjectCMD(intakeMotorSubsystem).withTimeout(2));
+
 
     configureBindings();
 
