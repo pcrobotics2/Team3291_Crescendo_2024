@@ -80,7 +80,12 @@ private final SendableChooser<Command> autoChooser;
         // // Register Named Commands
         // NamedCommands.registerCommand("test", intakeMotorSubsystem.TestStartEndCommand(-0.1));
         // NamedCommands.registerCommand("testStop", intakeMotorSubsystem.TestStartEndCommand(0.5));
-        NamedCommands.registerCommand("command", new EjectCMD(intakeMotorSubsystem).withTimeout(2));
+        NamedCommands.registerCommand("EjectCMD", new EjectCMD(intakeMotorSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub).withTimeout(1));
+        NamedCommands.registerCommand("FeedWheelCMD", new FeedWheelCMD(launcherSub).withTimeout(1));
+        NamedCommands.registerCommand("AmpCMD", new AmpCMD(intakeSubsystem).until(intakeSubsystem::ampAtAngle));
+
 
 
     configureBindings();

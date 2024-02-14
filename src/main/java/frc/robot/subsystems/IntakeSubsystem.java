@@ -132,12 +132,28 @@ public class IntakeSubsystem extends SubsystemBase {
   //   System.out.println("angled from encoder:" + value);
   //   return value;
   // }
-
+  public double getCurrentAngle() {
+    double value = intakeEncoder.getAbsolutePosition();
+    value *= 360;
+    value = value + Constants.intake.k_pivotEncoderOffset;
+    if (value > 360) {
+      value %= 360;
+    }
+    return value;
+  }
   public boolean getIntakeHasNote() {
     //must be inverted
     return !intakeLimitSwitch.get();
   }
    
+  public boolean ampAtAngle() {
+    boolean value = false;
+    if (getCurrentAngle() < Constants.intake.ampAngle + 1 && getCurrentAngle() > Constants.intake.ampAngle - 1) {
+      value = true;
+    }
+    return value;
+  }
+
   public void goToGround() {
 
      if (getIntakeHasNote()) {
@@ -147,16 +163,8 @@ public class IntakeSubsystem extends SubsystemBase {
     pidController.setP(SmartDashboard.getNumber("key", Constants.intake.intakePID.kp));
     double pivot_angle = pivotTargetToAngle(pivot_target);
     System.out.println("stow angle target: " + pivot_angle);
-   // SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
-   // SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
-    double value = intakeEncoder.getAbsolutePosition();
-    value *= 360;
-    value = value + Constants.intake.k_pivotEncoderOffset;
-    if (value > 360) {
-      value %= 360;
-    }
-    System.out.println("final voltage: " + giveVoltage(pivot_angle, value) + "\n\n");
-    double voltage = giveVoltage(pivot_angle, value);
+    System.out.println("final voltage: " + giveVoltage(pivot_angle, getCurrentAngle()) + "\n\n");
+    double voltage = giveVoltage(pivot_angle, getCurrentAngle());
     pivotMotor.setVoltage(voltage);
     SmartDashboard.putNumber("getVoltage", voltage);
     System.out.println("s");
@@ -166,16 +174,8 @@ public class IntakeSubsystem extends SubsystemBase {
     pivot_target = PivotTarget.SOURCE;
     double pivot_angle = pivotTargetToAngle(pivot_target);
     System.out.println("stow angle target: " + pivot_angle);
-   // SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
-   // SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
-    double value = intakeEncoder.getAbsolutePosition();
-    value *= 360;
-    value = value + Constants.intake.k_pivotEncoderOffset;
-    if (value > 360) {
-      value %= 360;
-    }
-    System.out.println("final voltage: " + giveVoltage(pivot_angle, value) + "\n\n");
-    double voltage = giveVoltage(pivot_angle, value);
+    System.out.println("final voltage: " + giveVoltage(pivot_angle, getCurrentAngle()) + "\n\n");
+    double voltage = giveVoltage(pivot_angle, getCurrentAngle());
     pivotMotor.setVoltage(voltage);
     SmartDashboard.putNumber("getVoltage", voltage);
     System.out.println("s");
@@ -185,16 +185,8 @@ public class IntakeSubsystem extends SubsystemBase {
     pivot_target = PivotTarget.AMP;
     double pivot_angle = pivotTargetToAngle(pivot_target);
     System.out.println("stow angle target: " + pivot_angle);
-   // SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
-   // SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
-    double value = intakeEncoder.getAbsolutePosition();
-    value *= 360;
-    value = value + Constants.intake.k_pivotEncoderOffset;
-    if (value > 360) {
-      value %= 360;
-    }
-    System.out.println("final voltage: " + giveVoltage(pivot_angle, value) + "\n\n");
-    double voltage = giveVoltage(pivot_angle, value);
+    System.out.println("final voltage: " + giveVoltage(pivot_angle, getCurrentAngle()) + "\n\n");
+    double voltage = giveVoltage(pivot_angle, getCurrentAngle());
     pivotMotor.setVoltage(voltage);
     SmartDashboard.putNumber("getVoltage", voltage);
     System.out.println("s");
@@ -204,16 +196,8 @@ public class IntakeSubsystem extends SubsystemBase {
     pivot_target = PivotTarget.STOW;
     double pivot_angle = pivotTargetToAngle(pivot_target);
     System.out.println("stow angle target: " + pivot_angle);
-   // SmartDashboard.putNumber("getVoltage", giveVoltage(pivot_angle));
-   // SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
-    double value = intakeEncoder.getAbsolutePosition();
-    value *= 360;
-    value = value + Constants.intake.k_pivotEncoderOffset;
-    if (value > 360) {
-      value %= 360;
-    }
-    System.out.println("final voltage: " + giveVoltage(pivot_angle, value) + "\n\n");
-    double voltage = giveVoltage(pivot_angle, value);
+   System.out.println("final voltage: " + giveVoltage(pivot_angle, getCurrentAngle()) + "\n\n");
+    double voltage = giveVoltage(pivot_angle, getCurrentAngle());
     pivotMotor.setVoltage(voltage);
     SmartDashboard.putNumber("getVoltage", voltage);
     System.out.println("s");
