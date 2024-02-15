@@ -5,40 +5,30 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.subsystems.LauncherSub;
+import frc.robot.subsystems.ColorChanger;
 
-public class FeedWheelCMD extends Command {
 
-  LauncherSub launcherSub;
-  /** Creates a new FeedWheelCMD. */
-  public FeedWheelCMD(LauncherSub launcherSub) {
+public class ColorChangingCMD extends Command {
+  private ColorChanger colorChanger;
+
+  /** Creates a new ColorChangingCMD. */
+  public ColorChangingCMD() {
     // Use addRequirements() here to declare subsystem dependencies.
-    
-    this.launcherSub = launcherSub;
-    addRequirements(launcherSub);
-          
+    this.colorChanger = colorChanger;
+    addRequirements(colorChanger);
   }
   
-  
-
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    launcherSub.setLaunchWheels(-Constants.feedSpeed, Constants.feedSpeed);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    launcherSub.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
@@ -46,3 +36,4 @@ public class FeedWheelCMD extends Command {
     return false;
   }
 }
+

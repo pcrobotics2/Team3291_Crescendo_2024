@@ -25,8 +25,8 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   
-  public static final int leftClimberID = 23;
-  public static final int rightClimberID = 37;
+  public static final int leftClimberID = 22;
+  public static final int rightClimberID = 15;
 
   public static final double feedSpeed = 0.40;   //0.40
   public static final double launchSpeed = 0.90; //1.00 originally
@@ -34,6 +34,7 @@ public final class Constants {
   public static final double hangSpeed = 0.5;
   public static final int upLauncherID = 18; //18
   public static final int downLauncherID = 14; //14
+  public static final int LEDColors = 1;
 
   public static class buttonList {
     public static final int a = 1;
@@ -58,8 +59,8 @@ public final class Constants {
 
     //ids
     public static final int encoderID = 0; //Changed due to rewire
-    public static final int IntakeID = 19; 
-    public static final int PivotID = 21;//19 
+    public static final int IntakeID = 23; 
+    public static final int PivotID = 19;//19 
     public static final int intakeLimitSwitchID = 9;
 
     public static final double k_pivotEncoderOffset = 40;
@@ -250,7 +251,7 @@ public final class Constants {
   public final static class Lighting {
     public final static int lightingPort = 1;
 
-    public enum Colors {
+    public static enum Colors {
      RAINBOWRAINBOW  ("Rainbow Palette", -0.99),
      RAINBOWPARTY ("Rainbow Party Palette", -0.97),
      RAINBOWOCEAN ("Rainbow Ocean Palette", -0.95),

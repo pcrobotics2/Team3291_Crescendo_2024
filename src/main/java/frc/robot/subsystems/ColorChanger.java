@@ -42,12 +42,23 @@ public class ColorChanger extends SubsystemBase {
   public void defaultDisable() {
     lighting.set(Constants.Lighting.disableColor.getColorValue());
   }
-
+  public void setRED() {
+  }
+  public void setGREEN() {
+  }
+  public void setGOLD() {
+  }
+  public void setRAINBOWRAINBOW() {}
   @Override
   public void periodic() {
     //This method will be called once per scheduler run
     Colors selectedColor = lighting_chooser.getSelected();
 
     lighting.set(selectedColor.getColorValue());
+  }
+
+  public static void set(double colorValue) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'set'");
   }
 }
