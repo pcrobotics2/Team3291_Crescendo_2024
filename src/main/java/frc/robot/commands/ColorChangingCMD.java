@@ -5,20 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ColorChanger;
 
-public class Lower extends Command {
-  /** Creates a new Lower. */
-  public ClimberSubsystem climberSubsystem;
-  public boolean status;
-  public Lower(ClimberSubsystem climbersub) {
-  status = false;
-    climberSubsystem = climbersub;
-    addRequirements(climbersub);
+
+public class ColorChangingCMD extends Command {
+  private ColorChanger colorChanger;
+
+  /** Creates a new ColorChangingCMD. */
+  public ColorChangingCMD() {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.colorChanger = colorChanger;
+    addRequirements(colorChanger);
   }
   
-    // Use addRequirements() here to declare subsystem dependencies.
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -29,14 +28,12 @@ public class Lower extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  status = true;
-  climberSubsystem.stop();
-  }
- 
+  public void end(boolean interrupted) {}
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
   }
 }
+

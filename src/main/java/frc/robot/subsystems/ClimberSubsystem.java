@@ -4,94 +4,45 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import frc.robot.Constants;
-import edu.wpi.first.math.controller.ElevatorFeedforward;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
 
-  
-
-
-  public CommandJoystick controller5 = new CommandJoystick(0);
   public CANSparkMax leftclimber;
   public CANSparkMax rightclimber;
-  private static double kDt = 0.02;
-  private static double kMaxVelocity = 1.0;
-  private static double kMaxAcceleration = 1.0;
-  private static double kP = 0.001;
-  private static double kI = 0.0;// keep as 0 because it is not very useful for robotics
-  private static double kD = 0.1;
-  private static double kS = 1.1;
-  private static double kG = 1.2;
-  private static double kV = 1.3;
-  private final DutyCycleEncoder encoder = new DutyCycleEncoder(0);
-  private final Joystick m_joystick = new Joystick(0);
-  final TrapezoidProfile.Constraints m_constraints =
-    new TrapezoidProfile.Constraints(kMaxVelocity, kMaxAcceleration);
-  final ProfiledPIDController leftclimbController =
-    new ProfiledPIDController(kP, kI, kD, m_constraints);
-  final ElevatorFeedforward feedforward = new ElevatorFeedforward(kS, kG, kV);
-  private final RelativeEncoder motorEncoder = leftclimber.getEncoder();
- public double encoderPosition = motorEncoder.getPosition();
- 
+  
   public ClimberSubsystem() {
     
-    this.leftclimber = new CANSparkMax(25, MotorType.kBrushless);//
-   // this.rightclimber = new CANSparkMax(0, MotorType.kBrushless);//
-   
+    this.leftclimber = new CANSparkMax(Constants.leftClimberID, MotorType.kBrushless);//
+    this.rightclimber = new CANSparkMax(Constants.rightClimberID, MotorType.kBrushless);//
    
   }
    
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-  //double encoderValue = Encoder.getAbsolutePosition();
-  //SmartDashboard.putNumber("encoder", encoderValue);
-  
   }
-public void setGoal(){
 
+public void setClimberIndividual(double positiveSpeed, double negativeSpeed) {
+ leftclimber.set(positiveSpeed); 
+ rightclimber.set(negativeSpeed);
+}
+public void setClimberTogether(double positiveSpeed, double negativeSpeed) {
+ leftclimber.set(positiveSpeed - negativeSpeed); 
+ rightclimber.set(-1 * (positiveSpeed - negativeSpeed));
 }
 
-public void setClimber(double velocity) {
- //leftclimber.set(speed); 
- //rightclimber.set(-speed);
-// final TrapezoidProfile.Constraints m_constraints =
-//    new TrapezoidProfile.Constraints(kMaxVelocity, kMaxAcceleration);
-//  leftclimber.set(leftclimbController.calculate(Encoder.getAbsolutePosition()));
-//+ feedforward.calculate(leftclimbController.getSetpoint().velocity));
-//double PIDValue = leftclimbController.calculate(MotorEncoder.getVelocity(),speed);
-// leftclimber.set(PIDValue);
-leftclimbController.setGoal(1);
-State goal = leftclimbController.getGoal();
-double kPIDValue = leftclimbController.calculate(encoderPosition, goal.position);
- kPIDValue = kPIDValue > 10 ? 10 : kPIDValue;
- kPIDValue = kPIDValue < -10 ? -10 : kPIDValue;
-leftclimber.setVoltage(kPIDValue);
 
-}
+
 
 public void stop() {
  leftclimber.set(0);
- //rightclimber.set(0);
+ rightclimber.set(0);
     // TODO Auto-generated method stub
 }
-
-
 }

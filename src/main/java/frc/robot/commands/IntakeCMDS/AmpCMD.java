@@ -29,6 +29,7 @@ public class AmpCMD extends Command {
     //intakeSubsystem.goToAmp();
     intakeSubsystem.goToAmp();
 
+
   }
 
   // Called once the command ends or is interrupted.

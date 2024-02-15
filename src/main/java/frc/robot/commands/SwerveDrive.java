@@ -59,11 +59,11 @@ public class SwerveDrive extends Command {
     SmartDashboard.putNumber("Rotation Supplier", rotationSupplier.getAsDouble());
 
     double translationVal = translationLimiter.calculate(
-      MathUtil.applyDeadband(translationSupplier.getAsDouble()/2.2, Swerve.stickDeadband));
+      MathUtil.applyDeadband(translationSupplier.getAsDouble()/2, Swerve.stickDeadband));
     double strafeVal = strafeLimiter.calculate(
-      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/2.2, Swerve.stickDeadband));
+      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/2, Swerve.stickDeadband));
     double rotationVal = rotationLimiter.calculate(
-      MathUtil.applyDeadband(rotationSupplier.getAsDouble()/2.2, Swerve.stickDeadband));
+      MathUtil.applyDeadband(rotationSupplier.getAsDouble()/2, Swerve.stickDeadband));
 
     swerveSubsystem.drive(
       new Translation2d(translationVal, -strafeVal).times(Swerve.maxSpeed), 

@@ -6,33 +6,33 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.Swerve;
 import frc.robot.commands.ClimbCMD;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchWheelCMD;
 import frc.robot.commands.SwerveDrive;
 import frc.robot.commands.Auto.MildAuto;
 import frc.robot.commands.IntakeCMDS.AmpCMD;
 import frc.robot.commands.IntakeCMDS.GroundCMD;
-import frc.robot.commands.IntakeCMDS.MoveIntakeMotorCMD;
 import frc.robot.commands.IntakeCMDS.SourceCMD;
 import frc.robot.commands.IntakeCMDS.StowCMD;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.IntakeCMDS.IntakeMotor.EjectCMD;
+import frc.robot.commands.IntakeCMDS.IntakeMotor.IntakeMotorCMD;
 import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
@@ -50,58 +50,76 @@ import frc.robot.subsystems.ClimberSubsystem;
 public class RobotContainer {
 
 private final SendableChooser<Command> autoChooser;
-
   //careful setting the port for controller
-  public CommandJoystick controller5 = new CommandJoystick(0);
+  public CommandJoystick controller0 = new CommandJoystick(0);
+  public CommandJoystick controller1 = new CommandJoystick(0); //same for testing
   public LauncherSub launcherSub = new LauncherSub();
-  // public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+  public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
+  //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
-  // public ClimbCMD climbCMD = new ClimbCMD(climberSubsystem);
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
-//  public MoveIntakeMotorCMD moveIntakeMotorCMD = new MoveIntakeMotorCMD(intakeSubsystem);
-  // The robot's subsystems and commands are definelad here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public EjectCMD ejectCMD = new EjectCMD(intakeMotorSubsystem);
+  public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem); 
+  
+  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.lb);
+  public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  // private final CommandXboxController m_driverController =
-  //    new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  public final JoystickButton robotCentricButton = new JoystickButton(controller5.getHID(), Constants.buttonList.lb);
 
   //subsystems\\
   private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
+ // Subsystem initialization
+        // intakeMotorSubsystem = new IntakeMotorSubsystem();
+
+        // // Register Named Commands
+        // NamedCommands.registerCommand("test", intakeMotorSubsystem.TestStartEndCommand(-0.1));
+        // NamedCommands.registerCommand("testStop", intakeMotorSubsystem.TestStartEndCommand(0.5));
+        NamedCommands.registerCommand("EjectCMD", new EjectCMD(intakeMotorSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub).withTimeout(1));
+        NamedCommands.registerCommand("FeedWheelCMD", new FeedWheelCMD(launcherSub).withTimeout(1));
+        NamedCommands.registerCommand("AmpCMD", new AmpCMD(intakeSubsystem).until(intakeSubsystem::ampAtAngle));
+        NamedCommands.registerCommand("SourceCMD", new SourceCMD(intakeSubsystem).until(intakeSubsystem::sourceAtAngle));
+        NamedCommands.registerCommand("GroundCMD", new GroundCMD(intakeSubsystem).until(intakeSubsystem::groundAtAngle));
+        NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
+
+
+
 
     configureBindings();
 
-    // controller5.button(Constants.buttonList.y).whileTrue(launchWheelCMD);
-    // controller5.button(Constants.buttonList.a).whileTrue(feedWheelCMD);
-    // controller5.button(Constants.buttonList.x).whileTrue(climbCMD);
+    controller0.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
+    controller0.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+    
+    controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
+    controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
    
     //intake
 
-    // controller5.button(Constants.buttonList.x).toggleOnTrue(stowCMD);
-    // controller5.button(Constants.buttonList.a).toggleOnTrue(groundCMD);
-    // controller5.button(Constants.buttonList.y).toggleOnTrue(sourceCMD);
-    // controller5.button(Constants.buttonList.b).toggleOnTrue(ampCMD);
+    controller1.povDown().whileTrue(groundCMD);
+    controller1.povUp().whileTrue(stowCMD);
+    controller1.povLeft().whileTrue(sourceCMD);
+    controller1.povRight().whileTrue(ampCMD);
 
-    controller5.povLeft().toggleOnTrue(ampCMD);
-    controller5.povUp().toggleOnTrue(stowCMD);
-    controller5.povRight().toggleOnTrue(sourceCMD);
-    controller5.povDown().toggleOnTrue(groundCMD);
+    controller1.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
+    controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
 
+    controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
+    controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
+    
+    
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
 
-  SmartDashboard.putData("Test Auto", autoChooser);
+  SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   /**
@@ -115,49 +133,48 @@ private final SendableChooser<Command> autoChooser;
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
     swerveSubsystem.setDefaultCommand(
       new SwerveDrive(
         swerveSubsystem,
-        () -> controller5.getRawAxis(1),
-        () -> controller5.getRawAxis(0),
-        () -> controller5.getRawAxis(4),
+        () -> controller0.getRawAxis(1),
+        () -> controller0.getRawAxis(0),
+        () -> controller0.getRawAxis(4),
         () -> robotCentricButton.getAsBoolean()
       )
     );
-    intakeMotorSubsystem.setDefaultCommand(
-      new MoveIntakeMotorCMD(
-        intakeMotorSubsystem,
-        () -> controller5.getRawAxis(2),
-        () -> controller5.getRawAxis(3)
+    climberSubsystem.setDefaultCommand(
+      new ClimbCMD(
+        climberSubsystem,
+        () -> controller0.getRawAxis(2),
+        () -> controller0.getRawAxis(3),
+        () -> aToggleButton.getAsBoolean()
       )
     );
     
-    
+    controller0.button(Constants.buttonList.y).whileTrue(
+      intakeMotorSubsystem.startEnd(
+        ()->{
+          intakeMotorSubsystem.moveIntakeMotor(0.3);
+        }, 
+        ()->{
+          intakeMotorSubsystem.moveIntakeMotor(0);
+        }
+      )
+    );
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-
-    SmartDashboard.putData("Test Auto", new PathPlannerAuto("Test Auto"));
-
+    SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
   }
                                                                                              
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("Test Auto");
+    return new PathPlannerAuto("TestMotorAuto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }
-
-  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-   
 }
