@@ -161,7 +161,7 @@ public final class Constants {
     /**************************
      * Module Specific Constants
      **************************/
-    // Front Left Module - Module 0 
+    // Front Left before it flipped, now  Module - Module 0 
     public static final class Mod0 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 10;
