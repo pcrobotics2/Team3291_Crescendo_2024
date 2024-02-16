@@ -28,8 +28,8 @@ public final class Constants {
   public static final int leftClimberID = 17;
   public static final int rightClimberID = 15;
 
-  public static final double feedSpeed = 0.40;   //0.40
-  public static final double launchSpeed = 0.90; //1.00 originally
+  public static final double feedSpeed = 0.05;   //0.40
+  public static final double launchSpeed = 0.05; //1.00 originally
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
   public static final int upLauncherID = 18; //18
