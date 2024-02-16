@@ -33,16 +33,16 @@ public class LaunchNoteCMD extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (Timer.getFPGATimestamp() - timeCheck > 1000) {
-    // intakeMotorSubsystem.moveIntakeMotor(Constants.intake.ejectSpeed);
-    // }
+    if (Timer.getFPGATimestamp() - timeCheck > Constants.intake.launchNoteTimeInSecs) {
+    intakeMotorSubsystem.moveIntakeMotor(Constants.intake.ejectSpeed);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     launcherSub.setLaunchWheels(0, 0);
-   // intakeMotorSubsystem.moveIntakeMotor(0);//stops it
+    intakeMotorSubsystem.moveIntakeMotor(0);//stops it
   }
 
   // Returns true when the command should end.

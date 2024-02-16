@@ -12,8 +12,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.util.Color;
+//import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.ColorChanger;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
@@ -22,6 +24,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public DigitalInput intakeLimitSwitch;
   public PIDController pidController;
   public CANSparkMax pivotMotor;
+  public ColorChanger colorChanger;
   
   public enum PivotTarget {
     NONE,
@@ -148,28 +151,28 @@ public class IntakeSubsystem extends SubsystemBase {
    
   public boolean ampAtAngle() {
     boolean value = false;
-    if (getCurrentAngle() < Constants.intake.ampAngle + 1 && getCurrentAngle() > Constants.intake.ampAngle - 1) {
+    if (getCurrentAngle() < Constants.intake.ampAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.ampAngle - Constants.angleDeadband) {
       value = true;
     }
     return value;
   }
   public boolean groundAtAngle() {
     boolean value = false;
-    if (getCurrentAngle() < Constants.intake.groundAngle + 1 && getCurrentAngle() > Constants.intake.groundAngle - 1) {
+    if (getCurrentAngle() < Constants.intake.groundAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.groundAngle - Constants.angleDeadband) {
       value = true;
     }
     return value;
   }
   public boolean stowAtAngle() {
     boolean value = false;
-    if (getCurrentAngle() < Constants.intake.stowAngle + 1 && getCurrentAngle() > Constants.intake.stowAngle - 1) {
+    if (getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
       value = true;
     }
     return value;
   }
   public boolean sourceAtAngle() {
     boolean value = false;
-    if (getCurrentAngle() < Constants.intake.sourceAngle + 1 && getCurrentAngle() > Constants.intake.sourceAngle - 1) {
+    if (getCurrentAngle() < Constants.intake.sourceAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.sourceAngle - Constants.angleDeadband) {
       value = true;
     }
     return value;
@@ -229,6 +232,12 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if (!getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
+      colorChanger.setCOLORWAVESLAVA();
+    }
+    if (getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
+      colorChanger.setLAWNGREEN();
+    }
   }
 }
   

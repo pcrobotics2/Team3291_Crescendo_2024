@@ -154,16 +154,16 @@ private final SendableChooser<Command> autoChooser;
       )
     );
     
-    controller0.button(Constants.buttonList.y).whileTrue(
-      intakeMotorSubsystem.startEnd(
-        ()->{
-          intakeMotorSubsystem.moveIntakeMotor(0.3);
-        }, 
-        ()->{
-          intakeMotorSubsystem.moveIntakeMotor(0);
-        }
-      )
-    );
+    // controller0.button(Constants.buttonList.y).whileTrue(
+    //   intakeMotorSubsystem.startEnd(
+    //     ()->{
+    //       intakeMotorSubsystem.moveIntakeMotor(0.3);
+    //     }, 
+    //     ()->{
+    //       intakeMotorSubsystem.moveIntakeMotor(0);
+    //     }
+    //   )
+    // );
 
     SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
   }
