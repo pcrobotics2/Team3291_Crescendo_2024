@@ -25,17 +25,17 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "End 1"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.5,
-    "maxAcceleration": 2.5,
-    "maxAngularVelocity": 11.5,
-    "maxAngularAcceleration": 132.25
+    "maxVelocity": 100.0,
+    "maxAcceleration": 15.0,
+    "maxAngularVelocity": 3600.0,
+    "maxAngularAcceleration": 3600.0
   },
   "goalEndState": {
     "velocity": 0.0,
