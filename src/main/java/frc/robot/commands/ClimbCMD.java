@@ -18,6 +18,7 @@ public class ClimbCMD extends Command {
   DoubleSupplier positiveSupplier;
   DoubleSupplier negativeSupplier;
   BooleanSupplier aToggle;
+  private int hasChanged;
   public ClimbCMD(
   ClimberSubsystem climberSubsystem,
     DoubleSupplier positiveSupplier,
@@ -36,23 +37,41 @@ public class ClimbCMD extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    this.hasChanged = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     boolean isAToggled = aToggle.getAsBoolean();
-    if (isAToggled) {
+
+    if (isAToggled && this.hasChanged == 0) {
+        this.hasChanged = 1;
+    }
+
+    if (this.hasChanged == 1 && !isAToggled) {
+        this.hasChanged = 2;
+      }
+
+    if (this.hasChanged == 2 && isAToggled) {
+        this.hasChanged = 3;
+      }
+
+    if (this.hasChanged == 3 && !isAToggled) {
+        this.hasChanged = 0; 
+      }
+
+    if (this.hasChanged == 0) {
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
     climberSubsystem.setClimberTogether(positiveSpeed, negativeSpeed);
     }
-    else {
+    else if (this.hasChanged == 2) {
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
     climberSubsystem.setClimberIndividual(positiveSpeed, negativeSpeed);
     }
+    
     
 }
 
@@ -70,3 +89,4 @@ public class ClimbCMD extends Command {
     return false;
   }
 }
+

@@ -64,8 +64,8 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("originalAngle", current_angle);
     //double pivot_angle = pivotTargetToAngle(pivot_target);
     
-    //double angle = Math.abs(360 - current_angle); //reverses it
-    double angle = current_angle;
+    double angle = Math.abs(360 - current_angle); //reverses it
+    //double angle = current_angle;
     SmartDashboard.putNumber("updatedAngle", angle);
 
     double intake_pivot_voltage = pidController.calculate(angle, pivot_angle);
