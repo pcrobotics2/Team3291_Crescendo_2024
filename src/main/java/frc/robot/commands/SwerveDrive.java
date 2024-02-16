@@ -66,7 +66,7 @@ public class SwerveDrive extends Command {
       MathUtil.applyDeadband(rotationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
 
     swerveSubsystem.drive(
-      new Translation2d(-translationVal, -strafeVal).times(Swerve.maxSpeed), 
+      new Translation2d(-translationVal, strafeVal).times(Swerve.maxSpeed), 
       rotationVal * Swerve.maxAngularVelocity, 
       robotCentricSupplier.getAsBoolean(),
       true
