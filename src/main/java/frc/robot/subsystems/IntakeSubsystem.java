@@ -64,8 +64,8 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("originalAngle", current_angle);
     //double pivot_angle = pivotTargetToAngle(pivot_target);
     
-    //double angle = Math.abs(360 - current_angle); //reverses it
-    double angle = current_angle;
+    double angle = Math.abs(360 - current_angle); //reverses it
+    //double angle = current_angle;
     SmartDashboard.putNumber("updatedAngle", angle);
 
     double intake_pivot_voltage = pidController.calculate(angle, pivot_angle);
@@ -149,6 +149,27 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean ampAtAngle() {
     boolean value = false;
     if (getCurrentAngle() < Constants.intake.ampAngle + 1 && getCurrentAngle() > Constants.intake.ampAngle - 1) {
+      value = true;
+    }
+    return value;
+  }
+  public boolean groundAtAngle() {
+    boolean value = false;
+    if (getCurrentAngle() < Constants.intake.groundAngle + 1 && getCurrentAngle() > Constants.intake.groundAngle - 1) {
+      value = true;
+    }
+    return value;
+  }
+  public boolean stowAtAngle() {
+    boolean value = false;
+    if (getCurrentAngle() < Constants.intake.stowAngle + 1 && getCurrentAngle() > Constants.intake.stowAngle - 1) {
+      value = true;
+    }
+    return value;
+  }
+  public boolean sourceAtAngle() {
+    boolean value = false;
+    if (getCurrentAngle() < Constants.intake.sourceAngle + 1 && getCurrentAngle() > Constants.intake.sourceAngle - 1) {
       value = true;
     }
     return value;

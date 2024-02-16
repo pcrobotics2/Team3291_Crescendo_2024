@@ -28,9 +28,13 @@ public class ClimberSubsystem extends SubsystemBase {
   public void periodic() {
   }
 
-public void setClimber(double positiveSpeed, double negativeSpeed) {
+public void setClimberIndividual(double positiveSpeed, double negativeSpeed) {
  leftclimber.set(positiveSpeed); 
  rightclimber.set(negativeSpeed);
+}
+public void setClimberTogether(double positiveSpeed, double negativeSpeed) {
+ leftclimber.set(positiveSpeed - negativeSpeed); 
+ rightclimber.set(-1 * (positiveSpeed - negativeSpeed));
 }
 
 

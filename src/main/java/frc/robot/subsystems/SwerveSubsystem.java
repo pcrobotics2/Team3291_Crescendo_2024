@@ -72,7 +72,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     swerveOdometry = new SwerveDriveOdometry(
       Swerve.swerveKinematics,
-      getroll(),
+      filterGyro(),
       getModulePositions()
     );
 
@@ -135,7 +135,7 @@ public class SwerveSubsystem extends SubsystemBase {
           translation.getX(),
           translation.getY(),
           rotation,
-          getroll())
+          filterGyro())
         : new ChassisSpeeds(
           translation.getX(),
           translation.getY(),
@@ -203,7 +203,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
   public void resetOdometry(Pose2d pose) {
-    swerveOdometry.resetPosition(getroll(), getModulePositions(), pose);
+    swerveOdometry.resetPosition(filterGyro(), getModulePositions(), pose);
   }
 
 
@@ -230,7 +230,7 @@ public ChassisSpeeds getSpeeds() {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    swerveOdometry.update(getroll(), getModulePositions());
+    swerveOdometry.update(filterGyro(), getModulePositions());
     field.setRobotPose(swerveOdometry.getPoseMeters());
 
 
