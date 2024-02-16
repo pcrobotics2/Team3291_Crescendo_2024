@@ -160,7 +160,7 @@ public final class Constants {
     /**************************
      * Module Specific Constants
      **************************/
-    // Front Left Module - Module 0 
+    // Back Right Module - Module 0 
     public static final class Mod0 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 10;
@@ -178,7 +178,7 @@ public final class Constants {
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
-    // Back Right Module - Module 1 //then left back
+    // Back Left Module - Module 1 
     public static final class Mod1 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 6;
@@ -196,7 +196,7 @@ public final class Constants {
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
-    // Back Left Module - Module 2
+    // Front Right Module - Module 2
     public static final class Mod2 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 12;
@@ -214,7 +214,7 @@ public final class Constants {
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
-    // Front Right Module - Module 3
+    // Front Left Module - Module 3
     public static final class Mod3 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 9;

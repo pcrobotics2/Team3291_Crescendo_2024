@@ -168,7 +168,7 @@ private final SendableChooser<Command> autoChooser;
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("TestMotorAuto");
+    return new PathPlannerAuto("TestAuto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }
