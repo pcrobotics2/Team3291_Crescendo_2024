@@ -21,6 +21,7 @@ import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
+import frc.robot.Constants.Swerve.Mod0;
 import frc.lib.Math.SwerveOpt;
 import frc.lib.config.*;
 
@@ -259,8 +260,8 @@ public class SwerveModule {
         // If we are in open loop mode, set the drive motor to the desired speed
         // if (isOpenLoop) {
             double driveValue = (desiredState.speedMetersPerSecond / Swerve.maxSpeed);
-            drivePid.calculate(driveValue,0);
-            //driveValue = feedForward.calculate(desiredState.speedMetersPerSecond) + drivePid.calculate(driveEncoder.getVelocity(), desiredState.speedMetersPerSecond);
+            //driveValue = drivePid.calculate(driveEncoder.getVelocity(), desiredState.speedMetersPerSecond/2);
+            //driveValue = feedForward.calculate(desiredState.speedMetersPerSecond/2) + drivePid.calculate(driveEncoder.getVelocity(), desiredState.speedMetersPerSecond/2);
             driveValue = invertDriveMotor ? driveValue * -1 : driveValue;
             driveMotor.set(driveValue);
         // } else {
@@ -295,6 +296,10 @@ public class SwerveModule {
         //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
         boolean invertDriveMotor = setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop, invertDriveMotor);
+    }
+
+    public void shwomp(){
+        driveMotor.set(1);
     }
 
 

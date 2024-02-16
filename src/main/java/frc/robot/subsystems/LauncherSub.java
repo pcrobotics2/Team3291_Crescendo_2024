@@ -20,30 +20,20 @@ public class LauncherSub extends SubsystemBase {
   public CANSparkMax upLauncher;
 
   public LauncherSub() {
-   this.upLauncher = new CANSparkMax(Constants.upLauncherID, MotorType.kBrushless); //7
-   this.downLauncher = new CANSparkMax(Constants.downLauncherID, MotorType.kBrushless);//14
+  this.upLauncher = new CANSparkMax(Constants.upLauncherID, MotorType.kBrushless); //7
+  this.downLauncher = new CANSparkMax(Constants.downLauncherID, MotorType.kBrushless);//14
 
   }
-  // public Command getIntakeCommand() {
-  //   return this.startEnd(
-  //     () -> {
-  //       setFeedWheel(kIntakeFeederSpeed);
-  //       setLaunchWheel(kIntakeLauncherSpeed);
-  //     }, 
-  //     () -> 
-  //       stop();
-  //     });
-  // }
-  public void setLaunchWheel(double speed) {
+
+  public void setLaunchWheelUp(double speed) {
     upLauncher.set(speed);
 
   }
-    public void setLaunchWheel2(double speed) {
-    upLauncher.set(speed);
-    downLauncher.set(speed);
+    public void setLaunchWheels(double upSpeed, double downSpeed) {
+    upLauncher.set(upSpeed);
+    downLauncher.set(downSpeed);
   }
-  public void setFeedWheel(double speed) {
-    upLauncher.set(speed);
+  public void setLaunchWheelDown(double speed) {
     downLauncher.set(speed);
   }
   public void stop() {

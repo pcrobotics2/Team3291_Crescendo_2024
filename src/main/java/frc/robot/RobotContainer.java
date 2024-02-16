@@ -21,8 +21,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.Swerve;
 import frc.robot.commands.ClimbCMD;
 import frc.robot.commands.FeedWheelCMD;
+import frc.robot.commands.LaunchNoteCMD;
 import frc.robot.commands.LaunchWheelCMD;
 import frc.robot.commands.SwerveDrive;
 import frc.robot.commands.Auto.MildAuto;
@@ -51,11 +53,12 @@ public class RobotContainer {
 private final SendableChooser<Command> autoChooser;
   //careful setting the port for controller
   public CommandJoystick controller0 = new CommandJoystick(0);
-  public CommandJoystick controller1 = new CommandJoystick(1);
+  public CommandJoystick controller1 = new CommandJoystick(0); //same for testing
   public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
+  //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
@@ -63,19 +66,35 @@ private final SendableChooser<Command> autoChooser;
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
   public EjectCMD ejectCMD = new EjectCMD(intakeMotorSubsystem);
-  public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem); 
+  //public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem); 
+  public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
   
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.lb);
+  public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
+
 
   //subsystems\\
   private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
+ // Subsystem initialization
+        // intakeMotorSubsystem = new IntakeMotorSubsystem();
 
-   // NamedCommands.registerCommand("FeedWheelCMD", launcherSub.FeedWheelCMD()); 
-    NamedCommands.registerCommand("testCMD", Commands.print("IT WORKS"));
+        // // Register Named Commands
+        // NamedCommands.registerCommand("test", intakeMotorSubsystem.TestStartEndCommand(-0.1));
+        // NamedCommands.registerCommand("testStop", intakeMotorSubsystem.TestStartEndCommand(0.5));
+        NamedCommands.registerCommand("EjectCMD", new EjectCMD(intakeMotorSubsystem).withTimeout(1));
+       // NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub).withTimeout(1));
+        NamedCommands.registerCommand("FeedWheelCMD", new FeedWheelCMD(launcherSub).withTimeout(1));
+        NamedCommands.registerCommand("AmpCMD", new AmpCMD(intakeSubsystem).until(intakeSubsystem::ampAtAngle));
+        NamedCommands.registerCommand("SourceCMD", new SourceCMD(intakeSubsystem).until(intakeSubsystem::sourceAtAngle));
+        NamedCommands.registerCommand("GroundCMD", new GroundCMD(intakeSubsystem).until(intakeSubsystem::groundAtAngle));
+        NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
+
+
+
 
     configureBindings();
 
@@ -87,17 +106,19 @@ private final SendableChooser<Command> autoChooser;
    
     //intake
 
-    controller1.povDown().toggleOnTrue(groundCMD);
-    controller1.povUp().toggleOnTrue(stowCMD);
-    controller1.povLeft().toggleOnTrue(sourceCMD);
-    controller1.povRight().toggleOnTrue(ampCMD);
+    controller1.povDown().whileTrue(groundCMD);
+    controller1.povUp().whileTrue(stowCMD);
+    controller1.povLeft().whileTrue(sourceCMD);
+    controller1.povRight().whileTrue(ampCMD);
 
     controller1.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
-    controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
+    //controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
 
     controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
-    controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
-
+   // controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
+    
+    controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
+    
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -119,7 +140,7 @@ private final SendableChooser<Command> autoChooser;
       new SwerveDrive(
         swerveSubsystem,
         () -> controller0.getRawAxis(1),
-        () -> controller0.getRawAxis(0),
+        () -> -controller0.getRawAxis(0),
         () -> controller0.getRawAxis(4),
         () -> robotCentricButton.getAsBoolean()
       )
@@ -128,10 +149,22 @@ private final SendableChooser<Command> autoChooser;
       new ClimbCMD(
         climberSubsystem,
         () -> controller0.getRawAxis(2),
-        () -> controller0.getRawAxis(3)
+        () -> controller0.getRawAxis(3),
+        () -> aToggleButton.getAsBoolean()
       )
     );
-  
+    
+    // controller0.button(Constants.buttonList.y).whileTrue(
+    //   intakeMotorSubsystem.startEnd(
+    //     ()->{
+    //       intakeMotorSubsystem.moveIntakeMotor(0.3);
+    //     }, 
+    //     ()->{
+    //       intakeMotorSubsystem.moveIntakeMotor(0);
+    //     }
+    //   )
+    // );
+
     SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
   }
                                                                                              
