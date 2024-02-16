@@ -373,4 +373,6 @@ public final class Constants {
     public final static Colors startingColor = Colors.OFF;
     public final static Colors disableColor = Colors.RAINBOWOCEAN;
   }
+
+public static Object ColorChanger;
 }

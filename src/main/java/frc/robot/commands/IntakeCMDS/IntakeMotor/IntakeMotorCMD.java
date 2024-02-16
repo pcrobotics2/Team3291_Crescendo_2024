@@ -7,14 +7,19 @@ package frc.robot.commands.IntakeCMDS.IntakeMotor;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeMotorSubsystem;
+import frc.robot.subsystems.ColorChanger;
+
 
 public class IntakeMotorCMD extends Command {
   IntakeMotorSubsystem intakeMotorSubsystem;
+  private ColorChanger ColorChanger;
   /** Creates a new IntakeMotorCMD. */
-  public IntakeMotorCMD(IntakeMotorSubsystem intakeMotorSubsystem) {
+  public IntakeMotorCMD(IntakeMotorSubsystem intakeMotorSubsystem, ColorChanger colorChanger) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeMotorSubsystem = intakeMotorSubsystem;
+    this.ColorChanger = colorChanger;
     addRequirements(intakeMotorSubsystem);
+    addRequirements(colorChanger);
   }
 
   // Called when the command is initially scheduled.
@@ -26,13 +31,13 @@ public class IntakeMotorCMD extends Command {
   @Override
   public void execute() {
     intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
-
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intakeMotorSubsystem.moveIntakeMotor(0);//stops it
+    ColorChanger.setGOLD();
   }
 
   // Returns true when the command should end.
@@ -41,3 +46,7 @@ public class IntakeMotorCMD extends Command {
     return false;
   }
 }
+
+
+
+
