@@ -25,8 +25,8 @@ public class IntakeMotorCMD extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!intakeSubsystem.getIntakeHasNote()) {
-    intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
+    // if (!intakeSubsystem.getIntakeHasNote()) {
+    // intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
 
   }
 
@@ -34,7 +34,7 @@ public class IntakeMotorCMD extends Command {
   @Override
   public void end(boolean interrupted) {
     intakeMotorSubsystem.moveIntakeMotor(0);//stops it
-    ColorChanger.setGOLD();
+    //ColorChanger.setGOLD();
   }
 
   // Returns true when the command should end.

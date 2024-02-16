@@ -38,7 +38,7 @@ public class SwerveDrive extends Command {
     this.swerveSubsystem = swerveSubsystem;
     addRequirements(swerveSubsystem);
 
-    this.translationSupplier = translationSupplier;//oh god what have I done
+    this.translationSupplier = translationSupplier;
     this.strafeSupplier = strafeSupplier;
     this.rotationSupplier = rotationSupplier;
     this.robotCentricSupplier = robotCentricSupplier;
@@ -75,7 +75,7 @@ public class SwerveDrive extends Command {
     SmartDashboard.putNumber("Translation Val", translationVal);
     SmartDashboard.putNumber("Strafe Val", strafeVal);
     SmartDashboard.putNumber("Rotation Val", rotationVal);
-    SmartDashboard.putBoolean("Field centric", robotCentricSupplier.getAsBoolean());
+    SmartDashboard.putBoolean("robot centric", robotCentricSupplier.getAsBoolean());
   }
 
   // Called once the command ends or is interrupted.
