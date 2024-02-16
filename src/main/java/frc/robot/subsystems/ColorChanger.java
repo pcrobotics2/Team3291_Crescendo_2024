@@ -43,10 +43,13 @@ public class ColorChanger extends SubsystemBase {
     lighting.set(Constants.Lighting.disableColor.getColorValue());
   }
   public void setRED() {
+    lighting.set(-0.39);//Color Waves Lava Palette
   }
   public void setGREEN() {
+  lighting.set(0.71);//LAWN GREEN
   }
   public void setGOLD() {
+    lighting.set(0.67);//GOLD 
   }
   public void setRAINBOWRAINBOW() {}
   @Override

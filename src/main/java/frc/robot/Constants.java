@@ -25,7 +25,7 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   
-  public static final int leftClimberID = 22;
+  public static final int leftClimberID = 17;
   public static final int rightClimberID = 15;
 
   public static final double feedSpeed = 0.40;   //0.40
@@ -59,7 +59,7 @@ public final class Constants {
 
     //ids
     public static final int encoderID = 0; //Changed due to rewire
-    public static final int IntakeID = 23; 
+    public static final int IntakeID = 22; 
     public static final int PivotID = 19;//19 
     public static final int intakeLimitSwitchID = 9;
 
@@ -73,6 +73,7 @@ public final class Constants {
 
     public static final double ejectSpeed = 0.5;
     public static final double intakeSpeed = 0.7;
+    public static final int launchNoteTimeInMili = 1000;
     
   }
 
@@ -373,4 +374,6 @@ public final class Constants {
     public final static Colors startingColor = Colors.OFF;
     public final static Colors disableColor = Colors.RAINBOWOCEAN;
   }
+
+public static Object ColorChanger;
 }

@@ -20,6 +20,7 @@ public class IntakeMotorSubsystem extends SubsystemBase {
   /** Creates a new IntakeMotorSubsystem. */
     public CANSparkMax intakeMotor;
     public IntakeMotorSubsystem intakeMotorSubsystem;
+    public Object setColorMode;
 
   public IntakeMotorSubsystem() {
     this.intakeMotor = new CANSparkMax(Constants.intake.IntakeID, CANSparkLowLevel.MotorType.kBrushless); 
