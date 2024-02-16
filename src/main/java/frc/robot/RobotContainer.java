@@ -140,7 +140,7 @@ private final SendableChooser<Command> autoChooser;
       new SwerveDrive(
         swerveSubsystem,
         () -> controller0.getRawAxis(1),
-        () -> controller0.getRawAxis(0),
+        () -> -controller0.getRawAxis(0),
         () -> controller0.getRawAxis(4),
         () -> robotCentricButton.getAsBoolean()
       )

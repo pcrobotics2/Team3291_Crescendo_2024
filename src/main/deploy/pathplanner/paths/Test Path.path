@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.5,
+        "x": 4.0,
         "y": 7.08
       },
       "isLocked": false,
@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 4.0,
-        "y": 7.08
+        "y": 6.08
       },
       "prevControl": {
-        "x": 2.5,
+        "x": 4.0,
         "y": 7.08
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "End 1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -34,11 +34,11 @@
   "globalConstraints": {
     "maxVelocity": 100.0,
     "maxAcceleration": 15.0,
-    "maxAngularVelocity": 3600.0,
-    "maxAngularAcceleration": 3600.0
+    "maxAngularVelocity": 36000.0,
+    "maxAngularAcceleration": 35000.0
   },
   "goalEndState": {
-    "velocity": 0.0,
+    "velocity": 1.0,
     "rotation": 0,
     "rotateFast": false
   },
