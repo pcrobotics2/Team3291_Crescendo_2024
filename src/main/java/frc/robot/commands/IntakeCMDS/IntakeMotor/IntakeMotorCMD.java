@@ -31,6 +31,9 @@ public class IntakeMotorCMD extends Command {
     if (!intakeSubsystem.getIntakeHasNote()) {
     intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
     }
+    if (intakeSubsystem.getIntakeHasNote() && intakeSubsystem.getCurrentAngle() < Constants.intake.groundAngle + Constants.angleDeadband && intakeSubsystem.getCurrentAngle() > Constants.intake.groundAngle - Constants.angleDeadband) {
+
+    }
     // if (!intakeSubsystem.getIntakeHasNote()) {
     // intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
 

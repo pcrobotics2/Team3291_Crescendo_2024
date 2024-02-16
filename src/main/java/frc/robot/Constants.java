@@ -35,6 +35,7 @@ public final class Constants {
   public static final int upLauncherID = 18; //18
   public static final int downLauncherID = 14; //14
   public static final int LEDColors = 1;
+  public static final double angleDeadband = 1;
 
   public static class buttonList {
     public static final int a = 1;
@@ -73,7 +74,7 @@ public final class Constants {
 
     public static final double ejectSpeed = 0.5;
     public static final double intakeSpeed = 0.7;
-    public static final int launchNoteTimeInMili = 1000;
+    public static final int launchNoteTimeInSecs = 1;
     
   }
 
@@ -353,6 +354,110 @@ public final class Constants {
      GRAY ("Gray", 0.95),
      DARKGRAY ("Dark Gray", 0.97),
      OFF ("Off", 0.99);
+
+     public class ColorConstants {
+      public static final double RAINBOWRAINBOW = -0.99;
+      public static final double RAINBOWPARTY = -0.97;
+      public static final double RAINBOWOCEAN = -0.95;
+      public static final double RAINBOWLAVE = -0.93;
+      public static final double RAINBOWFOREST = -0.91;
+      public static final double RAINBOWGLITTER = -0.89;
+      public static final double CONFETTI = -0.87;
+      public static final double SHOTRED = -0.85;
+      public static final double SHOTBLUE = -0.83;
+      public static final double SHOTWHITE = -0.81;
+      public static final double SINELONRAINBOW = -0.79;
+      public static final double SINELONPARTY = -0.77;
+      public static final double SINELONOCEAN = -0.75;
+      public static final double SINELONLAVA = -0.73;
+      public static final double SINELONFOREST = -0.71;
+      public static final double BEATSRAINBOWPALETTE = -0.69;
+      public static final double BEATSPARTYPALETTE = -0.67;
+      public static final double BEATSOCEANPALETTE = -0.65;
+      public static final double BEATSLAVAPALETTE = -0.63;
+      public static final double BEATSFORESTPALETTE = -0.61;
+      public static final double FIREMEDIUM = -0.59;
+      public static final double FIRELARGE = -0.57;
+      public static final double TWINKLESRAINBOW = -0.55;
+      public static final double TWINKLESPARTY = -0.53;
+      public static final double TWINKLESOCEAN = -0.51;
+      public static final double TWINKLESLAVA = -0.49;
+      public static final double TWINKLESFOREST = -0.47;
+      public static final double COLORWAVESRAINBOW = -0.45;
+      public static final double COLORWAVESPARTY = -0.43;
+      public static final double COLORWAVESOCEAN = -0.41;
+      public static final double COLORWAVESLAVA = -0.39;
+      public static final double COLORWAVESFOREST = -0.37;
+      public static final double LARSONRED = -0.35;
+      public static final double LARSONGRAY = -0.33;
+      public static final double CHASERED = -0.31;
+      public static final double CHASEBLUE = -0.29;
+      public static final double CHASEGRAY = -0.27;
+      public static final double HEARTBEATRED = -0.25;
+      public static final double HEARTBEATBLUE = -0.23;
+      public static final double HEARTBEATWHITE = -0.21;
+      public static final double HEARTBEATGRAY = -0.19;
+      public static final double BREATHRED = -0.17;
+      public static final double BREATHBLUE = -0.15;
+      public static final double BREATHGRAY = -0.13;
+      public static final double STROBERED = -0.11;
+      public static final double STROBEBLUE = -0.09;
+      public static final double STROBEGOLD = -0.07;
+      public static final double STROBEWHITE = -0.05;
+      public static final double ENDTOOFF = -0.03;
+      public static final double LARSONSCANNER = -0.01;
+      public static final double LIGHTCHASE = 0.01;
+      public static final double HEARTBEATSLOW = 0.03;
+      public static final double HEARTBEATMEDIUM = 0.05;
+      public static final double HEARTBEATFAST = 0.07;
+      public static final double BREATHSLOW = 0.09;
+      public static final double BREATHFAST = 0.11;
+      public static final double SHOT = 0.13;
+      public static final double STROBE = 0.15;
+      public static final double ENDTOOFFTWO = 0.17;
+      public static final double LARSONSCANNERTWO = 0.19;
+      public static final double LIGHTCHASETWO = 0.21;
+      public static final double HEARTBEATSLOWTWO = 0.23;
+      public static final double HEARTBEATMEDIUMTWO = 0.25;
+      public static final double HEARTBEATFASTTWO = 0.27;
+      public static final double BREATHSLOWYTWO = 0.29;
+      public static final double BREATHFASTTWO = 0.31;
+      public static final double SHOTTWO = 0.33;
+      public static final double STROBETWO = 0.35;
+      public static final double SPARKLEONEANDTWO = 0.37;
+      public static final double SPARKLETWOANDONE = 0.39;
+      public static final double COLORGRADIENTONEANDTWO = 0.41;
+      public static final double BEATSCOLORONEANDTWO = 0.43;
+      public static final double ENDTOENDOFF = 0.45;
+      public static final double ENDTOEND = 0.47;
+      public static final double COLORONEANDCOLORTWO = 0.49;
+      public static final double TWINKLESCOLORS = 0.51;
+      public static final double COLORWAVESONEANDTWO = 0.53;
+      public static final double SINELONONEANDTWO = 0.55;
+      public static final double HOTPINK = 0.57;
+      public static final double DARKRED = 0.59;
+      public static final double RED = 0.61;
+      public static final double REDORANGE = 0.63;
+      public static final double ORANGE = 0.65;
+      public static final double GOLD = 0.67;
+      public static final double YELLOW = 0.69;
+      public static final double LAWNGREEN = 0.71;
+      public static final double LIME = 0.73;
+      public static final double DARKGREEN = 0.75;
+      public static final double GREEN = 0.77;
+      public static final double BLUEGREEN = 0.79;
+      public static final double AQUA = 0.81;
+      public static final double SKYBLUE = 0.83;
+      public static final double DARKBLUE = 0.85;
+      public static final double BLUE = 0.87;
+      public static final double BLUEVIOLET = 0.89;
+      public static final double VIOLET = 0.91;
+      public static final double WHITE = 0.93;
+      public static final double GRAY = 0.95;
+      public static final double DARKGRAY = 0.97;
+      public static final double OFF = 0.99;
+  }
+  
 
      public final String colorName;
      public final double colorValue;
