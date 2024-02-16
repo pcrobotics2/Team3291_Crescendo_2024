@@ -66,7 +66,7 @@ private final SendableChooser<Command> autoChooser;
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
   public EjectCMD ejectCMD = new EjectCMD(intakeMotorSubsystem);
-  public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem); 
+  //public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem); 
   public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
   
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.lb);
@@ -85,7 +85,7 @@ private final SendableChooser<Command> autoChooser;
         // NamedCommands.registerCommand("test", intakeMotorSubsystem.TestStartEndCommand(-0.1));
         // NamedCommands.registerCommand("testStop", intakeMotorSubsystem.TestStartEndCommand(0.5));
         NamedCommands.registerCommand("EjectCMD", new EjectCMD(intakeMotorSubsystem).withTimeout(1));
-        NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem).withTimeout(1));
+       // NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem).withTimeout(1));
         NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub).withTimeout(1));
         NamedCommands.registerCommand("FeedWheelCMD", new FeedWheelCMD(launcherSub).withTimeout(1));
         NamedCommands.registerCommand("AmpCMD", new AmpCMD(intakeSubsystem).until(intakeSubsystem::ampAtAngle));
@@ -112,10 +112,10 @@ private final SendableChooser<Command> autoChooser;
     controller1.povRight().whileTrue(ampCMD);
 
     controller1.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
-    controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
+    //controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
 
     controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
-    controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
+   // controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
     
     controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
     
@@ -171,7 +171,7 @@ private final SendableChooser<Command> autoChooser;
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("TestMotorAuto");
+    return new PathPlannerAuto("TestAuto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }

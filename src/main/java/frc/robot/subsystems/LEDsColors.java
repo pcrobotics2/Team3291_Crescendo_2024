@@ -13,7 +13,7 @@
 //   private static LEDsColors m_instance;
 
 
-//   private int m_ledTotalLength = Constants.LEDColors.k_totalLength;
+//  // private int m_ledTotalLength = Constants.LEDColors.k_totalLength;
   
 //   //private Function<Integer, Function<Integer>LEDsColors;
 
@@ -24,12 +24,12 @@
 //     }
 //     return m_instance;
 //   }
-//   private LEDsColors() {
-//     super("LEDsColors");
-//     m_LEDsColors = new LEDsColors();
-//     m_LEDsColors.setLength(m_ledTotalLength);
-//     m_LEDsColors.start();
-//   }
+// //   private LEDsColors() {
+// //     super("LEDsColors");
+// //     m_LEDsColors = new LEDsColors();
+// //     m_LEDsColors.setLength(m_ledTotalLength);
+// //     m_LEDsColors.start();
+// //   }
 
 //   @Override
 //   public void periodic() {

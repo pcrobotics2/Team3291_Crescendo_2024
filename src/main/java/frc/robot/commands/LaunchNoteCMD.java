@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeMotorSubsystem;
@@ -12,6 +13,8 @@ import frc.robot.subsystems.LauncherSub;
 public class LaunchNoteCMD extends Command {
   IntakeMotorSubsystem intakeMotorSubsystem;
   LauncherSub launcherSub;
+  double timeCheck;
+
   /** Creates a new LaunchNoteCMD. */
   public LaunchNoteCMD(IntakeMotorSubsystem intakeMotorSubsystem, LauncherSub launcherSub) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,27 +25,24 @@ public class LaunchNoteCMD extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    this.timeCheck = Timer.getFPGATimestamp();
+    launcherSub.setLaunchWheels(Constants.launchSpeed, -Constants.launchSpeed);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    launcherSub.setLaunchWheels(Constants.launchSpeed, -Constants.launchSpeed);
-    new Thread(() -> {
-      try {
-        Thread.sleep(Constants.intake.launchNoteTimeInMili);
-        //do thing
-        intakeMotorSubsystem.moveIntakeMotor(Constants.intake.ejectSpeed);
-      }
-      catch (Exception E) {}
-    }).start();
+    // if (Timer.getFPGATimestamp() - timeCheck > 1000) {
+    // intakeMotorSubsystem.moveIntakeMotor(Constants.intake.ejectSpeed);
+    // }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    launcherSub.stop();
-    intakeMotorSubsystem.moveIntakeMotor(0);//stops it
+    launcherSub.setLaunchWheels(0, 0);
+   // intakeMotorSubsystem.moveIntakeMotor(0);//stops it
   }
 
   // Returns true when the command should end.

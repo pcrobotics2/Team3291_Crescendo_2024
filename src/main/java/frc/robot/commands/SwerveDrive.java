@@ -38,8 +38,8 @@ public class SwerveDrive extends Command {
     this.swerveSubsystem = swerveSubsystem;
     addRequirements(swerveSubsystem);
 
-    this.translationSupplier = strafeSupplier;//oh god what have I done
-    this.strafeSupplier = translationSupplier;
+    this.translationSupplier = translationSupplier;
+    this.strafeSupplier = strafeSupplier;
     this.rotationSupplier = rotationSupplier;
     this.robotCentricSupplier = robotCentricSupplier;
   }
@@ -59,14 +59,14 @@ public class SwerveDrive extends Command {
     SmartDashboard.putNumber("Rotation Supplier", rotationSupplier.getAsDouble());
 
     double translationVal = translationLimiter.calculate(
-      MathUtil.applyDeadband(translationSupplier.getAsDouble()/2, Swerve.stickDeadband));
+      MathUtil.applyDeadband(translationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
     double strafeVal = strafeLimiter.calculate(
-      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/2, Swerve.stickDeadband));
+      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
     double rotationVal = rotationLimiter.calculate(
-      MathUtil.applyDeadband(rotationSupplier.getAsDouble()/2, Swerve.stickDeadband));
+      MathUtil.applyDeadband(rotationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
 
     swerveSubsystem.drive(
-      new Translation2d(translationVal, -strafeVal).times(Swerve.maxSpeed), 
+      new Translation2d(-translationVal, -strafeVal).times(Swerve.maxSpeed), 
       rotationVal * Swerve.maxAngularVelocity, 
       robotCentricSupplier.getAsBoolean(),
       true
@@ -75,7 +75,7 @@ public class SwerveDrive extends Command {
     SmartDashboard.putNumber("Translation Val", translationVal);
     SmartDashboard.putNumber("Strafe Val", strafeVal);
     SmartDashboard.putNumber("Rotation Val", rotationVal);
-    SmartDashboard.putBoolean("Field centric", robotCentricSupplier.getAsBoolean());
+    SmartDashboard.putBoolean("robot centric", robotCentricSupplier.getAsBoolean());
   }
 
   // Called once the command ends or is interrupted.

@@ -28,8 +28,8 @@ public final class Constants {
   public static final int leftClimberID = 17;
   public static final int rightClimberID = 15;
 
-  public static final double feedSpeed = 0.40;   //0.40
-  public static final double launchSpeed = 0.90; //1.00 originally
+  public static final double feedSpeed = 0.05;   //0.40
+  public static final double launchSpeed = 0.05; //1.00 originally
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
   public static final int upLauncherID = 18; //18
@@ -161,7 +161,7 @@ public final class Constants {
     /**************************
      * Module Specific Constants
      **************************/
-    // Front Left before it flipped, now  Module - Module 0 
+    // Back Right Module - Module 0 
     public static final class Mod0 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 10;
@@ -179,7 +179,7 @@ public final class Constants {
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
-    // Back Right Module - Module 1 //then left back
+    // Back Left Module - Module 1 
     public static final class Mod1 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 6;
@@ -197,7 +197,7 @@ public final class Constants {
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
-    // Back Left Module - Module 2
+    // Front Right Module - Module 2
     public static final class Mod2 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 12;
@@ -215,7 +215,7 @@ public final class Constants {
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
 
-    // Front Right Module - Module 3
+    // Front Left Module - Module 3
     public static final class Mod3 {
       // SparkMAX CAN Device ID
       public static final int driveMotorID = 9;
@@ -374,4 +374,6 @@ public final class Constants {
     public final static Colors startingColor = Colors.OFF;
     public final static Colors disableColor = Colors.RAINBOWOCEAN;
   }
+
+public static Object ColorChanger;
 }
