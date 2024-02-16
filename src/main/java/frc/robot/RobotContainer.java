@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.Swerve;
 import frc.robot.commands.ClimbCMD;
+import frc.robot.commands.ColorChangingCMD;
 import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchNoteCMD;
 import frc.robot.commands.LaunchWheelCMD;
@@ -39,6 +40,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ColorChanger;
 
 
 
@@ -52,11 +54,12 @@ public class RobotContainer {
 
 private final SendableChooser<Command> autoChooser;
   //careful setting the port for controller
+  public ColorChanger colorChanger = new ColorChanger();
   public CommandJoystick controller0 = new CommandJoystick(0);
   public CommandJoystick controller1 = new CommandJoystick(0); //same for testing
   public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem(colorChanger);
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
   //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
@@ -66,11 +69,13 @@ private final SendableChooser<Command> autoChooser;
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
   public EjectCMD ejectCMD = new EjectCMD(intakeMotorSubsystem);
-  //public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem); 
+  public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger); 
   public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
   
-  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.lb);
+  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.l3);
   public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
+  public final JoystickButton colorToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.start);
+
 
 
   //subsystems\\
@@ -85,13 +90,14 @@ private final SendableChooser<Command> autoChooser;
         // NamedCommands.registerCommand("test", intakeMotorSubsystem.TestStartEndCommand(-0.1));
         // NamedCommands.registerCommand("testStop", intakeMotorSubsystem.TestStartEndCommand(0.5));
         NamedCommands.registerCommand("EjectCMD", new EjectCMD(intakeMotorSubsystem).withTimeout(1));
-       // NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger).withTimeout(1));
         NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub).withTimeout(1));
         NamedCommands.registerCommand("FeedWheelCMD", new FeedWheelCMD(launcherSub).withTimeout(1));
         NamedCommands.registerCommand("AmpCMD", new AmpCMD(intakeSubsystem).until(intakeSubsystem::ampAtAngle));
         NamedCommands.registerCommand("SourceCMD", new SourceCMD(intakeSubsystem).until(intakeSubsystem::sourceAtAngle));
         NamedCommands.registerCommand("GroundCMD", new GroundCMD(intakeSubsystem).until(intakeSubsystem::groundAtAngle));
         NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
+        NamedCommands.registerCommand("ColorChangingCMD", new ColorChangingCMD(colorChanger));
 
 
 
@@ -111,11 +117,11 @@ private final SendableChooser<Command> autoChooser;
     controller1.povLeft().whileTrue(sourceCMD);
     controller1.povRight().whileTrue(ampCMD);
 
-    controller1.button(Constants.buttonList.rb).toggleOnTrue(ejectCMD);
-    //controller1.button(Constants.buttonList.lb).toggleOnTrue(intakeMotorCMD);
+    controller1.button(Constants.buttonList.rb).whileTrue(ejectCMD);
+    controller1.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
 
     controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
-   // controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
+    controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
     
     controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
     
@@ -148,9 +154,11 @@ private final SendableChooser<Command> autoChooser;
     climberSubsystem.setDefaultCommand(
       new ClimbCMD(
         climberSubsystem,
+        colorChanger,
         () -> controller0.getRawAxis(2),
         () -> controller0.getRawAxis(3),
-        () -> aToggleButton.getAsBoolean()
+        () -> aToggleButton.getAsBoolean(),
+        () -> colorToggleButton.getAsBoolean()
       )
     );
     

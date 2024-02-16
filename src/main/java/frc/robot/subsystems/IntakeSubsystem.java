@@ -49,7 +49,8 @@ public class IntakeSubsystem extends SubsystemBase {
   //double intake_pivot_voltage = 0.0;
   public double intake_speed = 0.0;
 
-  public IntakeSubsystem() {
+  public IntakeSubsystem(ColorChanger colorChanger) {
+    this.colorChanger = colorChanger;
     this.intakeEncoder = new DutyCycleEncoder(Constants.intake.encoderID);
     this.intakeLimitSwitch = new DigitalInput(Constants.intake.intakeLimitSwitchID);
 
@@ -231,12 +232,16 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("limit switch", getIntakeHasNote());
+    //This method will be called once per scheduler run
     if (!getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
       colorChanger.setCOLORWAVESLAVA();
     }
     if (getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
       colorChanger.setLAWNGREEN();
+    }
+    if (getIntakeHasNote()) {
+      colorChanger.setRAINBOWOCEAN();
     }
   }
 }
