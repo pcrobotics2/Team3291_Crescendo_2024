@@ -74,8 +74,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     swerveOdometry = new SwerveDriveOdometry(
       Swerve.swerveKinematics,
-      //filterGyro(),
-      getroll(),
+      filterGyro(),
       getModulePositions()
     );
 
@@ -148,8 +147,7 @@ public class SwerveSubsystem extends SubsystemBase {
           translation.getX(),
           translation.getY(),
           rotation,
-          //filterGyro()
-          getroll())
+          filterGyro())
         : new ChassisSpeeds(
           translation.getX(),
           translation.getY(),
@@ -192,10 +190,10 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
 
-  /*public Rotation2d filterGyro(){
+  public Rotation2d filterGyro(){
     angle = (0.97402597402)*(angle + (getroll().getDegrees()*0.0262)) + (0.02597402597)*(gyro.getWorldLinearAccelX());
     return Rotation2d.fromDegrees(angle);
-  }*/
+  }
 
 
   private SwerveModulePosition[] getModulePositions() {
@@ -218,13 +216,11 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
   public void resetOdometry(Pose2d pose) {
-    //swerveOdometry.resetPosition(filterGyro(), getModulePositions(), pose);
-    swerveOdometry.resetPosition(getroll(), getModulePositions(), pose);
+    swerveOdometry.resetPosition(filterGyro(), getModulePositions(), pose);
   }
 
   public void resetPoseEstimator(Pose2d pose){
-  //m_poseEstimator.resetPosition(filterGyro(), getModulePositions(), pose);
-  //m_poseEstimator.resetPosition(getroll(), getModulePositions(), pose);
+  m_poseEstimator.resetPosition(filterGyro(), getModulePositions(), pose);
 }
 
 
@@ -253,18 +249,17 @@ public ChassisSpeeds getSpeeds() {
     int numAprilTags = results.targetingResults.targets_Fiducials.length;
     var timeStmap = results.targetingResults.timestamp_LIMELIGHT_publish;
 
-    /*if (numAprilTags >= 0 && timeStmap != previousTimeStmap){
+    if (numAprilTags >= 0 && timeStmap != previousTimeStmap){
       var botpose = results.targetingResults.getBotPose2d();//Idon'tthink this is the right way to make the call, and I'm not sure if it's getting the right data 
       previousTimeStmap = timeStmap;
       m_poseEstimator.addVisionMeasurement(botpose, timeStmap);
-    }*/
+    }
 
     
-    /*m_poseEstimator.update(
-      //filterGyro(),
-      getroll(),
-      getModulePositions());*/
-    //swerveOdometry.update(filterGyro(), getModulePositions());
+    m_poseEstimator.update(
+      filterGyro(),
+      getModulePositions());
+    swerveOdometry.update(filterGyro(), getModulePositions());
     swerveOdometry.update(getroll(), getModulePositions());
     field.setRobotPose(swerveOdometry.getPoseMeters());
 
@@ -273,7 +268,7 @@ public ChassisSpeeds getSpeeds() {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
       SmartDashboard.putNumber(("GYRO"), getroll().getDegrees());
-    //  SmartDashboard.putNumber("filterGyro", filterGyro().getDegrees());
+      SmartDashboard.putNumber("filterGyro", filterGyro().getDegrees());
     }
   }
 }
