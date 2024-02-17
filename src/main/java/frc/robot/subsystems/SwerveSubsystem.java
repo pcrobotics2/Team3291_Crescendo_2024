@@ -50,18 +50,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private Field2d field;
 
+  public SwerveDrivePoseEstimator m_poseEstimator;
 
   public AutoBuilder autoBuilder;
-
-  public SwerveDrivePoseEstimator m_poseEstimator = new SwerveDrivePoseEstimator(
-    Swerve.swerveKinematics,
-    filterGyro(),
-    getModulePositions(),
-    new Pose2d(0, 0, Rotation2d.fromDegrees(0)) // TODO: CLARIFY THIS WORKS
-);
-
-  
-
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() {
@@ -69,7 +60,6 @@ public class SwerveSubsystem extends SubsystemBase {
     //accelerometer = new AHRS(SerialPort.Port.kUSB);
 
     zeroGryo();
-
 
     mSwerveMods = new SwerveModule[] {
       new SwerveModule(0, Swerve.Mod0.constants),//test to see if its modul number that denotes position, reguardless of position
@@ -122,6 +112,15 @@ public class SwerveSubsystem extends SubsystemBase {
             },
             this
      );
+
+     
+  SwerveDrivePoseEstimator m_poseEstimator = new SwerveDrivePoseEstimator(
+    Swerve.swerveKinematics,
+    filterGyro(),
+    getModulePositions(),
+    new Pose2d(0, 0, Rotation2d.fromDegrees(0)) // TODO: CLARIFY THIS WORKS
+);
+
   }
      
  
