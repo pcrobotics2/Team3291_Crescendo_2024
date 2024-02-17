@@ -27,25 +27,23 @@ public class IntakeMotorCMD extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    colorChanger.setFIRELARGE();
   }
   
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
+    if (!intakeSubsystem.getIntakeHasNote()) {
+      intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
+    }
+    else {
+      intakeMotorSubsystem.moveIntakeMotor(0);
+    }
+    if (intakeSubsystem.getCurrentAngle() < Constants.intake.groundAngle + Constants.angleDeadband && intakeSubsystem.getCurrentAngle() > Constants.intake.groundAngle - Constants.angleDeadband) {
+      colorChanger.setGOLD();
+    }
     // if (!intakeSubsystem.getIntakeHasNote()) {
-    //   intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
-    // }
-    // else {
-    //   intakeMotorSubsystem.moveIntakeMotor(0);
-    // }
-    // if (intakeSubsystem.getCurrentAngle() < Constants.intake.groundAngle + Constants.angleDeadband && intakeSubsystem.getCurrentAngle() > Constants.intake.groundAngle - Constants.angleDeadband) {
-    //   colorChanger.setGOLD();
-    // }
-    // // if (!intakeSubsystem.getIntakeHasNote()) {
-    // // intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
+    // intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
 
   }
 

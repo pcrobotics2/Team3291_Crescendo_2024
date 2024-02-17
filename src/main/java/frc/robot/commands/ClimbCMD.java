@@ -46,7 +46,7 @@ public class ClimbCMD extends Command {
   @Override
   public void initialize() {
     this.hasChanged = 0;
-    this.colorToggleNumber = 0;
+    this.colorToggleNumber = 2;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -101,7 +101,7 @@ public class ClimbCMD extends Command {
       }
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
-    climberSubsystem.setClimberIndividual(positiveSpeed, negativeSpeed);
+    climberSubsystem.setClimberIndividual(positiveSpeed, -negativeSpeed);
     }
     
     

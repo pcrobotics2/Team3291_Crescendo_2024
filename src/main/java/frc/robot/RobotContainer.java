@@ -53,17 +53,25 @@ import frc.robot.subsystems.ColorChanger;
 public class RobotContainer {
 
 private final SendableChooser<Command> autoChooser;
-  //careful setting the port for controller
-  public ColorChanger colorChanger = new ColorChanger();
+  //controllers
   public CommandJoystick controller0 = new CommandJoystick(0);
   public CommandJoystick controller1 = new CommandJoystick(1); 
 
+  //buttons
   public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
   public final JoystickButton colorToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.start);
+  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.l3);
+
+  //subsystems
+  public ColorChanger colorChanger = new ColorChanger();
   public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem(colorChanger);
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
+  private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem(colorChanger);//below colorChanger
+  //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+
+  //commands
   public ClimbCMD climbCMD = new ClimbCMD(
         climberSubsystem,
         colorChanger,
@@ -72,23 +80,24 @@ private final SendableChooser<Command> autoChooser;
         () -> aToggleButton.getAsBoolean(),
         () -> colorToggleButton.getAsBoolean()
       );
-  //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  //launcher
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
+  //pivot motor
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
+  //intake motor
   public EjectCMD ejectCMD = new EjectCMD(intakeMotorSubsystem);
   public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger); 
+  //intake motor + launcher
   public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
   
-  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.l3);
 
 
 
   //subsystems\\
-  private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

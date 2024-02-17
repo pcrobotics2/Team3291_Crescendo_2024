@@ -27,7 +27,7 @@ public class LaunchNoteCMD extends Command {
   @Override
   public void initialize() {
     this.timeCheck = Timer.getFPGATimestamp();
-    launcherSub.setLaunchWheels(Constants.launchSpeed, -Constants.launchSpeed);
+    launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

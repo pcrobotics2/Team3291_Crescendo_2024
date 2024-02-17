@@ -16,29 +16,29 @@ import frc.robot.Constants;
 public class LauncherSub extends SubsystemBase {
   /** Creates a new launcher. */
   //motor up is higher than motor down
-  public CANSparkMax downLauncher;
-  public CANSparkMax upLauncher;
+  public CANSparkMax leftLauncher;
+  public CANSparkMax rightLauncher;
 
   public LauncherSub() {
-  this.upLauncher = new CANSparkMax(Constants.upLauncherID, MotorType.kBrushless); //7
-  this.downLauncher = new CANSparkMax(Constants.downLauncherID, MotorType.kBrushless);//14
+  this.rightLauncher = new CANSparkMax(Constants.rightLauncherID, MotorType.kBrushless); 
+  this.leftLauncher = new CANSparkMax(Constants.leftLauncherID, MotorType.kBrushless);
 
   }
 
   public void setLaunchWheelUp(double speed) {
-    upLauncher.set(speed);
+    rightLauncher.set(speed);
 
   }
-    public void setLaunchWheels(double upSpeed, double downSpeed) {
-    upLauncher.set(upSpeed);
-    downLauncher.set(downSpeed);
+    public void setLaunchWheels(double rightSpeed, double leftSpeed) {
+    rightLauncher.set(rightSpeed);
+    leftLauncher.set(leftSpeed);
   }
   public void setLaunchWheelDown(double speed) {
-    downLauncher.set(speed);
+    leftLauncher.set(speed);
   }
   public void stop() {
-    downLauncher.set(0);
-    upLauncher.set(0);
+    leftLauncher.set(0);
+    rightLauncher.set(0);
   }
   
   @Override

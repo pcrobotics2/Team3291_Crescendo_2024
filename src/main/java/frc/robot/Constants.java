@@ -25,15 +25,17 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   
-  public static final int leftClimberID = 24;
-  public static final int rightClimberID = 15;
+  public static final int leftClimberID = 24;//24
+  public static final int rightClimberID = 15;//15
 
-  public static final double feedSpeed = 0.05;   //0.40
-  public static final double launchSpeed = 0.05; //1.00 originally
+  public static final double feedSpeed = 0.4;   //0.40
+  public static final double launchSpeed = 0.8; 
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
-  public static final int upLauncherID = 18; //18
-  public static final int downLauncherID = 14; //14
+
+  public static final int rightLauncherID = 14; //14
+  public static final int leftLauncherID = 18; //18
+  
   public static final int LEDColors = 1;
   public static final double angleDeadband = 1;
 
@@ -60,7 +62,7 @@ public final class Constants {
 
     //ids
     public static final int encoderID = 0; //Changed due to rewire
-    public static final int IntakeID = 22; 
+    public static final int IntakeID = 21;//21 
     public static final int PivotID = 19;//19 
     public static final int intakeLimitSwitchID = 9;
 
