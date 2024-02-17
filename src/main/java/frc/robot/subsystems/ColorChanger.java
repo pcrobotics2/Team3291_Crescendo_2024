@@ -447,9 +447,9 @@ public void setOFF() {
   @Override
   public void periodic() {
     //This method will be called once per scheduler run
-    Colors selectedColor = lighting_chooser.getSelected();
+    // Colors selectedColor = lighting_chooser.getSelected();
 
-    lighting.set(selectedColor.getColorValue());
+    //lighting.set(selectedColor.getColorValue());
   }
 
   public static void set(double colorValue) {
