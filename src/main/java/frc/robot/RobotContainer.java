@@ -56,11 +56,22 @@ private final SendableChooser<Command> autoChooser;
   //careful setting the port for controller
   public ColorChanger colorChanger = new ColorChanger();
   public CommandJoystick controller0 = new CommandJoystick(0);
-  public CommandJoystick controller1 = new CommandJoystick(0); //same for testing
+  public CommandJoystick controller1 = new CommandJoystick(1); 
+
+  public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
+  public final JoystickButton colorToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.start);
   public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem(colorChanger);
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
+  public ClimbCMD climbCMD = new ClimbCMD(
+        climberSubsystem,
+        colorChanger,
+        () -> controller0.getRawAxis(2),
+        () -> controller0.getRawAxis(3),
+        () -> aToggleButton.getAsBoolean(),
+        () -> colorToggleButton.getAsBoolean()
+      );
   //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
@@ -73,8 +84,6 @@ private final SendableChooser<Command> autoChooser;
   public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
   
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.l3);
-  public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
-  public final JoystickButton colorToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.start);
 
 
 
@@ -122,6 +131,8 @@ private final SendableChooser<Command> autoChooser;
 
     controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
     controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
+
+    controller0.button(Constants.buttonList.l3).toggleOnTrue(climbCMD);
     
     controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
     
@@ -151,16 +162,16 @@ private final SendableChooser<Command> autoChooser;
         () -> robotCentricButton.getAsBoolean()
       )
     );
-    climberSubsystem.setDefaultCommand(
-      new ClimbCMD(
-        climberSubsystem,
-        colorChanger,
-        () -> controller0.getRawAxis(2),
-        () -> controller0.getRawAxis(3),
-        () -> aToggleButton.getAsBoolean(),
-        () -> colorToggleButton.getAsBoolean()
-      )
-    );
+    // climberSubsystem.setDefaultCommand(
+    //   new ClimbCMD(
+    //     climberSubsystem,
+    //     colorChanger,
+    //     () -> controller0.getRawAxis(2),
+    //     () -> controller0.getRawAxis(3),
+    //     () -> aToggleButton.getAsBoolean(),
+    //     () -> colorToggleButton.getAsBoolean()
+    //   )
+    // );
     
     // controller0.button(Constants.buttonList.y).whileTrue(
     //   intakeMotorSubsystem.startEnd(
