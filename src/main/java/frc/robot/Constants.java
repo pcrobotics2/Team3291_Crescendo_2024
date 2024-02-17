@@ -32,8 +32,8 @@ public final class Constants {
   public static final double launchSpeed = 0.05; //1.00 originally
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
-  public static final int upLauncherID = 14; //14
-  public static final int downLauncherID = 15; //15
+  public static final int upLauncherID = 37; //unknown
+  public static final int downLauncherID = 38; //unknown
   public static final int LEDColors = 1;
   public static final double angleDeadband = 1;
 
