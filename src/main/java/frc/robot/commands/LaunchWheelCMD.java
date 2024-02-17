@@ -19,7 +19,7 @@ public class LaunchWheelCMD extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    launcherSub.setLaunchWheels(Constants.launchSpeed, -Constants.launchSpeed);
+    launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

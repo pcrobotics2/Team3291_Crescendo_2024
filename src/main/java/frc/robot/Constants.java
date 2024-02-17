@@ -28,12 +28,14 @@ public final class Constants {
   public static final int leftClimberID = 24;//24
   public static final int rightClimberID = 15;//15
 
-  public static final double feedSpeed = 0.05;   //0.40
-  public static final double launchSpeed = 0.05; //1.00 originally
+  public static final double feedSpeed = 0.4;   //0.40
+  public static final double launchSpeed = 0.8; 
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
-  public static final int upLauncherID = 37; //unknown
-  public static final int downLauncherID = 38; //unknown
+
+  public static final int rightLauncherID = 14; //14
+  public static final int leftLauncherID = 18; //18
+  
   public static final int LEDColors = 1;
   public static final double angleDeadband = 1;
 
