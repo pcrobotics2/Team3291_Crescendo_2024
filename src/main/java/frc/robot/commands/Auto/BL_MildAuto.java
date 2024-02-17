@@ -22,7 +22,7 @@ public class BL_MildAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new BL_ToSpeaker(swerveSubsystem),
-      new LaunchNoteCMD(intakeMotorSubsystem, launcherSub),
+      new LaunchNoteCMD(intakeMotorSubsystem, launcherSub).withTimeout(5),
       new BL_BackOut(swerveSubsystem)
     );
   }
