@@ -114,7 +114,7 @@ public class SwerveSubsystem extends SubsystemBase {
      );
 
      
-  SwerveDrivePoseEstimator m_poseEstimator = new SwerveDrivePoseEstimator(
+  m_poseEstimator = new SwerveDrivePoseEstimator(
     Swerve.swerveKinematics,
     filterGyro(),
     getModulePositions(),
@@ -181,17 +181,17 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
 
-  private Rotation2d getroll() {
+  private Rotation2d getYaw() {
     if (Swerve.invertGyro) {
-      return Rotation2d.fromDegrees(360 - gyro.getRoll());
+      return Rotation2d.fromDegrees(360 - gyro.getYaw());
     } else {
-      return Rotation2d.fromDegrees(gyro.getRoll());
+      return Rotation2d.fromDegrees(gyro.getYaw());
     }
   }
 
 
   public Rotation2d filterGyro(){
-    angle = (0.97402597402)*(angle + (getroll().getDegrees()*0.0262)) + (0.02597402597)*(gyro.getWorldLinearAccelX());
+    angle = (0.97402597402)*(angle + (getYaw().getDegrees()*0.0262)) + (0.02597402597)*(gyro.getWorldLinearAccelX());
     return Rotation2d.fromDegrees(angle);
   }
 
@@ -260,14 +260,14 @@ public ChassisSpeeds getSpeeds() {
       filterGyro(),
       getModulePositions());
     swerveOdometry.update(filterGyro(), getModulePositions());
-    swerveOdometry.update(getroll(), getModulePositions());
+    swerveOdometry.update(getYaw(), getModulePositions());
     field.setRobotPose(swerveOdometry.getPoseMeters());
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-      SmartDashboard.putNumber(("GYRO"), getroll().getDegrees());
+      SmartDashboard.putNumber(("GYRO"), getYaw().getDegrees());
       SmartDashboard.putNumber("filterGyro", filterGyro().getDegrees());
     }
   }
