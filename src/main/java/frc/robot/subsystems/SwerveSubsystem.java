@@ -189,7 +189,6 @@ public class SwerveSubsystem extends SubsystemBase {
     }
   }
 
-
   public Rotation2d filterGyro(){
     angle = (0.97402597402)*(angle + (getYaw().getDegrees()*0.0262)) + (0.02597402597)*(gyro.getWorldLinearAccelX());
     return Rotation2d.fromDegrees(angle);
