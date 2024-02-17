@@ -8,15 +8,20 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.subsystems.LimelightHelpers;
+import frc.robot.subsystems.LimelightHelpers.LimelightTarget_Fiducial;
+
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.LimelightHelpers.LimelightTarget_Fiducial;
 
 public class VisionSubsystem extends SubsystemBase {
   /** Creates a new VisionSubsystem. */
   public VisionSubsystem() {
-    //x is horizontal, y is vertical, a is area, s is skew 
+    //tx is horizontal value of target, ty is vertical value of target, ta is area, ts is skew of target, tv is validity of target
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
@@ -32,6 +37,8 @@ public class VisionSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
+
+    CANSparkMax mooypr;
 
   }
 

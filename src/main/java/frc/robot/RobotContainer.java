@@ -27,7 +27,7 @@ import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchNoteCMD;
 import frc.robot.commands.LaunchWheelCMD;
 import frc.robot.commands.SwerveDrive;
-import frc.robot.commands.Auto.MildAuto;
+import frc.robot.commands.Auto.MN_MildAuto;
 import frc.robot.commands.IntakeCMDS.AmpCMD;
 import frc.robot.commands.IntakeCMDS.GroundCMD;
 import frc.robot.commands.IntakeCMDS.SourceCMD;

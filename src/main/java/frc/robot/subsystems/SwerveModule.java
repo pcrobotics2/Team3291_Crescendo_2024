@@ -5,10 +5,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -70,6 +71,7 @@ public class SwerveModule {
     //feedforward - def for auto maybe for teleop
     private final SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(Swerve.ffkS, Swerve.ffkV, Swerve.ffkA);
 
+
     /**
      * 
      * @param moduleNumber
@@ -115,7 +117,7 @@ public class SwerveModule {
     
         this.lastAngle = getState().angle;
     }
-    
+
     /* 
      * 
      * This is intended to set the default strategy for each angle encoder (CANCoder)
@@ -283,7 +285,7 @@ public class SwerveModule {
 
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-            (this.driveEncoder.getPosition() * (Swerve.wheelCircumference / (Swerve.driveGearRatio * 42))), 
+            (this.driveEncoder.getPosition()), // * (Swerve.wheelCircumference / (Swerve.driveGearRatio * 42) Actually forgot where I got this from lmao
             this.getCanCoder()
         );
     }
@@ -297,10 +299,4 @@ public class SwerveModule {
         boolean invertDriveMotor = setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop, invertDriveMotor);
     }
-
-    public void shwomp(){
-        driveMotor.set(1);
-    }
-
-
 }

@@ -37,9 +37,6 @@ public void setClimberTogether(double positiveSpeed, double negativeSpeed) {
  rightclimber.set(-1 * (positiveSpeed - negativeSpeed));
 }
 
-
-
-
 public void stop() {
  leftclimber.set(0);
  rightclimber.set(0);

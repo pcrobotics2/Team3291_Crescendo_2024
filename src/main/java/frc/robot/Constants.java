@@ -25,7 +25,7 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   
-  public static final int leftClimberID = 17;
+  public static final int leftClimberID = 24;
   public static final int rightClimberID = 15;
 
   public static final double feedSpeed = 0.05;   //0.40
@@ -149,7 +149,7 @@ public final class Constants {
     public static final double angleKFF = 0.0;
 
     // Drive Motor PID Values
-    public static final double driveKP = 0.0001;
+    public static final double driveKP = 0.01;
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
 
