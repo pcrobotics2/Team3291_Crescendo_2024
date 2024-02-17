@@ -6,23 +6,29 @@ package frc.robot.commands.IntakeCMDS.IntakeMotor;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.ColorChanger;
 import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeMotorCMD extends Command {
   IntakeMotorSubsystem intakeMotorSubsystem;
   IntakeSubsystem intakeSubsystem;
+  ColorChanger colorChanger;
   /** Creates a new IntakeMotorCMD. */
-  public IntakeMotorCMD(IntakeMotorSubsystem intakeMotorSubsystem, IntakeSubsystem intakeSubsystem) {
+  public IntakeMotorCMD(IntakeMotorSubsystem intakeMotorSubsystem, IntakeSubsystem intakeSubsystem, ColorChanger colorChanger) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeMotorSubsystem = intakeMotorSubsystem;
     this.intakeSubsystem = intakeSubsystem;
-    addRequirements(intakeMotorSubsystem, intakeSubsystem);
+    this.colorChanger = colorChanger;
+    
+    addRequirements(intakeMotorSubsystem, intakeSubsystem, colorChanger);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    colorChanger.setFIRELARGE();
+  }
   
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,6 +36,9 @@ public class IntakeMotorCMD extends Command {
   public void execute() {
     if (!intakeSubsystem.getIntakeHasNote()) {
     intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
+    }
+    if (intakeSubsystem.getCurrentAngle() < Constants.intake.groundAngle + Constants.angleDeadband && intakeSubsystem.getCurrentAngle() > Constants.intake.groundAngle - Constants.angleDeadband) {
+      colorChanger.setGOLD();
     }
     // if (!intakeSubsystem.getIntakeHasNote()) {
     // intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);

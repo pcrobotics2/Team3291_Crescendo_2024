@@ -10,40 +10,50 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ColorChanger;
 
 
 public class ClimbCMD extends Command {
   /** Creates a new MoveIntakeMotorCMD. */
+  ColorChanger colorChanger;
   ClimberSubsystem climberSubsystem;
   DoubleSupplier positiveSupplier;
   DoubleSupplier negativeSupplier;
   BooleanSupplier aToggle;
+  BooleanSupplier colorToggled;
   private int hasChanged;
+  private int colorToggleNumber;
   public ClimbCMD(
-  ClimberSubsystem climberSubsystem,
+    ClimberSubsystem climberSubsystem,
+    ColorChanger colorChanger,
     DoubleSupplier positiveSupplier,
     DoubleSupplier negativeSupplier,
-    BooleanSupplier aToggle
+    BooleanSupplier aToggle,
+    BooleanSupplier colorToggled
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.climberSubsystem = climberSubsystem;
-    addRequirements(climberSubsystem);
+    this.colorChanger = colorChanger;
+    addRequirements(climberSubsystem, colorChanger);
 
     this.positiveSupplier = positiveSupplier;
     this.negativeSupplier = negativeSupplier;
     this.aToggle = aToggle;
+    this.colorToggled = colorToggled;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     this.hasChanged = 0;
+    this.colorToggleNumber = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     boolean isAToggled = aToggle.getAsBoolean();
+    boolean colorToggle = colorToggled.getAsBoolean();
 
     if (isAToggled && this.hasChanged == 0) {
         this.hasChanged = 1;
@@ -61,12 +71,34 @@ public class ClimbCMD extends Command {
         this.hasChanged = 0; 
       }
 
+      if (colorToggle && this.colorToggleNumber == 0) {
+        this.colorToggleNumber = 1;
+    }
+
+    if (this.colorToggleNumber == 1 && !colorToggle) {
+        this.colorToggleNumber = 2;
+      }
+
+    if (this.colorToggleNumber == 2 && colorToggle) {
+        this.colorToggleNumber = 3;
+      }
+
+    if (this.colorToggleNumber == 3 && !colorToggle) {
+        this.colorToggleNumber = 0; 
+      }
+
     if (this.hasChanged == 0) {
+      if (this.colorToggleNumber == 2) {
+    colorChanger.setREDORANGE();
+      }
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
     climberSubsystem.setClimberTogether(positiveSpeed, negativeSpeed);
     }
     else if (this.hasChanged == 2) {
+      if (colorToggleNumber == 2) {
+    colorChanger.setVIOLET();
+      }
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
     climberSubsystem.setClimberIndividual(positiveSpeed, negativeSpeed);

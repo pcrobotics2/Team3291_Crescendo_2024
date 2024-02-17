@@ -12,7 +12,7 @@ public class ColorChangingCMD extends Command {
   private ColorChanger colorChanger;
 
   /** Creates a new ColorChangingCMD. */
-  public ColorChangingCMD() {
+  public ColorChangingCMD(ColorChanger colorChanger) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.colorChanger = colorChanger;
     addRequirements(colorChanger);
@@ -24,7 +24,9 @@ public class ColorChangingCMD extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    colorChanger.setRAINBOWRAINBOW();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
