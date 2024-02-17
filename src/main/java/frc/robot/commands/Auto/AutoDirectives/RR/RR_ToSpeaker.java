@@ -42,10 +42,10 @@ public class RR_ToSpeaker extends SequentialCommandGroup {
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through an interior waypoint
-            List.of(new Translation2d(0.96647, 0.7239),
-            new Translation2d(1.93294,0.9652)),
+            List.of(new Translation2d(0.96647, -0.7239),
+            new Translation2d(1.93294,-0.9652)),
             // End 1 meter straight ahead of where we started, facing forward
-            new Pose2d(1.93294, 1.4478, new Rotation2d(180)),
+            new Pose2d(1.93294, -1.4478, new Rotation2d(180)),
             config);
 
     ProfiledPIDController thetaController =

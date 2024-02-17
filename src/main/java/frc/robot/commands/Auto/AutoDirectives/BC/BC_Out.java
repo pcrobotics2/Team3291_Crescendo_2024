@@ -42,9 +42,9 @@ public class BC_Out extends SequentialCommandGroup {
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(180)),
             // Pass through an interior waypoint
-            List.of(new Translation2d(2.06502, -1.2319)),
+            List.of(new Translation2d(1.8415, -0.508)),
             // End 1 meter straight ahead of where we started, facing forward
-            new Pose2d(2.1971, -1.016, new Rotation2d(360)),
+            new Pose2d(3.683, 1.016, new Rotation2d(360)),
             config);
 
     ProfiledPIDController thetaController =

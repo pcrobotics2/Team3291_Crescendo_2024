@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Auto.AutoDirectives.RR;
+package frc.robot.commands.Auto.AutoDirectives.RL;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -24,9 +24,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class RR_BackOut extends SequentialCommandGroup {
+public class RL_BackOut extends SequentialCommandGroup {
   /** Creates a new MildAuto. */
-  public RR_BackOut(SwerveSubsystem s_sSwerve) {
+  public RL_BackOut(SwerveSubsystem s_sSwerve) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -40,11 +40,11 @@ public class RR_BackOut extends SequentialCommandGroup {
     Trajectory Trajectory1 =
         TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
-            new Pose2d(1.93294, -1.4478, new Rotation2d(180)),
+            new Pose2d(1.93294, 1.4478, new Rotation2d(180)),
             // Pass through an interior waypoint
-            List.of(new Translation2d(2.06502, -1.2319)),
+            List.of(new Translation2d(2.06502, 1.2319)),
             // End 1 meter straight ahead of where we started, facing forward
-            new Pose2d(2.1971, -1.016, new Rotation2d(360)),
+            new Pose2d(2.1971, 0.916, new Rotation2d(360)),
             config);
 
     ProfiledPIDController thetaController =
