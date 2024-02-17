@@ -29,6 +29,7 @@ import frc.robot.commands.LaunchNoteCMD;
 import frc.robot.commands.LaunchWheelCMD;
 import frc.robot.commands.SwerveDrive;
 import frc.robot.commands.Auto.MN_MildAuto;
+import frc.robot.commands.DriveCommands.DriveToApriltag;
 import frc.robot.commands.IntakeCMDS.AmpCMD;
 import frc.robot.commands.IntakeCMDS.GroundCMD;
 import frc.robot.commands.IntakeCMDS.SourceCMD;
@@ -39,6 +40,7 @@ import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ColorChanger;
 
@@ -63,6 +65,7 @@ private final SendableChooser<Command> autoChooser;
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.l3);
 
   //subsystems
+  public VisionSubsystem visionSubsystem = new VisionSubsystem();
   public ColorChanger colorChanger = new ColorChanger();
   public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
@@ -72,6 +75,7 @@ private final SendableChooser<Command> autoChooser;
   //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   //commands
+  public DriveToApriltag driveToApriltag = new DriveToApriltag(visionSubsystem);
   public ClimbCMD climbCMD = new ClimbCMD(
         climberSubsystem,
         colorChanger,
@@ -127,6 +131,8 @@ private final SendableChooser<Command> autoChooser;
     
     controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+
+    controller0.button(Constants.buttonList.r3).toggleOnTrue(driveToApriltag);
    
     //intake
 
