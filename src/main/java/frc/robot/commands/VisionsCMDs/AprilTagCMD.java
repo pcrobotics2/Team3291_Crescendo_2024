@@ -2,14 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.DriveCommands;
+package frc.robot.commands.VisionsCMDs;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class DriveToApriltag extends Command {
+public class AprilTagCMD extends Command {
   /** Creates a new DriveToApriltag. */
   VisionSubsystem visionSubsystem;
-  public DriveToApriltag(VisionSubsystem visionSubsystem) {
+  public AprilTagCMD(VisionSubsystem visionSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.visionSubsystem = visionSubsystem;
     addRequirements(visionSubsystem);
@@ -30,7 +30,9 @@ public class DriveToApriltag extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    visionSubsystem.drive(0);
+  }
 
   // Returns true when the command should end.
   @Override
