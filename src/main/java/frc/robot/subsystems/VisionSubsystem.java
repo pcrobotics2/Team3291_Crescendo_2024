@@ -149,22 +149,39 @@ public double proportionalAiming()
     double ty = LimelightHelpers.getTY("limelight");
     double targetOffsetAngle_Vertical = ty;//not accurate, this is a1, to be changed later
 
+    double desiredDistanceInches = 43.5;//the subwoofer + 6 inches 
+
     // how many degrees back is your limelight rotated from perfectly vertical?
-    double limelightMountAngleDegrees = 25.0; //not accurate to be changed later
+    double limelightMountAngleDegrees = 28.8; //not accurate to be changed later
 
     // distance from the center of the Limelight lens to the floor
-    double limelightLensHeightInches = 20.0; //not accurate to be changed later
+    double limelightLensHeightInches = 16.875; //not accurate to be changed later
 
     // distance from the target to the floor
-    double goalHeightInches = 78.0; //accounts for the lowest edge
+    double goalHeightInches = 57.125; //accounts for the lowest edge
 
     double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
     //calculate distance
     double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
-    distancePID.calculate(distanceFromLimelightToGoalInches,0);
-    return distanceFromLimelightToGoalInches;
+    double distance = distancePID.calculate(distanceFromLimelightToGoalInches, desiredDistanceInches);
+    return distance;
+  }
+
+  public double getTXSwerve() {
+    return LimelightHelpers.getTX("limelight");
+  }
+
+  public boolean apriltagIdCHeck(int ID){
+
+    if (LimelightHelpers.getFiducialID("limelight") == ID){
+      return true;
+    }
+    else {
+      return false;
+    }
+
   }
 
   @Override

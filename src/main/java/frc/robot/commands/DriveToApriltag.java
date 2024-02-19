@@ -17,85 +17,45 @@ import frc.robot.Constants.Swerve;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-public class SwerveDrive extends Command {
+public class DriveToApriltag extends Command {
   private final VisionSubsystem visionSubsystem;
   private final SwerveSubsystem swerveSubsystem;
-  private final DoubleSupplier translationSupplier;
-  private final DoubleSupplier strafeSupplier;
-  private final DoubleSupplier rotationSupplier;
-  private final BooleanSupplier robotCentricSupplier;
-  private final BooleanSupplier backToggleSupplier;
-  private int backToggleInt;
   private double rotationVal;
   private double translationVal;
+  private double strafeVal;
   private double visionTX;
 
+  //MAYBE USE TX FOR STRAFING AND THEN SKEW FOR ROT, TEST THIS FORST BUT DEFINTELY CONSIDER THIS AS A POSIBILITY
+
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(Swerve.kMaxTranslationAcceleration);
-  private SlewRateLimiter strafeLimiter = new SlewRateLimiter(Swerve.kMaxStrafeAcceleration);
+  //private SlewRateLimiter strafeLimiter = new SlewRateLimiter(Swerve.kMaxStrafeAcceleration);
   private SlewRateLimiter rotationLimiter = new SlewRateLimiter(Swerve.kMaxRotationAcceleration);
-  private double strafeVal;
+  private int apriltagID;
 
   /** Creates a new SwerveDrive. */
-  public SwerveDrive(
+  public DriveToApriltag(
     SwerveSubsystem swerveSubsystem,
     VisionSubsystem visionSubsystem,
-    DoubleSupplier translationSupplier,
-    DoubleSupplier strafeSupplier,
-    DoubleSupplier rotationSupplier,
-    BooleanSupplier robotCentricSupplier,
-    BooleanSupplier backToggleSupplier
+    int apriltagID
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.visionSubsystem = visionSubsystem;
     this.swerveSubsystem = swerveSubsystem;
+    this.apriltagID = apriltagID;
     addRequirements(swerveSubsystem, visionSubsystem);
-
-    this.translationSupplier = translationSupplier;
-    this.strafeSupplier = strafeSupplier;
-    this.rotationSupplier = rotationSupplier;
-    this.robotCentricSupplier = robotCentricSupplier;
-    this.backToggleSupplier = backToggleSupplier;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     swerveSubsystem.resetToAbsolute();
-    this.backToggleInt = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (backToggleSupplier.getAsBoolean() && this.backToggleInt == 0) {
-      this.backToggleInt = 1;
-  }
+    if (visionSubsystem.apriltagIdCHeck(apriltagID) == true && apriltagID != 0){
 
-  if (this.backToggleInt == 1 && !backToggleSupplier.getAsBoolean()) {
-      this.backToggleInt = 2;
-    }
-
-  if (this.backToggleInt == 2 && backToggleSupplier.getAsBoolean()) {
-      this.backToggleInt = 3;
-    }
-
-  if (this.backToggleInt == 3 && !backToggleSupplier.getAsBoolean()) {
-      this.backToggleInt = 0; 
-    }
-
-    SmartDashboard.putNumber("Translation Supplier", translationSupplier.getAsDouble());
-    SmartDashboard.putNumber("Strafe Supplier", strafeSupplier.getAsDouble());
-    SmartDashboard.putNumber("Rotation Supplier", rotationSupplier.getAsDouble());
-
-    if (backToggleInt == 0) {
-    this.rotationVal = rotationLimiter.calculate(
-      MathUtil.applyDeadband(rotationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
-      this.translationVal = translationLimiter.calculate(
-      MathUtil.applyDeadband(translationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
-      this.strafeVal = strafeLimiter.calculate(
-      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
-    }
-    else if (backToggleInt == 2) {
       if (visionSubsystem.getTXSwerve() > 1 || visionSubsystem.getTXSwerve() < -1) {
       if (visionSubsystem.getTXSwerve() > 20) {
         this.visionTX = 20;
@@ -112,23 +72,30 @@ public class SwerveDrive extends Command {
       }
 
       double visionOutput = (visionTX - Constants.Swerve.visionXOffset)/20;
-      this.rotationVal = rotationLimiter.calculate(
-      MathUtil.applyDeadband(visionOutput, Swerve.stickDeadband));
+      this.rotationVal = rotationLimiter.calculate(visionOutput);
 
       this.translationVal = translationLimiter.calculate(visionSubsystem.getDistance());
       this.strafeVal = 0.0;
-    }
+
     swerveSubsystem.drive(
-      new Translation2d(-translationVal, strafeVal).times(Swerve.maxSpeed), 
+      new Translation2d(this.translationVal, this.strafeVal).times(Swerve.maxSpeed), 
       this.rotationVal * Swerve.maxAngularVelocity, 
-      robotCentricSupplier.getAsBoolean(),
-      true
+      false,
+      false
     );
 
-    SmartDashboard.putNumber("Translation Val", translationVal);
-    SmartDashboard.putNumber("Strafe Val", strafeVal);
+  } else {
+    swerveSubsystem.drive(
+      new Translation2d(0.0, 0.0).times(Swerve.maxSpeed), 
+      0.1 * Swerve.maxAngularVelocity, 
+      false,
+      false
+    );
+  }
+
+    SmartDashboard.putNumber("Translation Val", this.translationVal);
+    SmartDashboard.putNumber("Strafe Val", this.strafeVal);
     SmartDashboard.putNumber("Rotation Val", this.rotationVal);
-    SmartDashboard.putBoolean("robot centric", robotCentricSupplier.getAsBoolean());
   }
 
   // Called once the command ends or is interrupted.
@@ -138,6 +105,10 @@ public class SwerveDrive extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
+    if (rotationVal == 0 && Math.abs(this.translationVal) >= 0.01){
+      return true;
+    }
     return false;
   }
 }

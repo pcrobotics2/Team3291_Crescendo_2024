@@ -25,6 +25,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -246,15 +247,15 @@ public ChassisSpeeds getSpeeds() {
     // This method will be called once per scheduler run
     LimelightResults results = LimelightHelpers.getLatestResults("limelight");
     int numAprilTags = results.targetingResults.targets_Fiducials.length;
-    var timeStmap = results.targetingResults.timestamp_LIMELIGHT_publish;
+    var timeStmap = Timer.getFPGATimestamp() - (results.targetingResults.botpose[6]/1000.0);
 
     if (numAprilTags >= 0 && timeStmap != previousTimeStmap){
       var botpose = results.targetingResults.getBotPose2d();//Idon'tthink this is the right way to make the call, and I'm not sure if it's getting the right data 
+      System.out.print(botpose);
       previousTimeStmap = timeStmap;
       m_poseEstimator.addVisionMeasurement(botpose, timeStmap);
     }
-
-    
+ 
     m_poseEstimator.update(
       filterGyro(),
       getModulePositions());
