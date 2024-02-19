@@ -29,7 +29,12 @@ public class VisionSubsystem extends SubsystemBase {
     public double AimkI = 0.0;
     public double AimkD = 0.0007;
 
+    public double dkP = 0.1;
+    public double dkI = 0.0;
+    public double dkD = 0.0001;
+
     public PIDController AimvisionPID;
+    public PIDController distancePID;
 
     public CANSparkMax testMotor;
 
@@ -61,7 +66,11 @@ public class VisionSubsystem extends SubsystemBase {
       AimkD
     );
 
-
+    this.distancePID = new PIDController(
+      dkP,
+      dkI,
+      dkD
+    );
 
   }
 
@@ -125,6 +134,28 @@ public double proportionalAiming()
     targetingForwardSpeed *= Constants.Swerve.maxSpeed;
     targetingForwardSpeed *= -1.0;
     return targetingForwardSpeed;
+  }
+
+  public double getDistance(){
+    double ty = LimelightHelpers.getTY("limelight");
+    double targetOffsetAngle_Vertical = ty;//not accurate, this is a1, to be changed later
+
+    // how many degrees back is your limelight rotated from perfectly vertical?
+    double limelightMountAngleDegrees = 25.0; //not accurate to be changed later
+
+    // distance from the center of the Limelight lens to the floor
+    double limelightLensHeightInches = 20.0; //not accurate to be changed later
+
+    // distance from the target to the floor
+    double goalHeightInches = 78.0; //accounts for the lowest edge
+
+    double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+    //calculate distance
+    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+    distancePID.calculate(distanceFromLimelightToGoalInches,0);
+    return distanceFromLimelightToGoalInches;
   }
 
   @Override

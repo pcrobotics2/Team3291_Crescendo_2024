@@ -5,14 +5,19 @@
 package frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.Swerve;
+import frc.robot.commands.SwerveDrive;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class DriveToApriltag extends Command {
   /** Creates a new DriveToApriltag. */
   VisionSubsystem visionSubsystem;
-  public DriveToApriltag(VisionSubsystem visionSubsystem) {
+  SwerveSubsystem swerveSubsystem;
+  public DriveToApriltag(VisionSubsystem visionSubsystem, SwerveSubsystem swerveSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.visionSubsystem = visionSubsystem;
-    addRequirements(visionSubsystem);
+    this.swerveSubsystem = swerveSubsystem;
+    addRequirements(visionSubsystem, swerveSubsystem);
   }
 
   // Called when the command is initially scheduled.
