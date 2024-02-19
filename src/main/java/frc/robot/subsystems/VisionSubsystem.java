@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
 import frc.robot.subsystems.LimelightHelpers;
+import frc.robot.subsystems.LimelightHelpers.LimelightResults;
 import frc.robot.subsystems.LimelightHelpers.LimelightTarget_Fiducial;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -38,11 +39,14 @@ public class VisionSubsystem extends SubsystemBase {
 
     public CANSparkMax testMotor;
 
+    public  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+
+   public LimelightResults limelight = LimelightHelpers.getLatestResults("limelight");
 
   public VisionSubsystem() {
     //tx is horizontal value of target, ty is vertical value of target, ta is area, ts is skew of target, tv is validity of target
 
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    LimelightHelpers.setPipelineIndex("limelight",0);
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
@@ -106,8 +110,11 @@ public double proportionalAiming()
     // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
     // your limelight 3 feed, tx should return roughly 31 degrees.
     double targetingAngularVelocity = LimelightHelpers.getTX("limelight");
+    //double targetingAngularVelocity = table.getEntry("tx").getDouble(0);
+    SmartDashboard.putNumber("TX", LimelightHelpers.getTX("limelight"));
 
-    targetingAngularVelocity = AimvisionPID.calculate(targetingAngularVelocity, 0);
+    targetingAngularVelocity = AimvisionPID.calculate(targetingAngularVelocity);
+    //targetingAngularVelocity = targetingAngularVelocity * AimkP;
 
     // convert to radians per second for our drive method
     targetingAngularVelocity *= Constants.Swerve.maxAngularVelocity;
@@ -115,13 +122,15 @@ public double proportionalAiming()
     //invert since tx is positive when the target is to the right of the crosshair
     targetingAngularVelocity *= -1.0;
 
+
+
     return targetingAngularVelocity;
   }
 
   public void drive(double value){
 
-  testMotor.set(value);
-
+  testMotor.set(value/5);
+  System.out.print(table.getEntry("tx").getDouble(0));
   }
 
   // simple proportional ranging control with Limelight's "ty" value
@@ -161,5 +170,6 @@ public double proportionalAiming()
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("SOOOOP", limelight.targetingResults.latency_capture);
   }
 }
