@@ -82,6 +82,7 @@ public final class Constants {
 
 
   public static class Swerve {
+    public static final double visionXOffset = 0;
     public static final double stickDeadband = 0.1;//configure and mess around with later
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW- 
 

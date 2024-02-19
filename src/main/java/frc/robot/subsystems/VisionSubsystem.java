@@ -104,7 +104,7 @@ public double proportionalAiming()
     //double targetingAngularVelocity = table.getEntry("tx").getDouble(0);
     SmartDashboard.putNumber("TX", LimelightHelpers.getTX("limelight"));
 
-    //targetingAngularVelocity = AimvisionPID.calculate(targetingAngularVelocity);
+    targetingAngularVelocity = AimvisionPID.calculate(targetingAngularVelocity);
     //targetingAngularVelocity = targetingAngularVelocity * AimkP;
 
     // convert to radians per second for our drive method
@@ -120,7 +120,7 @@ public double proportionalAiming()
 
   public void drive(double value){
 
-  testMotor.set(value/15);
+  testMotor.set(value/5);
   System.out.print(table.getEntry("tx").getDouble(0));
   }
 
@@ -135,7 +135,9 @@ public double proportionalAiming()
     targetingForwardSpeed *= -1.0;
     return targetingForwardSpeed;
   }
-
+  public double getTXSwerve () {
+    return LimelightHelpers.getTX("limelight");
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

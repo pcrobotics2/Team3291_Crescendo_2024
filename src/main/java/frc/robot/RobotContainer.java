@@ -60,6 +60,7 @@ private final SendableChooser<Command> autoChooser;
   public CommandJoystick controller1 = new CommandJoystick(1); 
 
   //buttons
+  public final JoystickButton backToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.back);
   public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
   public final JoystickButton colorToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.start);
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.l3);
@@ -171,10 +172,12 @@ private final SendableChooser<Command> autoChooser;
     swerveSubsystem.setDefaultCommand(
       new SwerveDrive(
         swerveSubsystem,
+        visionSubsystem,
         () -> controller0.getRawAxis(1),
         () -> -controller0.getRawAxis(0),
         () -> controller0.getRawAxis(4),
-        () -> robotCentricButton.getAsBoolean()
+        () -> robotCentricButton.getAsBoolean(),
+        () -> backToggleButton.getAsBoolean()
       )
     );
     // climberSubsystem.setDefaultCommand(
