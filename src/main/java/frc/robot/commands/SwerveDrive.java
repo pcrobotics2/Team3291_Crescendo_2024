@@ -46,7 +46,7 @@ public class SwerveDrive extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     this.visionSubsystem = visionSubsystem;
     this.swerveSubsystem = swerveSubsystem;
-    addRequirements(swerveSubsystem);
+    addRequirements(swerveSubsystem, visionSubsystem);
 
     this.translationSupplier = translationSupplier;
     this.strafeSupplier = strafeSupplier;
@@ -102,7 +102,7 @@ public class SwerveDrive extends Command {
         this.visionTX = -20;
       }
       else {
-          this.visionTX = visionSubsystem.getTXSwerve();
+        this.visionTX = visionSubsystem.getTXSwerve();
       }
     }
       else {
