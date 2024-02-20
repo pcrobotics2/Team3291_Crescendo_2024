@@ -68,8 +68,8 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("originalAngle", current_angle);
     //double pivot_angle = pivotTargetToAngle(pivot_target);
     
-    double angle = Math.abs(360 - current_angle); //reverses it
-    //double angle = current_angle;
+    //double angle = Math.abs(360 - current_angle); //reverses it
+    double angle = current_angle;
     SmartDashboard.putNumber("updatedAngle", angle);
 
     double intake_pivot_voltage = pidController.calculate(angle, pivot_angle);
@@ -84,11 +84,11 @@ public class IntakeSubsystem extends SubsystemBase {
     if (intakeEncoder.get() == 0.0) {
       adjustedIntakePivotVoltage = 0.0;
     }
-    if (adjustedIntakePivotVoltage > 10) {
-      adjustedIntakePivotVoltage = 10;
+    if (adjustedIntakePivotVoltage > 3) {
+      adjustedIntakePivotVoltage = 3;
     }
-    if (adjustedIntakePivotVoltage < -10) {
-      adjustedIntakePivotVoltage = -10;
+    if (adjustedIntakePivotVoltage < -3) {
+      adjustedIntakePivotVoltage = -3;
     }
     System.out.println("division error" + adjustedIntakePivotVoltage);
     return adjustedIntakePivotVoltage;
@@ -243,6 +243,7 @@ public class IntakeSubsystem extends SubsystemBase {
     if (getIntakeHasNote()) {
       colorChanger.setRAINBOWOCEAN();
     }
+    SmartDashboard.putNumber("encoder reading", getCurrentAngle());
   }
 }
   

@@ -34,7 +34,7 @@ public class IntakeMotorCMD extends Command {
   @Override
   public void execute() {
     if (!intakeSubsystem.getIntakeHasNote()) {
-      intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
+      intakeMotorSubsystem.moveIntakeMotor(Constants.intake.intakeSpeed);
     }
     else {
       intakeMotorSubsystem.moveIntakeMotor(0);

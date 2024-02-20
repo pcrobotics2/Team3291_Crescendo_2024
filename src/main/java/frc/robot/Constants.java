@@ -24,14 +24,17 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
-  
+
   public static final int leftClimberID = 24;//24
   public static final int rightClimberID = 15;//15
 
   public static final double feedSpeed = 0.4;   //0.40
-  public static final double launchSpeed = 0.8; 
+  public static final double launchSpeed = 1; 
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
+  public static final double launcherTargetVoltage = launchSpeed * 12;
+  public static final double gracePeriod = 0.3;
+
 
   public static final int rightLauncherID = 14; //14
   public static final int leftLauncherID = 18; //18
@@ -83,6 +86,9 @@ public final class Constants {
 
   public static class Swerve {
     public static final double visionXOffset = 0;
+    public static final double visionXRange = 20;
+    public static final double visionXDeadband = 1;
+    public static final double visionXProportionalGain = 2;
     public static final double stickDeadband = 0.1;//configure and mess around with later
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW- 
 

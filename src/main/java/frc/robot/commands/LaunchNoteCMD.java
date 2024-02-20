@@ -14,6 +14,7 @@ public class LaunchNoteCMD extends Command {
   IntakeMotorSubsystem intakeMotorSubsystem;
   LauncherSub launcherSub;
   double timeCheck;
+  double speed;
 
   /** Creates a new LaunchNoteCMD. */
   public LaunchNoteCMD(IntakeMotorSubsystem intakeMotorSubsystem, LauncherSub launcherSub) {
@@ -27,15 +28,23 @@ public class LaunchNoteCMD extends Command {
   @Override
   public void initialize() {
     this.timeCheck = Timer.getFPGATimestamp();
-    launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
+  //  launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
+    this.speed = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Timer.getFPGATimestamp() - timeCheck > Constants.intake.launchNoteTimeInSecs) {
-    intakeMotorSubsystem.moveIntakeMotor(Constants.intake.ejectSpeed);
+    // this.speed += Constants.intake.launchNoteTimeInSecs * Constants.launcherTargetVoltage / 50;
+    // if (this.speed >= Constants.launcherTargetVoltage) {
+    //   this.speed = Constants.launcherTargetVoltage;
+    // }
+    //launcherSub.setLaunchWheelsVoltage(-this.speed, this.speed);
+    launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
+    if (Timer.getFPGATimestamp() - timeCheck > Constants.intake.launchNoteTimeInSecs + Constants.gracePeriod) {
+    intakeMotorSubsystem.moveIntakeMotor(Constants.launchSpeed);
     }
+
   }
 
   // Called once the command ends or is interrupted.
