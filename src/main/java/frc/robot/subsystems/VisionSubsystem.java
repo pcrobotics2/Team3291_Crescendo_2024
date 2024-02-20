@@ -30,7 +30,12 @@ public class VisionSubsystem extends SubsystemBase {
     public double AimkI = 0.0;
     public double AimkD = 0.0007;
 
+    public double dkP = 0.1;
+    public double dkI = 0.0;
+    public double dkD = 0.0001;
+
     public PIDController AimvisionPID;
+    public PIDController distancePID;
 
     public CANSparkMax testMotor;
 
@@ -45,6 +50,7 @@ public class VisionSubsystem extends SubsystemBase {
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
+    NetworkTableEntry targetpose_cameraspace = table.getEntry("targetpose_cameraspace");
 
     this.testMotor = new CANSparkMax(22, MotorType.kBrushless); //7
     
@@ -65,7 +71,11 @@ public class VisionSubsystem extends SubsystemBase {
       AimkD
     );
 
-
+    this.distancePID = new PIDController(
+      dkP,
+      dkI,
+      dkD
+    );
 
   }
 
@@ -127,17 +137,53 @@ public double proportionalAiming()
   // simple proportional ranging control with Limelight's "ty" value
   // this works best if your Limelight's mount height and target mount height are different.
   // if your limelight and target are mounted at the same or similar heights, use "ta" (area) for target ranging rather than "ty"
-  double limelight_range_proportional()
+  public double getLimelightSpeed()
   {    
     double kP = .1;
     double targetingForwardSpeed = LimelightHelpers.getTY("limelight") * kP;
-    targetingForwardSpeed *= Constants.Swerve.maxSpeed;
     targetingForwardSpeed *= -1.0;
     return targetingForwardSpeed;
   }
-  public double getTXSwerve () {
+
+  public double getDistanceToSpeaker(){
+    double ty = LimelightHelpers.getTY("limelight");
+    double targetOffsetAngle_Vertical = ty;//not accurate, this is a1, to be changed later
+
+    double desiredDistanceInches = 43.5;//the subwoofer + 6 inches 
+
+    // how many degrees back is your limelight rotated from perfectly vertical?
+    double limelightMountAngleDegrees = 28.8; //not accurate to be changed later
+
+    // distance from the center of the Limelight lens to the floor
+    double limelightLensHeightInches = 16.875; //not accurate to be changed later
+
+    // distance from the target to the floor
+    double goalHeightInches = 57.125; //accounts for the lowest edge
+
+    double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+    //calculate distance
+    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+    double distance = distancePID.calculate(distanceFromLimelightToGoalInches, desiredDistanceInches);
+    return distance;
+  }
+
+  public double getTXSwerve() {
     return LimelightHelpers.getTX("limelight");
   }
+
+  public boolean apriltagIdCHeck(int ID){
+
+    if (LimelightHelpers.getFiducialID("limelight") == ID){
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

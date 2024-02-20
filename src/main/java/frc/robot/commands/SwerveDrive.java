@@ -27,11 +27,13 @@ public class SwerveDrive extends Command {
   private final BooleanSupplier backToggleSupplier;
   private int backToggleInt;
   private double rotationVal;
+  private double translationVal;
   private double visionTX;
 
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(Swerve.kMaxTranslationAcceleration);
   private SlewRateLimiter strafeLimiter = new SlewRateLimiter(Swerve.kMaxStrafeAcceleration);
   private SlewRateLimiter rotationLimiter = new SlewRateLimiter(Swerve.kMaxRotationAcceleration);
+  private double strafeVal;
 
   /** Creates a new SwerveDrive. */
   public SwerveDrive(
@@ -85,13 +87,13 @@ public class SwerveDrive extends Command {
     SmartDashboard.putNumber("Strafe Supplier", strafeSupplier.getAsDouble());
     SmartDashboard.putNumber("Rotation Supplier", rotationSupplier.getAsDouble());
 
-    double translationVal = translationLimiter.calculate(
-      MathUtil.applyDeadband(translationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
-    double strafeVal = strafeLimiter.calculate(
-      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
     if (backToggleInt == 0) {
     this.rotationVal = rotationLimiter.calculate(
       MathUtil.applyDeadband(rotationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
+      this.translationVal = translationLimiter.calculate(
+      MathUtil.applyDeadband(translationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
+      this.strafeVal = strafeLimiter.calculate(
+      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
     }
     else if (backToggleInt == 2) {
       if (visionSubsystem.getTXSwerve() > Constants.Swerve.visionXDeadband || visionSubsystem.getTXSwerve() < -Constants.Swerve.visionXDeadband) {
@@ -110,7 +112,10 @@ public class SwerveDrive extends Command {
       }
       double visionOutput = (visionTX - Constants.Swerve.visionXOffset)/Constants.Swerve.visionXRange;
       this.rotationVal = rotationLimiter.calculate(
-      MathUtil.applyDeadband(visionOutput/1.8, Swerve.stickDeadband));
+      MathUtil.applyDeadband(visionOutput, Swerve.stickDeadband));
+
+      this.translationVal = translationLimiter.calculate(visionSubsystem.getDistanceToSpeaker());
+      this.strafeVal = 0.0;
     }
     swerveSubsystem.drive(
       new Translation2d(-translationVal, strafeVal).times(Swerve.maxSpeed), 

@@ -24,6 +24,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.Swerve;
 import frc.robot.commands.ClimbCMD;
 import frc.robot.commands.ColorChangingCMD;
+import frc.robot.commands.DriveToApriltag;
+import frc.robot.commands.DriveToApriltagAndShoot;
 import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchNoteCMD;
 import frc.robot.commands.LaunchWheelCMD;
@@ -98,6 +100,8 @@ private final SendableChooser<Command> autoChooser;
   public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger); 
   //intake motor + launcher
   public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
+  public DriveToApriltagAndShoot driveToApriltagAndShoot = new DriveToApriltagAndShoot(swerveSubsystem, visionSubsystem, intakeMotorSubsystem, launcherSub, 0);
+  public DriveToApriltag driveToApriltag = new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, false);
   
 
 
@@ -121,19 +125,18 @@ private final SendableChooser<Command> autoChooser;
         NamedCommands.registerCommand("GroundCMD", new GroundCMD(intakeSubsystem).until(intakeSubsystem::groundAtAngle));
         NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
         NamedCommands.registerCommand("ColorChangingCMD", new ColorChangingCMD(colorChanger));
-
-
-
+        NamedCommands.registerCommand("DriveToApriltagAndShoot", driveToApriltagAndShoot);
 
     configureBindings();
 
     controller0.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller0.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
     
-    //controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
+    controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
 
-    controller0.button(Constants.buttonList.b).whileTrue(aprilTagCMD);
+    controller1.button(Constants.buttonList.back).whileTrue(driveToApriltagAndShoot);
+    controller1.button(Constants.buttonList.start).whileTrue(driveToApriltag);
    
     //intake
 
