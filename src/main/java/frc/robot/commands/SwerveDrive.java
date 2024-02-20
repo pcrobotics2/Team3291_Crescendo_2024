@@ -94,21 +94,21 @@ public class SwerveDrive extends Command {
       MathUtil.applyDeadband(rotationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
     }
     else if (backToggleInt == 2) {
-      if (visionSubsystem.getTXSwerve() > 1 || visionSubsystem.getTXSwerve() < -1) {
-      if (visionSubsystem.getTXSwerve() > 20) {
-        this.visionTX = 20;
+      if (visionSubsystem.getTXSwerve() > Constants.Swerve.visionXDeadband || visionSubsystem.getTXSwerve() < -Constants.Swerve.visionXDeadband) {
+        if (visionSubsystem.getTXSwerve() > Constants.Swerve.visionXRange) {
+        this.visionTX = Constants.Swerve.visionXRange;
+        }
+          else if (visionSubsystem.getTXSwerve() < -Constants.Swerve.visionXRange) {
+            this.visionTX = -Constants.Swerve.visionXRange;
+          }
+            else {
+              this.visionTX = visionSubsystem.getTXSwerve() * Constants.Swerve.visionXProportionalGain;
+            }
       }
-      if (visionSubsystem.getTXSwerve() < -20) {
-        this.visionTX = -20;
-      }
-      else {
-        this.visionTX = visionSubsystem.getTXSwerve();
-      }
-    }
       else {
         this.visionTX = Constants.Swerve.visionXOffset;
       }
-      double visionOutput = (visionTX - Constants.Swerve.visionXOffset)/20;
+      double visionOutput = (visionTX - Constants.Swerve.visionXOffset)/Constants.Swerve.visionXRange;
       this.rotationVal = rotationLimiter.calculate(
       MathUtil.applyDeadband(visionOutput/1.8, Swerve.stickDeadband));
     }

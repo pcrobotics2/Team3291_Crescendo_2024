@@ -36,6 +36,10 @@ public class LauncherSub extends SubsystemBase {
   public void setLaunchWheelDown(double speed) {
     leftLauncher.set(speed);
   }
+  public void setLaunchWheelsVoltage (double rightSpeed, double leftSpeed) {
+    rightLauncher.setVoltage(rightSpeed);
+    leftLauncher.setVoltage(leftSpeed);
+  }
   public void stop() {
     leftLauncher.set(0);
     rightLauncher.set(0);

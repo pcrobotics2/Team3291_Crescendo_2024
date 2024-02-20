@@ -148,9 +148,9 @@ private final SendableChooser<Command> autoChooser;
     controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
     controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
 
-    controller0.button(Constants.buttonList.l3).toggleOnTrue(climbCMD);
+    controller1.button(Constants.buttonList.l3).toggleOnTrue(climbCMD);
     
-    controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
+    controller1.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
     
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
