@@ -125,6 +125,7 @@ private final SendableChooser<Command> autoChooser;
         NamedCommands.registerCommand("GroundCMD", new GroundCMD(intakeSubsystem).until(intakeSubsystem::groundAtAngle));
         NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
         NamedCommands.registerCommand("ColorChangingCMD", new ColorChangingCMD(colorChanger));
+        NamedCommands.registerCommand("DriveToApriltagAndShoot", ampCMD);
 
 
 
