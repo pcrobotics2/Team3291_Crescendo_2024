@@ -50,6 +50,7 @@ public class VisionSubsystem extends SubsystemBase {
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
+    NetworkTableEntry targetpose_cameraspace = table.getEntry("targetpose_cameraspace");
 
     this.testMotor = new CANSparkMax(22, MotorType.kBrushless); //7
     
@@ -136,16 +137,15 @@ public double proportionalAiming()
   // simple proportional ranging control with Limelight's "ty" value
   // this works best if your Limelight's mount height and target mount height are different.
   // if your limelight and target are mounted at the same or similar heights, use "ta" (area) for target ranging rather than "ty"
-  double limelight_range_proportional()
+  public double getLimelightSpeed()
   {    
     double kP = .1;
     double targetingForwardSpeed = LimelightHelpers.getTY("limelight") * kP;
-    targetingForwardSpeed *= Constants.Swerve.maxSpeed;
     targetingForwardSpeed *= -1.0;
     return targetingForwardSpeed;
   }
 
-  public double getDistance(){
+  public double getDistanceToSpeaker(){
     double ty = LimelightHelpers.getTY("limelight");
     double targetOffsetAngle_Vertical = ty;//not accurate, this is a1, to be changed later
 

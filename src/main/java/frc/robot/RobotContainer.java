@@ -101,7 +101,7 @@ private final SendableChooser<Command> autoChooser;
   //intake motor + launcher
   public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
   public DriveToApriltagAndShoot driveToApriltagAndShoot = new DriveToApriltagAndShoot(swerveSubsystem, visionSubsystem, intakeMotorSubsystem, launcherSub, 0);
-  public DriveToApriltag driveToApriltag = new DriveToApriltag(swerveSubsystem, visionSubsystem, 0);
+  public DriveToApriltag driveToApriltag = new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, false);
   
 
 

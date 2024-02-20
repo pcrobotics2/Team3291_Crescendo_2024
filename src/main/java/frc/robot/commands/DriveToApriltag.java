@@ -25,23 +25,24 @@ public class DriveToApriltag extends Command {
   private double strafeVal;
   private double visionTX;
 
-  //MAYBE USE TX FOR STRAFING AND THEN SKEW FOR ROT, TEST THIS FORST BUT DEFINTELY CONSIDER THIS AS A POSIBILITY
-
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(Swerve.kMaxTranslationAcceleration);
   //private SlewRateLimiter strafeLimiter = new SlewRateLimiter(Swerve.kMaxStrafeAcceleration);
   private SlewRateLimiter rotationLimiter = new SlewRateLimiter(Swerve.kMaxRotationAcceleration);
   private int apriltagID;
+  private boolean toSpeaker;
 
   /** Creates a new SwerveDrive. */
   public DriveToApriltag(
     SwerveSubsystem swerveSubsystem,
     VisionSubsystem visionSubsystem,
-    int apriltagID
+    int apriltagID,
+    boolean toSpeaker
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.visionSubsystem = visionSubsystem;
     this.swerveSubsystem = swerveSubsystem;
     this.apriltagID = apriltagID;
+    this.toSpeaker = toSpeaker;
     addRequirements(swerveSubsystem, visionSubsystem);
   }
 
@@ -54,7 +55,7 @@ public class DriveToApriltag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (visionSubsystem.apriltagIdCHeck(apriltagID) == true && apriltagID != 0){
+    if (visionSubsystem.apriltagIdCHeck(apriltagID) == true){
 
       if (visionSubsystem.getTXSwerve() > 1 || visionSubsystem.getTXSwerve() < -1) {
       if (visionSubsystem.getTXSwerve() > 20) {
@@ -74,7 +75,11 @@ public class DriveToApriltag extends Command {
       double visionOutput = (visionTX - Constants.Swerve.visionXOffset)/20;
       this.rotationVal = rotationLimiter.calculate(visionOutput);
 
-      this.translationVal = translationLimiter.calculate(visionSubsystem.getDistance());
+      if (toSpeaker = true){
+        this.translationVal = translationLimiter.calculate(visionSubsystem.getDistanceToSpeaker());
+      } else {
+        this.translationVal = translationLimiter.calculate(visionSubsystem.getLimelightSpeed());
+      }
       this.strafeVal = 0.0;
 
     swerveSubsystem.drive(
@@ -106,7 +111,7 @@ public class DriveToApriltag extends Command {
   @Override
   public boolean isFinished() {
 
-    if (rotationVal == 0 && Math.abs(this.translationVal) >= 0.01){
+    if (rotationVal >= 0.1 && Math.abs(this.translationVal) >= 0.1){
       return true;
     }
     return false;

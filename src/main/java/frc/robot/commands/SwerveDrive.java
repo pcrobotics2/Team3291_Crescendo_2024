@@ -115,7 +115,7 @@ public class SwerveDrive extends Command {
       this.rotationVal = rotationLimiter.calculate(
       MathUtil.applyDeadband(visionOutput, Swerve.stickDeadband));
 
-      this.translationVal = translationLimiter.calculate(visionSubsystem.getDistance());
+      this.translationVal = translationLimiter.calculate(visionSubsystem.getDistanceToSpeaker());
       this.strafeVal = 0.0;
     }
     swerveSubsystem.drive(
