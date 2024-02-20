@@ -79,59 +79,20 @@ public class VisionSubsystem extends SubsystemBase {
 
   }
 
-  double limelight_aim_proportional()
-  {    
-    // kP (constant of proportionality)
-    // this is a hand-tuned number that determines the aggressiveness of our proportional control loop
-    // if it is too high, the robot will oscillate around.
-    // if it is too low, the robot will never reach its target
-    // if the robot never turns in the correct direction, kP should be inverted.
-
-    // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
-    // your limelight 3 feed, tx should return roughly 31 degrees.
-    double targetingAngularVelocity = LimelightHelpers.getTX("limelight");
-
-    // convert to radians per second for our drive method
-    targetingAngularVelocity *= Constants.Swerve.maxAngularVelocity;
-
-    //invert since tx is positive when the target is to the right of the crosshair
-    targetingAngularVelocity *= -1.0;
-
-    return targetingAngularVelocity;
-  }
-
 public double proportionalAiming()
   {    
-    // kP (constant of proportionality)
-    // this is a hand-tuned number that determines the aggressiveness of our proportional control loop
-    // if it is too high, the robot will oscillate around.
-    // if it is too low, the robot will never reach its target
-    // if the robot never turns in the correct direction, kP should be inverted.
-
     // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
-    // your limelight 3 feed, tx should return roughly 31 degrees.
+    // your limelight 3 feed, tx should return roughly 21 degrees.
     double targetingAngularVelocity = LimelightHelpers.getTX("limelight");
     //double targetingAngularVelocity = table.getEntry("tx").getDouble(0);
-    SmartDashboard.putNumber("TX", LimelightHelpers.getTX("limelight"));
+    SmartDashboard.putNumber("TX", LimelightHelpers.getTX("limelight"));//checking the value
 
-    targetingAngularVelocity = AimvisionPID.calculate(targetingAngularVelocity);
-    //targetingAngularVelocity = targetingAngularVelocity * AimkP;
-
-    // convert to radians per second for our drive method
-    targetingAngularVelocity *= Constants.Swerve.maxAngularVelocity;
+    targetingAngularVelocity = AimvisionPID.calculate(targetingAngularVelocity);//plug it in to pid 
 
     //invert since tx is positive when the target is to the right of the crosshair
     targetingAngularVelocity *= -1.0;
 
-
-
     return targetingAngularVelocity;
-  }
-
-  public void drive(double value){
-
-  testMotor.set(value/5);
-  System.out.print(table.getEntry("tx").getDouble(0));
   }
 
   // simple proportional ranging control with Limelight's "ty" value
@@ -145,34 +106,40 @@ public double proportionalAiming()
     return targetingForwardSpeed;
   }
 
+  //formula to get the distance from a certain point, to then use in percise movement (you lowkey could just use the formula above but like this works too)
   public double getDistanceToSpeaker(){
     double ty = LimelightHelpers.getTY("limelight");
-    double targetOffsetAngle_Vertical = ty;//not accurate, this is a1, to be changed later
+    double targetOffsetAngle_Vertical = ty;//offset from the crosshair
 
     double desiredDistanceInches = 43.5;//the subwoofer + 6 inches 
 
     // how many degrees back is your limelight rotated from perfectly vertical?
-    double limelightMountAngleDegrees = 28.8; //not accurate to be changed later
+    double limelightMountAngleDegrees = 28.8;
 
     // distance from the center of the Limelight lens to the floor
-    double limelightLensHeightInches = 16.875; //not accurate to be changed later
+    double limelightLensHeightInches = 16.875;
 
     // distance from the target to the floor
-    double goalHeightInches = 57.125; //accounts for the lowest edge
+    double goalHeightInches = 57.125; //accounts for the lowest edge of the speaker's hood
 
+    //mounting angle plus the offset from the crosshair which should maybe be inverted?
     double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
     //calculate distance
     double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+    //calculate motor output to go to desired distance smooooothly (little extra might just need the p but like why not)
     double distance = distancePID.calculate(distanceFromLimelightToGoalInches, desiredDistanceInches);
+    //return that distance!!!!
     return distance;
   }
 
+  //gets the TX to then use in the drive to apriltag commands
   public double getTXSwerve() {
     return LimelightHelpers.getTX("limelight");
   }
 
+  //checks if the intended apriltag id has been found
   public boolean apriltagIdCHeck(int ID){
 
     if (LimelightHelpers.getFiducialID("limelight") == ID){
@@ -187,6 +154,5 @@ public double proportionalAiming()
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("SOOOOP", limelight.targetingResults.latency_capture);
   }
 }
