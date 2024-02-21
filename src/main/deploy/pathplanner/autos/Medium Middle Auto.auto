@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.2977105906762236,
+      "y": 5.560508013068222
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "LaunchNoteCMD"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Medium Middle"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LaunchNoteCMD"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Medium Auto",
+  "choreoAuto": false
+}

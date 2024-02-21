@@ -123,7 +123,7 @@ private final SendableChooser<Command> autoChooser;
         NamedCommands.registerCommand("GroundCMD", new GroundCMD(intakeSubsystem).until(intakeSubsystem::groundAtAngle));
         NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
         NamedCommands.registerCommand("ColorChangingCMD", new ColorChangingCMD(colorChanger));
-        NamedCommands.registerCommand("DriveToApriltagAndShoot", driveToApriltagAndShoot);
+        NamedCommands.registerCommand("DriveToApriltag", new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, true));
 
     configureBindings();
 
@@ -209,7 +209,7 @@ private final SendableChooser<Command> autoChooser;
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("TestAuto");
+    return new PathPlannerAuto("Test Auto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }

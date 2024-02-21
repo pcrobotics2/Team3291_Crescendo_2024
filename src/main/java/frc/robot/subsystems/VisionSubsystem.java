@@ -140,9 +140,9 @@ public double proportionalAiming()
   }
 
   //checks if the intended apriltag id has been found
-  public boolean apriltagIdCHeck(int ID){
+  public boolean isThereATarget(){
 
-    if (LimelightHelpers.getFiducialID("limelight") == ID){
+    if (LimelightHelpers.getTV("limelight") == true){
       return true;
     }
     else {
@@ -150,6 +150,8 @@ public double proportionalAiming()
     }
 
   }
+
+  
 
   @Override
   public void periodic() {

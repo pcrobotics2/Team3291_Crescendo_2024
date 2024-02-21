@@ -55,7 +55,7 @@ public class DriveToApriltag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (visionSubsystem.apriltagIdCHeck(apriltagID) == true){
+    if (visionSubsystem.isThereATarget() == true){
 
       if (visionSubsystem.getTXSwerve() > 1 || visionSubsystem.getTXSwerve() < -1) {
       if (visionSubsystem.getTXSwerve() > 20) {
