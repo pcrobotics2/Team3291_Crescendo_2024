@@ -364,7 +364,7 @@ public final class Constants {
      DARKGREEN ("Dark Green", 0.75),
      GREEN ("Green", 0.77),
      BLUEGREEN ("Blue Green", 0.79),
-     AQUA ("Auqa", 0.81),
+     AQUA ("Aqua", 0.81),
      SKYBLUE ("Sky Blue", 0.83),
      DARKBLUE ("Dark Blue", 0.85),
      BLUE ("Blue", 0.87),
