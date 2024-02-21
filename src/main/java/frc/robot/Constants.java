@@ -40,7 +40,7 @@ public final class Constants {
   public static final int rightClimberID = 15;//15
 
   public static final double feedSpeed = 0.4;   //0.40
-  public static final double launchSpeed = 500; 
+  public static final double launchSpeed = 5000 * 0.1;//5000 * percentage 
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
   public static final double launcherTargetVoltage = launchSpeed * 12;
@@ -70,8 +70,9 @@ public final class Constants {
 
     public static class intakePID {
     public static final double kp = 0.1;
-    public static final double ki = 0.01;
+    public static final double ki = 0.0;
     public static final double kd = 0.0;
+    public static final double kcos = 0.001;
     }
 
     //ids
