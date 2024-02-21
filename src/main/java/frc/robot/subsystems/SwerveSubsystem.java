@@ -47,7 +47,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public double previousTimeStmap;
 
 
-  //private SwerveDriveOdometry swerveOdometry;
+  private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
   private VisionSubsystem visionSubsystem;
 
@@ -78,11 +78,11 @@ public class SwerveSubsystem extends SubsystemBase {
     
 
 
-    /*swerveOdometry = new SwerveDriveOdometry(
+    swerveOdometry = new SwerveDriveOdometry(
       Swerve.swerveKinematics,
       filterGyro(),
       getModulePositions()
-    );*/
+    );
 
 
     field = new Field2d();
@@ -218,11 +218,6 @@ public class SwerveSubsystem extends SubsystemBase {
       return m_poseEstimator.getEstimatedPosition();// both return the estimated position on the field 
   }
 
-
-  /*public void resetPoseEstimator(Pose2d pose) {
-    swerveOdometry.resetPosition(filterGyro(), getModulePositions(), pose);
-  }*/
-
   public void resetPoseEstimator(Pose2d pose){
   m_poseEstimator.resetPosition(filterGyro(), getModulePositions(), pose);
 }
@@ -261,7 +256,7 @@ public ChassisSpeeds getSpeeds() {
     var timeStmap = Timer.getFPGATimestamp() - (tl/1000) - (cl/1000);
 
     //if there's apriltags and it's not the same millisecond, run
-    if (numAprilTags >= 0 && timeStmap != previousTimeStmap){
+    if (numAprilTags > 0 && timeStmap != previousTimeStmap){
       //get the bot pose as determined by the liemlight
       var botpose = results.targetingResults.getBotPose2d();//Idon'tthink this is the right way to make the call, and I'm not sure if it's getting the right data 
       //System.out.print(botpose);
@@ -273,12 +268,15 @@ public ChassisSpeeds getSpeeds() {
       filterGyro(),
       getModulePositions());
     
-    //swerveOdometry.update(filterGyro(), getModulePositions());
+    swerveOdometry.update(filterGyro(), getModulePositions());
 
     field.setRobotPose(m_poseEstimator.getEstimatedPosition());
     SmartDashboard.putNumber("poseEstimatorX", m_poseEstimator.getEstimatedPosition().getX());
     SmartDashboard.putNumber("poseEstimatorY", m_poseEstimator.getEstimatedPosition().getY());
     SmartDashboard.putNumber("poseEstimatorRot", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees());
+    SmartDashboard.putNumber("OdometryX", swerveOdometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("OdometryY", swerveOdometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("OdometryRot", swerveOdometry.getPoseMeters().getRotation().getDegrees());
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
