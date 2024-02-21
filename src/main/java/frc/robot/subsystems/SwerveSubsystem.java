@@ -257,7 +257,7 @@ public ChassisSpeeds getSpeeds() {
 
     if (numAprilTags >= 0 && timeStmap != previousTimeStmap){
       var botpose = results.targetingResults.getBotPose2d();//Idon'tthink this is the right way to make the call, and I'm not sure if it's getting the right data 
-      System.out.print(botpose);
+      //System.out.print(botpose);
       previousTimeStmap = timeStmap;
       m_poseEstimator.addVisionMeasurement(botpose, timeStmap);
     }

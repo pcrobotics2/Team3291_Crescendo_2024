@@ -29,7 +29,7 @@ public final class Constants {
   public static final int rightClimberID = 15;//15
 
   public static final double feedSpeed = 0.4;   //0.40
-  public static final double launchSpeed = 1; 
+  public static final double launchSpeed = 0.65; 
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
   public static final double launcherTargetVoltage = launchSpeed * 12;
@@ -69,13 +69,13 @@ public final class Constants {
     public static final int PivotID = 19;//19 
     public static final int intakeLimitSwitchID = 9;
 
-    public static final double k_pivotEncoderOffset = 40;
+    public static final double k_pivotEncoderOffset = 230;
 
     //angles
-    public static final double groundAngle = 10;//doesn't like 0
-    public static final double stowAngle = 163;
-    public static final double sourceAngle = 95;
-    public static final double ampAngle = 70;
+    public static final double groundAngle = 167 - 0;//doesn't like 0
+    public static final double stowAngle = 167 - 163;
+    public static final double sourceAngle = 167 - 55;
+    public static final double ampAngle = 167 - 30;
 
     public static final double ejectSpeed = 0.5;
     public static final double intakeSpeed = 0.7;
