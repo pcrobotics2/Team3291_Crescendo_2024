@@ -24,12 +24,23 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static final int kLauncherSubLeftMotorId = 22;
+  public static final int kLauncherSubRightMotorId = 18;
+
+  public static final double kLauncherSubP = 0.00005;
+  public static final double kLauncherSubI = 0.0;
+  public static final double kLauncherSubD = 0.0;
+  public static final double kLauncherSubFF = 0.0002;
+
+  public static final double kLauncherSubMinOutput = 0;
+  public static final double kLauncherSubMaxOutput = 1;
+
 
   public static final int leftClimberID = 24;//24
   public static final int rightClimberID = 15;//15
 
   public static final double feedSpeed = 0.4;   //0.40
-  public static final double launchSpeed = 0.55; 
+  public static final double launchSpeed = 500; 
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
   public static final double launcherTargetVoltage = launchSpeed * 12;

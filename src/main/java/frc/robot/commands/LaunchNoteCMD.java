@@ -40,7 +40,7 @@ public class LaunchNoteCMD extends Command {
     //   this.speed = Constants.launcherTargetVoltage;
     // }
     //launcherSub.setLaunchWheelsVoltage(-this.speed, this.speed);
-    launcherSub.setLaunchWheels(Constants.launchSpeed, -Constants.launchSpeed);
+    launcherSub.setSpeed(Constants.launchSpeed);
     if (Timer.getFPGATimestamp() - timeCheck > Constants.intake.launchNoteTimeInSecs + Constants.gracePeriod) {
     intakeMotorSubsystem.moveIntakeMotor(-Constants.launchSpeed);
     }
@@ -50,7 +50,7 @@ public class LaunchNoteCMD extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    launcherSub.setLaunchWheels(0, 0);
+    launcherSub.stopLauncherSub();
     intakeMotorSubsystem.moveIntakeMotor(0);//stops it
   }
 
