@@ -14,6 +14,7 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 
 import edu.wpi.first.math.estimator.KalmanFilter;
+import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -46,7 +47,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public double previousTimeStmap;
 
 
-  private SwerveDriveOdometry swerveOdometry;
+  //private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
   private VisionSubsystem visionSubsystem;
 
@@ -77,11 +78,11 @@ public class SwerveSubsystem extends SubsystemBase {
     
 
 
-    swerveOdometry = new SwerveDriveOdometry(
+    /*swerveOdometry = new SwerveDriveOdometry(
       Swerve.swerveKinematics,
       filterGyro(),
       getModulePositions()
-    );
+    );*/
 
 
     field = new Field2d();
@@ -93,7 +94,7 @@ public class SwerveSubsystem extends SubsystemBase {
      AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
             //this::resetPoseEstimator, // Method to reset the pose estimator (will be called if your auto has a starting pose)
-            this::resetOdometry,// Method to reset odometry (will be called if your auto has a starting pose)
+            this::resetPoseEstimator,// Method to reset odometry (will be called if your auto has a starting pose)
             this::getSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
@@ -214,13 +215,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public Pose2d getPose() {
       //return m_poseEstimator.getEstimatedPosition();
-      return swerveOdometry.getPoseMeters();// both return the estimated position on the field 
+      return m_poseEstimator.getEstimatedPosition();// both return the estimated position on the field 
   }
 
 
-  public void resetOdometry(Pose2d pose) {
+  /*public void resetPoseEstimator(Pose2d pose) {
     swerveOdometry.resetPosition(filterGyro(), getModulePositions(), pose);
-  }
+  }*/
 
   public void resetPoseEstimator(Pose2d pose){
   m_poseEstimator.resetPosition(filterGyro(), getModulePositions(), pose);
@@ -263,7 +264,7 @@ public ChassisSpeeds getSpeeds() {
     if (numAprilTags >= 0 && timeStmap != previousTimeStmap){
       //get the bot pose as determined by the liemlight
       var botpose = results.targetingResults.getBotPose2d();//Idon'tthink this is the right way to make the call, and I'm not sure if it's getting the right data 
-      System.out.print(botpose);
+      //System.out.print(botpose);
       previousTimeStmap = timeStmap;
       m_poseEstimator.addVisionMeasurement(botpose, timeStmap);//DO THE THING (DO A BACKFLIP)
     }
@@ -272,9 +273,12 @@ public ChassisSpeeds getSpeeds() {
       filterGyro(),
       getModulePositions());
     
-    swerveOdometry.update(filterGyro(), getModulePositions());
+    //swerveOdometry.update(filterGyro(), getModulePositions());
 
-    field.setRobotPose(swerveOdometry.getPoseMeters());
+    field.setRobotPose(m_poseEstimator.getEstimatedPosition());
+    SmartDashboard.putNumber("poseEstimatorX", m_poseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("poseEstimatorY", m_poseEstimator.getEstimatedPosition().getY());
+    SmartDashboard.putNumber("poseEstimatorRot", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees());
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());

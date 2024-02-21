@@ -62,9 +62,9 @@ private final SendableChooser<Command> autoChooser;
 
   //buttons
   public final JoystickButton backToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.back);
-  public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
-  public final JoystickButton colorToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.start);
-  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.l3);
+  public final JoystickButton aToggleButton = new JoystickButton(controller1.getHID(), Constants.buttonList.a);
+  public final JoystickButton colorToggleButton = new JoystickButton(controller1.getHID(), Constants.buttonList.l3);
+  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.r3);
 
   //subsystems
   public VisionSubsystem visionSubsystem = new VisionSubsystem();
@@ -80,8 +80,8 @@ private final SendableChooser<Command> autoChooser;
   public ClimbCMD climbCMD = new ClimbCMD(
         climberSubsystem,
         colorChanger,
-        () -> controller0.getRawAxis(2),
-        () -> controller0.getRawAxis(3),
+        () -> controller1.getRawAxis(2),
+        () -> controller1.getRawAxis(3),
         () -> aToggleButton.getAsBoolean(),
         () -> colorToggleButton.getAsBoolean()
       );
@@ -149,7 +149,7 @@ private final SendableChooser<Command> autoChooser;
     controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
     controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
 
-    controller1.button(Constants.buttonList.l3).toggleOnTrue(climbCMD);
+    controller1.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
     
     controller1.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
     

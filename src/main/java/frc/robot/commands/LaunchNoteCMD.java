@@ -40,9 +40,9 @@ public class LaunchNoteCMD extends Command {
     //   this.speed = Constants.launcherTargetVoltage;
     // }
     //launcherSub.setLaunchWheelsVoltage(-this.speed, this.speed);
-    launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
+    launcherSub.setLaunchWheels(Constants.launchSpeed, -Constants.launchSpeed);
     if (Timer.getFPGATimestamp() - timeCheck > Constants.intake.launchNoteTimeInSecs + Constants.gracePeriod) {
-    intakeMotorSubsystem.moveIntakeMotor(Constants.launchSpeed);
+    intakeMotorSubsystem.moveIntakeMotor(-Constants.launchSpeed);
     }
 
   }

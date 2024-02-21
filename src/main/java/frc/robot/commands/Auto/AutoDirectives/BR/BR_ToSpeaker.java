@@ -68,7 +68,7 @@ public class BR_ToSpeaker extends SequentialCommandGroup {
         s_sSwerve);
 
     addCommands(
-      new InstantCommand(() -> s_sSwerve.resetOdometry(Trajectory1.getInitialPose())),
+      new InstantCommand(() -> s_sSwerve.resetPoseEstimator(Trajectory1.getInitialPose())),
       swerveControllerCommand);
   }
     
