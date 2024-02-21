@@ -86,11 +86,11 @@ public class IntakeSubsystem extends SubsystemBase {
     if (intakeEncoder.get() == 0.0) {
       adjustedIntakePivotVoltage = 0.0;
     }
-    if (adjustedIntakePivotVoltage > 3) {
-      adjustedIntakePivotVoltage = 3;
+    if (adjustedIntakePivotVoltage > 4) {
+      adjustedIntakePivotVoltage = 4;
     }
-    if (adjustedIntakePivotVoltage < -3) {
-      adjustedIntakePivotVoltage = -3;
+    if (adjustedIntakePivotVoltage < -4) {
+      adjustedIntakePivotVoltage = -4;
     }
     System.out.println("division error" + adjustedIntakePivotVoltage);
     return adjustedIntakePivotVoltage;

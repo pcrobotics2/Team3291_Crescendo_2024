@@ -1,52 +1,111 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 
 public class IntakeMotorSubsystem extends SubsystemBase {
-  /** Creates a new IntakeMotorSubsystem. */
-    public CANSparkMax intakeMotor;
-    public IntakeMotorSubsystem intakeMotorSubsystem;
-    public Object setColorMode;
+
+  /*-------------------------------- public instance variables ---------------------------------*/
+  //public static IntakeMotorSubsystem mInstance;
+  //public PeriodicIO mPeriodicIO;
+
+ // public static IntakeMotorSubsystem getInstance() {
+ //   if (mInstance == null) {
+   //   mInstance = new IntakeMotorSubsystem();
+    //}
+    //return mInstance;
+  //}
+
+  public CANSparkMax IntakeMotorMotor;
+
+  public SparkPIDController IntakeMotorPID;
+
+  public RelativeEncoder IntakeMotorEncoder;
+
+  public SlewRateLimiter mSpeedLimiter = new SlewRateLimiter(1000);
 
   public IntakeMotorSubsystem() {
-    this.intakeMotor = new CANSparkMax(Constants.intake.IntakeID, CANSparkLowLevel.MotorType.kBrushless); 
+    // super("IntakeMotorSubsystem");
+
+  //  mPeriodicIO = new PeriodicIO();
+
+    IntakeMotorMotor = new CANSparkMax(Constants.intake.IntakeID, MotorType.kBrushless);
+    IntakeMotorMotor.restoreFactoryDefaults();
+
+    IntakeMotorPID = IntakeMotorMotor.getPIDController();
+    IntakeMotorPID.setP(Constants.kLauncherSubP);
+    IntakeMotorPID.setI(Constants.kLauncherSubI);
+    IntakeMotorPID.setD(Constants.kLauncherSubD);
+    IntakeMotorPID.setFF(Constants.kLauncherSubFF);
+    IntakeMotorPID.setOutputRange(Constants.kLauncherSubMinOutput, Constants.kLauncherSubMaxOutput);
+
+    mRightLauncherSubPID = mRightLauncherSubMotor.getPIDController();
+    mRightLauncherSubPID.setP(Constants.kLauncherSubP);
+    mRightLauncherSubPID.setI(Constants.kLauncherSubI);
+    mRightLauncherSubPID.setD(Constants.kLauncherSubD);
+    mRightLauncherSubPID.setFF(Constants.kLauncherSubFF);
+    mRightLauncherSubPID.setOutputRange(Constants.kLauncherSubMinOutput, Constants.kLauncherSubMaxOutput);
+
+    IntakeMotorEncoder = IntakeMotorMotor.getEncoder();
+    mRightIntakeMotorSubsystemEncoder = mRightIntakeMotorSubsystemMotor.getEncoder();
+
+    IntakeMotorMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    mRightIntakeMotorSubsystemMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
+    IntakeMotorMotor.setInverted(true);
+    mRightIntakeMotorSubsystemMotor.setInverted(false);
 
   }
-  public void moveIntakeMotor (double speed) {
-    intakeMotor.set(speed);
+
+//  public static class PeriodicIO {
+//    double IntakeMotorSubsystem_rpm = 0.0;
+//  }
+
+  /*-------------------------------- Generic Subsystem Functions --------------------------------*/
+
+  public void stop() {
+    stopIntakeMotorSubsystem();
   }
 
-//   public Command TestStartEndCommand(double speed) {
-//   // implicitly require `this`
-//   // return new FunctionalCommand(    // Reset encoders on command start
-//   // // Start driving forward at the start of the command
-//   // () -> this.moveIntakeMotor(speed),
-//   // // Stop driving at the end of the command
-//   // interrupted -> this.moveIntakeMotor(0),
-//   // // End the command when timer exceeds value
-//   // () -> Timer.getFPGATimestamp(),
-//   // // Require the drive subsystem
-//   // this);
+  // public void outputTelemetry() {
+  //   putNumber("Speed (RPM):", IntakeMotorSubsystem_rpm);
+  //   putNumber("Left speed:", IntakeMotorEncoder.getVelocity());
+  //   putNumber("Right speed:", mRightIntakeMotorSubsystemEncoder.getVelocity());
+  // }
 
 
-  
-// }
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+
+  /*---------------------------------- Custom Public Functions ----------------------------------*/
+
+  public void setSpeed(double rpm) {
+    IntakeMotorMotor.setInverted(true);
+    mRightIntakeMotorSubsystemMotor.setInverted(false);
+    double limitedSpeed = mSpeedLimiter.calculate(rpm);
+    IntakeMotorPID.setReference(limitedSpeed, ControlType.kVelocity);
+    mRightIntakeMotorSubsystemPID.setReference(limitedSpeed, ControlType.kVelocity);
   }
+  public void setSpeedOpposite(double rpm) {
+    IntakeMotorMotor.setInverted(false);
+    mRightIntakeMotorSubsystemMotor.setInverted(true);
+    double limitedSpeed = mSpeedLimiter.calculate(rpm);
+    IntakeMotorPID.setReference(limitedSpeed, ControlType.kVelocity);
+    mRightIntakeMotorSubsystemPID.setReference(limitedSpeed, ControlType.kVelocity);
+  }
+
+  public void stopIntakeMotorSubsystem() {
+    //double limitedSpeed = mSpeedLimiter.calculate(0);
+    IntakeMotorPID.setReference(0, ControlType.kVelocity);
+    mRightIntakeMotorSubsystemPID.setReference(0, ControlType.kVelocity);
+  }
+
+  /*---------------------------------- Custom public Functions ---------------------------------*/
 }
+
+
