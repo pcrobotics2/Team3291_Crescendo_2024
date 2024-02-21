@@ -11,6 +11,7 @@ import frc.robot.subsystems.LauncherSub;
 public class LaunchWheelCMD extends Command {
   /** Creates a new LaunchWheelCMD. */
   LauncherSub launcherSub;
+  double speed;
   public LaunchWheelCMD(LauncherSub launcherSub) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.launcherSub = launcherSub;
@@ -25,6 +26,12 @@ public class LaunchWheelCMD extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // this.speed += Constants.intake.launchNoteTimeInSecs * Constants.launcherTargetVoltage / 50;
+    // if (this.speed >= Constants.launcherTargetVoltage) {
+    //   this.speed = Constants.launcherTargetVoltage;
+    // }
+    // launcherSub.setLaunchWheelsVoltage(-this.speed, this.speed);
+    launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
   }
 
   // Called once the command ends or is interrupted.

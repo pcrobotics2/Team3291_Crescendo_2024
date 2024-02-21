@@ -24,14 +24,17 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
-  
+
   public static final int leftClimberID = 24;//24
   public static final int rightClimberID = 15;//15
 
   public static final double feedSpeed = 0.4;   //0.40
-  public static final double launchSpeed = 0.8; 
+  public static final double launchSpeed = 0.55; 
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
+  public static final double launcherTargetVoltage = launchSpeed * 12;
+  public static final double gracePeriod = 0.3;
+
 
   public static final int rightLauncherID = 14; //14
   public static final int leftLauncherID = 18; //18
@@ -66,13 +69,13 @@ public final class Constants {
     public static final int PivotID = 19;//19 
     public static final int intakeLimitSwitchID = 9;
 
-    public static final double k_pivotEncoderOffset = 40;
+    public static final double k_pivotEncoderOffset = 230;
 
     //angles
-    public static final double groundAngle = 10;//doesn't like 0
-    public static final double stowAngle = 163;
-    public static final double sourceAngle = 95;
-    public static final double ampAngle = 70;
+    public static final double groundAngle = 167 - 0;//doesn't like 0
+    public static final double stowAngle = 167 - 163;
+    public static final double sourceAngle = 167 - 55;
+    public static final double ampAngle = 167 - 30;
 
     public static final double ejectSpeed = 0.5;
     public static final double intakeSpeed = 0.7;
@@ -82,12 +85,16 @@ public final class Constants {
 
 
   public static class Swerve {
+    public static final double visionXOffset = 0;
+    public static final double visionXRange = 20;
+    public static final double visionXDeadband = 1;
+    public static final double visionXProportionalGain = 2;
     public static final double stickDeadband = 0.1;//configure and mess around with later
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW- 
 
     public static final double trackWidth = Units.inchesToMeters(22);
     public static final double wheelBase = Units.inchesToMeters(22);
-    public static final double wheelDiameter = Units.inchesToMeters(4.0);
+    public static final double wheelDiameter = 0.1016;//Units.inchesToMeters(4.0);
     public static final double wheelCircumference = wheelDiameter * Math.PI;
     public static final double driveGearRatio = (6.75 / 1.0); // 6.75:1
     public static final double angleGearRatio = ((150/7) / 1.0); // 150/7:1

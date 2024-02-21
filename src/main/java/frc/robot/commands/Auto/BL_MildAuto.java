@@ -7,9 +7,11 @@ import frc.robot.commands.Auto.AutoDirectives.BL.BL_BackOut;
 import frc.robot.commands.Auto.AutoDirectives.BL.BL_ToSpeaker;
 import frc.robot.commands.LaunchNoteCMD;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.IntakeMotorSubsystem;
-
+import frc.robot.commands.DriveToApriltag;
+import frc.robot.commands.DriveToApriltagAndShoot;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -17,12 +19,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class BL_MildAuto extends SequentialCommandGroup {
   /** Creates a new BL_MildAuto. */
-  public BL_MildAuto(SwerveSubsystem swerveSubsystem, LauncherSub launcherSub, IntakeMotorSubsystem intakeMotorSubsystem) {
+  public BL_MildAuto(SwerveSubsystem swerveSubsystem, LauncherSub launcherSub, IntakeMotorSubsystem intakeMotorSubsystem, VisionSubsystem visionSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new BL_ToSpeaker(swerveSubsystem),
-      new LaunchNoteCMD(intakeMotorSubsystem, launcherSub).withTimeout(5),
+      new DriveToApriltagAndShoot(swerveSubsystem, visionSubsystem, intakeMotorSubsystem, launcherSub, 7),
       new BL_BackOut(swerveSubsystem)
     );
   }

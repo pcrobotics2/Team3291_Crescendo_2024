@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.48,
-      "y": 2.0
+      "x": 0.8887064986466873,
+      "y": 7.147833417849517
     },
     "rotation": 0
   },
@@ -14,12 +14,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Mild Auto Blue"
+            "pathName": "MN Mild 1"
           }
         }
       ]
     }
   },
-  "folder": "Test",
+  "folder": "MN Mild",
   "choreoAuto": false
 }

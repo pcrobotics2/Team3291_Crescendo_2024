@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.48,
-      "y": 2.0
+      "x": 1.3464015540130732,
+      "y": 5.55076982040085
     },
     "rotation": 0
   },
@@ -12,14 +12,20 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "LaunchWheelCMD"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Mild Auto Blue"
+            "pathName": "Mild 1 Middle"
           }
         }
       ]
     }
   },
-  "folder": "Test",
+  "folder": "Mild Auto",
   "choreoAuto": false
 }

@@ -24,6 +24,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.Swerve;
 import frc.robot.commands.ClimbCMD;
 import frc.robot.commands.ColorChangingCMD;
+import frc.robot.commands.DriveToApriltag;
+import frc.robot.commands.DriveToApriltagAndShoot;
 import frc.robot.commands.FeedWheelCMD;
 import frc.robot.commands.LaunchNoteCMD;
 import frc.robot.commands.LaunchWheelCMD;
@@ -39,6 +41,7 @@ import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ColorChanger;
 
@@ -58,11 +61,13 @@ private final SendableChooser<Command> autoChooser;
   public CommandJoystick controller1 = new CommandJoystick(1); 
 
   //buttons
-  public final JoystickButton aToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.a);
-  public final JoystickButton colorToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.start);
-  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.l3);
+  public final JoystickButton backToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.back);
+  public final JoystickButton aToggleButton = new JoystickButton(controller1.getHID(), Constants.buttonList.a);
+  public final JoystickButton colorToggleButton = new JoystickButton(controller1.getHID(), Constants.buttonList.l3);
+  public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.r3);
 
   //subsystems
+  public VisionSubsystem visionSubsystem = new VisionSubsystem();
   public ColorChanger colorChanger = new ColorChanger();
   public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
@@ -75,8 +80,8 @@ private final SendableChooser<Command> autoChooser;
   public ClimbCMD climbCMD = new ClimbCMD(
         climberSubsystem,
         colorChanger,
-        () -> controller0.getRawAxis(2),
-        () -> controller0.getRawAxis(3),
+        () -> controller1.getRawAxis(2),
+        () -> controller1.getRawAxis(3),
         () -> aToggleButton.getAsBoolean(),
         () -> colorToggleButton.getAsBoolean()
       );
@@ -93,6 +98,8 @@ private final SendableChooser<Command> autoChooser;
   public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger); 
   //intake motor + launcher
   public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
+  public DriveToApriltagAndShoot driveToApriltagAndShoot = new DriveToApriltagAndShoot(swerveSubsystem, visionSubsystem, intakeMotorSubsystem, launcherSub, 0);
+  public DriveToApriltag driveToApriltag = new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, false);
   
 
 
@@ -116,9 +123,7 @@ private final SendableChooser<Command> autoChooser;
         NamedCommands.registerCommand("GroundCMD", new GroundCMD(intakeSubsystem).until(intakeSubsystem::groundAtAngle));
         NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
         NamedCommands.registerCommand("ColorChangingCMD", new ColorChangingCMD(colorChanger));
-
-
-
+        NamedCommands.registerCommand("DriveToApriltag", new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, true));
 
     configureBindings();
 
@@ -127,6 +132,9 @@ private final SendableChooser<Command> autoChooser;
     
     controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+
+    controller1.button(Constants.buttonList.back).whileTrue(driveToApriltagAndShoot);
+    controller1.button(Constants.buttonList.start).whileTrue(driveToApriltag);
    
     //intake
 
@@ -135,15 +143,15 @@ private final SendableChooser<Command> autoChooser;
     controller1.povLeft().whileTrue(sourceCMD);
     controller1.povRight().whileTrue(ampCMD);
 
-    controller1.button(Constants.buttonList.rb).whileTrue(ejectCMD);
-    controller1.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
+    controller1.button(Constants.buttonList.rb).whileTrue(ejectCMD);//this took things in
+    controller1.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);//this ejected
 
     controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
     controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
 
-    controller0.button(Constants.buttonList.l3).toggleOnTrue(climbCMD);
+    controller1.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
     
-    controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
+    controller1.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
     
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
@@ -165,10 +173,12 @@ private final SendableChooser<Command> autoChooser;
     swerveSubsystem.setDefaultCommand(
       new SwerveDrive(
         swerveSubsystem,
+        visionSubsystem,
         () -> controller0.getRawAxis(1),
         () -> -controller0.getRawAxis(0),
         () -> controller0.getRawAxis(4),
-        () -> robotCentricButton.getAsBoolean()
+        () -> robotCentricButton.getAsBoolean(),
+        () -> backToggleButton.getAsBoolean()
       )
     );
     // climberSubsystem.setDefaultCommand(
@@ -199,7 +209,7 @@ private final SendableChooser<Command> autoChooser;
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("TestAuto");
+    return new PathPlannerAuto("Test Auto");
     //return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }
