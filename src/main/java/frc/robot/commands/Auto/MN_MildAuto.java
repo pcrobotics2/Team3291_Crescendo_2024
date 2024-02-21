@@ -67,7 +67,7 @@ public class MN_MildAuto extends SequentialCommandGroup {
         s_sSwerve);
 
     addCommands(
-      new InstantCommand(() -> s_sSwerve.resetOdometry(exampleTrajectory.getInitialPose())),
+      new InstantCommand(() -> s_sSwerve.resetPoseEstimator(exampleTrajectory.getInitialPose())),
       swerveControllerCommand);
   }
     
