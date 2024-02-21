@@ -37,7 +37,6 @@ import frc.robot.commands.IntakeCMDS.SourceCMD;
 import frc.robot.commands.IntakeCMDS.StowCMD;
 import frc.robot.commands.IntakeCMDS.IntakeMotor.EjectCMD;
 import frc.robot.commands.IntakeCMDS.IntakeMotor.IntakeMotorCMD;
-import frc.robot.commands.VisionsCMDs.AprilTagCMD;
 import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
@@ -78,7 +77,6 @@ private final SendableChooser<Command> autoChooser;
   //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   //commands
-  public AprilTagCMD aprilTagCMD = new AprilTagCMD(visionSubsystem);
   public ClimbCMD climbCMD = new ClimbCMD(
         climberSubsystem,
         colorChanger,

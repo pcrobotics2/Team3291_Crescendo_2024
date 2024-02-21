@@ -237,7 +237,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
   }
 
-
+//get the speed
 public ChassisSpeeds getSpeeds() {
   SwerveModuleState[] states = new SwerveModuleState[4];
   for (int i = 0; i < 4; i++) {
@@ -249,24 +249,32 @@ public ChassisSpeeds getSpeeds() {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double tl = table.getEntry("tl").getDouble(0.0);
-    double cl = table.getEntry("cl").getDouble(0.0);
+    //target latency
+    double tl = LimelightHelpers.getLatency_Pipeline("limelight");
+    //capture latency
+    double cl = LimelightHelpers.getLatency_Capture("limelight");
+    //the RESULTS
     LimelightResults results = LimelightHelpers.getLatestResults("limelight");
+    //how many apirltags are present dear camera sir 
     int numAprilTags = results.targetingResults.targets_Fiducials.length;
+    //WHAT TIME IS IT ("ADVENTURE TIME!!!"), 
     var timeStmap = Timer.getFPGATimestamp() - (tl/1000) - (cl/1000);
 
+    //if there's apriltags and it's not the same millisecond, run
     if (numAprilTags >= 0 && timeStmap != previousTimeStmap){
+      //get the bot pose as determined by the liemlight
       var botpose = results.targetingResults.getBotPose2d();//Idon'tthink this is the right way to make the call, and I'm not sure if it's getting the right data 
       //System.out.print(botpose);
       previousTimeStmap = timeStmap;
-      m_poseEstimator.addVisionMeasurement(botpose, timeStmap);
+      m_poseEstimator.addVisionMeasurement(botpose, timeStmap);//DO THE THING (DO A BACKFLIP)
     }
  
-    m_poseEstimator.update(
+    m_poseEstimator.update(//if there's not apirltag be a regular actual odometry 
       filterGyro(),
       getModulePositions());
+    
     swerveOdometry.update(filterGyro(), getModulePositions());
-    swerveOdometry.update(getYaw(), getModulePositions());
+
     field.setRobotPose(swerveOdometry.getPoseMeters());
 
     for (SwerveModule mod : mSwerveMods) {
