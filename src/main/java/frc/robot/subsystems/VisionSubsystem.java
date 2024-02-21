@@ -25,12 +25,16 @@ import frc.robot.subsystems.LimelightHelpers.LimelightTarget_Fiducial;
 public class VisionSubsystem extends SubsystemBase {
   /** Creates a new VisionSubsystem. */
 
-    public double AimkP = .035;
-    public double AimkI = 0.0;
-    public double AimkD = 0.0007;
+    public double aimkP = .035;
+    public double aimkI = 0.0;
+    public double aimkD = 0.0007;
+
+    public double driveKP = 0.1;
+    public double driveKI = 0.0;
+    public double driveKD = 0.0001;
 
     public PIDController AimvisionPID;
-
+    
     public CANSparkMax testMotor;
 
 
@@ -56,9 +60,9 @@ public class VisionSubsystem extends SubsystemBase {
 
     // Initializing the angle motor PID Controller with PID values
     this.AimvisionPID = new PIDController(
-      AimkP,
-      AimkI,
-      AimkD
+      aimkP,
+      aimkI,
+      aimkD
     );
 
 
@@ -120,8 +124,8 @@ public double proportionalAiming()
   // if your limelight and target are mounted at the same or similar heights, use "ta" (area) for target ranging rather than "ty"
   double limelight_range_proportional()
   {    
-    double kP = .1;
-    double targetingForwardSpeed = LimelightHelpers.getTY("limelight") * kP;
+    double targetingForwardSpeed = LimelightHelpers.getTY("limelight");
+
     targetingForwardSpeed *= Constants.Swerve.maxSpeed;
     targetingForwardSpeed *= -1.0;
     return targetingForwardSpeed;
