@@ -67,16 +67,16 @@ public class SwerveSubsystem extends SubsystemBase {
     zeroGryo();
 
     mSwerveMods = new SwerveModule[] {
-      new SwerveModule(0, Swerve.Mod0.constants),//test to see if its modul number that denotes position, reguardless of position
-      new SwerveModule(2, Swerve.Mod2.constants),
-      new SwerveModule(3, Swerve.Mod3.constants),
-      new SwerveModule(1, Swerve.Mod1.constants),
+      new SwerveModule(3, Swerve.Mod3.constants),//++
+      new SwerveModule(2, Swerve.Mod2.constants), //+-
+      new SwerveModule(1, Swerve.Mod1.constants), //-+
+      new SwerveModule(0, Swerve.Mod0.constants), //--
     };
 
 
     resetToAbsolute();
     
-
+    //resetPoseEstimator(getPose());
 
     swerveOdometry = new SwerveDriveOdometry(
       Swerve.swerveKinematics,
