@@ -92,9 +92,9 @@ public final class Constants {
     public static final double stickDeadband = 0.1;//configure and mess around with later
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW- 
 
-    public static final double trackWidth = Units.inchesToMeters(22);
-    public static final double wheelBase = Units.inchesToMeters(22);
-    public static final double wheelDiameter = 0.1016;//Units.inchesToMeters(4.0);
+    public static final double trackWidth = Units.inchesToMeters(22.5);
+    public static final double wheelBase = Units.inchesToMeters(22.5);
+    public static final double wheelDiameter = Units.inchesToMeters(4.0);
     public static final double wheelCircumference = wheelDiameter * Math.PI;
     public static final double driveGearRatio = (6.75 / 1.0); // 6.75:1
     public static final double angleGearRatio = ((150/7) / 1.0); // 150/7:1
