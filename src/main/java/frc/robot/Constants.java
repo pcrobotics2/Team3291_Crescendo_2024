@@ -68,7 +68,7 @@ public final class Constants {
     public static final double kp = 0.1;
     public static final double ki = 0.0;
     public static final double kd = 0.0;
-    public static final double kcos = 0.00;
+    public static final double kcos = 0.5;
     }
 
     //ids
@@ -85,8 +85,10 @@ public final class Constants {
     public static final double sourceAngle = 167 - 55;
     public static final double ampAngle = 167 - 30;
 
-    public static final double ejectSpeed = 0.5;
-    public static final double intakeSpeed = 0.7;
+    public static final double maxPivotVoltage = 4;
+
+    public static final double ejectSpeed = 0.5 * 5000;
+    public static final double intakeSpeed = 0.7 * 5000;
     public static final int launchNoteTimeInSecs = 1;
     
   }

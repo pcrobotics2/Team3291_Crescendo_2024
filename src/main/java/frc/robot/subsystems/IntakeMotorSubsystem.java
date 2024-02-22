@@ -37,7 +37,7 @@ public class IntakeMotorSubsystem extends SubsystemBase {
   //  mPeriodicIO = new PeriodicIO();
 
     IntakeMotorMotor = new CANSparkMax(Constants.intake.IntakeID, MotorType.kBrushless);
-    IntakeMotorMotor.restoreFactoryDefaults();
+   // IntakeMotorMotor.restoreFactoryDefaults();
 
     IntakeMotorPID = IntakeMotorMotor.getPIDController();
     IntakeMotorPID.setP(Constants.kLauncherSubP);
@@ -46,21 +46,11 @@ public class IntakeMotorSubsystem extends SubsystemBase {
     IntakeMotorPID.setFF(Constants.kLauncherSubFF);
     IntakeMotorPID.setOutputRange(Constants.kLauncherSubMinOutput, Constants.kLauncherSubMaxOutput);
 
-    mRightLauncherSubPID = mRightLauncherSubMotor.getPIDController();
-    mRightLauncherSubPID.setP(Constants.kLauncherSubP);
-    mRightLauncherSubPID.setI(Constants.kLauncherSubI);
-    mRightLauncherSubPID.setD(Constants.kLauncherSubD);
-    mRightLauncherSubPID.setFF(Constants.kLauncherSubFF);
-    mRightLauncherSubPID.setOutputRange(Constants.kLauncherSubMinOutput, Constants.kLauncherSubMaxOutput);
-
     IntakeMotorEncoder = IntakeMotorMotor.getEncoder();
-    mRightIntakeMotorSubsystemEncoder = mRightIntakeMotorSubsystemMotor.getEncoder();
 
-    IntakeMotorMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
-    mRightIntakeMotorSubsystemMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+  //  IntakeMotorMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
     IntakeMotorMotor.setInverted(true);
-    mRightIntakeMotorSubsystemMotor.setInverted(false);
 
   }
 
@@ -68,41 +58,24 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 //    double IntakeMotorSubsystem_rpm = 0.0;
 //  }
 
-  /*-------------------------------- Generic Subsystem Functions --------------------------------*/
-
-  public void stop() {
-    stopIntakeMotorSubsystem();
-  }
-
-  // public void outputTelemetry() {
-  //   putNumber("Speed (RPM):", IntakeMotorSubsystem_rpm);
-  //   putNumber("Left speed:", IntakeMotorEncoder.getVelocity());
-  //   putNumber("Right speed:", mRightIntakeMotorSubsystemEncoder.getVelocity());
-  // }
-
 
 
   /*---------------------------------- Custom Public Functions ----------------------------------*/
 
-  public void setSpeed(double rpm) {
+  public void moveIntakeMotor(double rpm) {
     IntakeMotorMotor.setInverted(true);
-    mRightIntakeMotorSubsystemMotor.setInverted(false);
     double limitedSpeed = mSpeedLimiter.calculate(rpm);
     IntakeMotorPID.setReference(limitedSpeed, ControlType.kVelocity);
-    mRightIntakeMotorSubsystemPID.setReference(limitedSpeed, ControlType.kVelocity);
   }
-  public void setSpeedOpposite(double rpm) {
+  public void moveIntakeMotorReversed(double rpm) {
     IntakeMotorMotor.setInverted(false);
-    mRightIntakeMotorSubsystemMotor.setInverted(true);
     double limitedSpeed = mSpeedLimiter.calculate(rpm);
     IntakeMotorPID.setReference(limitedSpeed, ControlType.kVelocity);
-    mRightIntakeMotorSubsystemPID.setReference(limitedSpeed, ControlType.kVelocity);
   }
 
   public void stopIntakeMotorSubsystem() {
     //double limitedSpeed = mSpeedLimiter.calculate(0);
     IntakeMotorPID.setReference(0, ControlType.kVelocity);
-    mRightIntakeMotorSubsystemPID.setReference(0, ControlType.kVelocity);
   }
 
   /*---------------------------------- Custom public Functions ---------------------------------*/

@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -57,6 +58,11 @@ public class IntakeSubsystem extends SubsystemBase {
     this.intakeLimitSwitch = new DigitalInput(Constants.intake.intakeLimitSwitchID);
 
     this.pidController = new PIDController(Constants.intake.intakePID.kp, Constants.intake.intakePID.ki, Constants.intake.intakePID.kd);
+    // this.pidController.setD(Constants.intake.intakePID.kd);
+    // SendableRegistry.addChild("D", );
+    // this.pidController.setI(Constants.intake.intakePID.ki);
+    // this.pidController.setP(Constants.intake.intakePID.kp);
+
     //this.pidController.enableContinuousInput(0, 360);
     
 
@@ -74,7 +80,7 @@ public class IntakeSubsystem extends SubsystemBase {
     double angle = current_angle;
     SmartDashboard.putNumber("updatedAngle", angle);
 
-    double intake_pivot_voltage = pidController.calculate(angle, pivot_angle) + Math.cos(163 - angle) * Constants.intake.intakePID.kcos; //feed forward
+    double intake_pivot_voltage = pidController.calculate(angle, pivot_angle); //feed forward
 
     // If the pivot is at exactly 0.0, it's probably not connected, so disable it
     SmartDashboard.putNumber("pid output", intake_pivot_voltage);
@@ -86,12 +92,15 @@ public class IntakeSubsystem extends SubsystemBase {
     if (intakeEncoder.get() == 0.0) {
       adjustedIntakePivotVoltage = 0.0;
     }
-    if (adjustedIntakePivotVoltage > 4) {
-      adjustedIntakePivotVoltage = 4;
+    if (adjustedIntakePivotVoltage > Constants.intake.maxPivotVoltage) {
+      adjustedIntakePivotVoltage = Constants.intake.maxPivotVoltage;
     }
-    if (adjustedIntakePivotVoltage < -4) {
-      adjustedIntakePivotVoltage = -4;
+    if (adjustedIntakePivotVoltage < -Constants.intake.maxPivotVoltage) {
+      adjustedIntakePivotVoltage = -Constants.intake.maxPivotVoltage;
     }
+   if (!ampAtAngle() && !sourceAtAngle() && !stowAtAngle() && !groundAtAngle()) {
+    //adjustedIntakePivotVoltage += Math.cos(167 - angle) * Constants.intake.intakePID.kcos;
+   }
     System.out.println("division error" + adjustedIntakePivotVoltage);
     return adjustedIntakePivotVoltage;
   }
