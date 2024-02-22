@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import org.opencv.core.Mat;
+
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 
@@ -72,7 +74,7 @@ public class IntakeSubsystem extends SubsystemBase {
     double angle = current_angle;
     SmartDashboard.putNumber("updatedAngle", angle);
 
-    double intake_pivot_voltage = pidController.calculate(angle, pivot_angle);
+    double intake_pivot_voltage = pidController.calculate(angle, pivot_angle) + Math.cos(163 - angle) * Constants.intake.intakePID.kcos; //feed forward
 
     // If the pivot is at exactly 0.0, it's probably not connected, so disable it
     SmartDashboard.putNumber("pid output", intake_pivot_voltage);
@@ -84,11 +86,11 @@ public class IntakeSubsystem extends SubsystemBase {
     if (intakeEncoder.get() == 0.0) {
       adjustedIntakePivotVoltage = 0.0;
     }
-    if (adjustedIntakePivotVoltage > 3) {
-      adjustedIntakePivotVoltage = 3;
+    if (adjustedIntakePivotVoltage > 4) {
+      adjustedIntakePivotVoltage = 4;
     }
-    if (adjustedIntakePivotVoltage < -3) {
-      adjustedIntakePivotVoltage = -3;
+    if (adjustedIntakePivotVoltage < -4) {
+      adjustedIntakePivotVoltage = -4;
     }
     System.out.println("division error" + adjustedIntakePivotVoltage);
     return adjustedIntakePivotVoltage;

@@ -20,7 +20,7 @@ public class LaunchWheelCMD extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
+    //launcherSub.setSpeed(Constants.launchSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -31,13 +31,13 @@ public class LaunchWheelCMD extends Command {
     //   this.speed = Constants.launcherTargetVoltage;
     // }
     // launcherSub.setLaunchWheelsVoltage(-this.speed, this.speed);
-    launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
+    launcherSub.setSpeed(Constants.launchSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    launcherSub.stop();
+    launcherSub.stopLauncherSub();
   }
 
   // Returns true when the command should end.

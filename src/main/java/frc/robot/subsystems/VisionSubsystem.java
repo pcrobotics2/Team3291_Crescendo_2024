@@ -52,7 +52,7 @@ public class VisionSubsystem extends SubsystemBase {
     NetworkTableEntry ta = table.getEntry("ta");
     NetworkTableEntry targetpose_cameraspace = table.getEntry("targetpose_cameraspace");
 
-    this.testMotor = new CANSparkMax(22, MotorType.kBrushless); //7
+    this.testMotor = new CANSparkMax(42, MotorType.kBrushless); //7
     
     //read values periodically
     double x = tx.getDouble(0.0);

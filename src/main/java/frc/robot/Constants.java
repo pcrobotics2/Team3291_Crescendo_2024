@@ -24,20 +24,27 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static final int kLauncherSubLeftMotorId = 18;
+  public static final int kLauncherSubRightMotorId = 14;
+
+  public static final double kLauncherSubP = 0.00005;
+  public static final double kLauncherSubI = 0.0;
+  public static final double kLauncherSubD = 0.0;
+  public static final double kLauncherSubFF = 0.0002;
+
+  public static final double kLauncherSubMinOutput = 0;
+  public static final double kLauncherSubMaxOutput = 1;
+
 
   public static final int leftClimberID = 24;//24
   public static final int rightClimberID = 15;//15
 
   public static final double feedSpeed = 0.4;   //0.40
-  public static final double launchSpeed = 0.55; 
+  public static final double launchSpeed = 5000 * 0.55;//5000 * percentage 
   public static final double timeToWait = 0.25;
   public static final double hangSpeed = 0.5;
   public static final double launcherTargetVoltage = launchSpeed * 12;
   public static final double gracePeriod = 0.3;
-
-
-  public static final int rightLauncherID = 14; //14
-  public static final int leftLauncherID = 18; //18
   
   public static final int LEDColors = 1;
   public static final double angleDeadband = 1;
@@ -59,8 +66,9 @@ public final class Constants {
 
     public static class intakePID {
     public static final double kp = 0.1;
-    public static final double ki = 0.01;
+    public static final double ki = 0.0;
     public static final double kd = 0.0;
+    public static final double kcos = 0.00;
     }
 
     //ids
@@ -72,7 +80,7 @@ public final class Constants {
     public static final double k_pivotEncoderOffset = 230;
 
     //angles
-    public static final double groundAngle = 167 - 0;//doesn't like 0
+    public static final double groundAngle = 167 - -25;//doesn't like 0
     public static final double stowAngle = 167 - 163;
     public static final double sourceAngle = 167 - 55;
     public static final double ampAngle = 167 - 30;
