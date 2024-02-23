@@ -195,8 +195,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(325.019531250);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
 
     // Back Left Module - Module 1 
@@ -213,8 +215,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(147.041015625);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
 
     // Front Right Module - Module 2
@@ -231,8 +235,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(174.8144);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
 
     // Front Left Module - Module 3
@@ -249,8 +255,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(284.326171875);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
   }
 
