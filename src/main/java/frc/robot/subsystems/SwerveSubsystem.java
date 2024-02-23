@@ -75,8 +75,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
     resetToAbsolute();
-    
-    //resetPoseEstimator(getPose());
 
     swerveOdometry = new SwerveDriveOdometry(
       Swerve.swerveKinematics,
@@ -126,10 +124,10 @@ public class SwerveSubsystem extends SubsystemBase {
     new Pose2d(0, 0, Rotation2d.fromDegrees(0)) // TODO: CLARIFY THIS WORKS
 );
 
-  }
-     
- 
+    resetPoseEstimator(new Pose2d(0,0, new Rotation2d()));//If this is way wrong and fucks everything up, my bad guys
 
+
+  }
 
   public void driveRobotRelative(ChassisSpeeds Speeds){
     SwerveModuleState[] states = Swerve.swerveKinematics.toSwerveModuleStates(Speeds);
@@ -159,9 +157,7 @@ public class SwerveSubsystem extends SubsystemBase {
           rotation)
     );
 
-
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Swerve.maxSpeed);
-
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
@@ -214,12 +210,16 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
     public Pose2d getPose() {
-      //return m_poseEstimator.getEstimatedPosition();
+      //return swerveOdometry.getPoseMeters();
       return m_poseEstimator.getEstimatedPosition();// both return the estimated position on the field 
   }
 
   public void resetPoseEstimator(Pose2d pose){
   m_poseEstimator.resetPosition(filterGyro(), getModulePositions(), pose);
+}
+
+    public void resetOdometry(Pose2d pose){
+  swerveOdometry.resetPosition(filterGyro(), getModulePositions(), pose);
 }
 
 
@@ -282,8 +282,9 @@ public ChassisSpeeds getSpeeds() {
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-      SmartDashboard.putNumber(("GYRO"), getYaw().getDegrees());
-      SmartDashboard.putNumber("filterGyro", filterGyro().getDegrees());
+      SmartDashboard.putNumber("mod " + mod.moduleNumber + " converted enocder values in meters", mod.getPosition().distanceMeters);
     }
+    SmartDashboard.putNumber(("GYRO"), getYaw().getDegrees());
+    SmartDashboard.putNumber("filterGyro", filterGyro().getDegrees());
   }
 }

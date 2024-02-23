@@ -285,7 +285,7 @@ public class SwerveModule {
 
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-            (this.driveEncoder.getPosition()), // * (Swerve.wheelCircumference / (Swerve.driveGearRatio * 42) Actually forgot where I got this from lmao
+            (this.driveEncoder.getPosition()), // * (Swerve.wheelCircumference / (Swerve.driveGearRatio * 42)// Actually forgot where I got this from lmao
             this.getCanCoder()
         );
     }
