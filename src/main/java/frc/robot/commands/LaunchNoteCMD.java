@@ -29,18 +29,12 @@ public class LaunchNoteCMD extends Command {
   public void initialize() {
     this.timeCheck = Timer.getFPGATimestamp();
   //  launcherSub.setLaunchWheels(-Constants.launchSpeed, Constants.launchSpeed);
-    this.speed = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // this.speed += Constants.intake.launchNoteTimeInSecs * Constants.launcherTargetVoltage / 50;
-    // if (this.speed >= Constants.launcherTargetVoltage) {
-    //   this.speed = Constants.launcherTargetVoltage;
-    // }
-    //launcherSub.setLaunchWheelsVoltage(-this.speed, this.speed);
-    launcherSub.setSpeed(Constants.launchSpeed);
+    launcherSub.setSpeed(launcherSub.loadPreferences());
     if (Timer.getFPGATimestamp() - timeCheck > Constants.intake.launchNoteTimeInSecs + Constants.gracePeriod) {
     intakeMotorSubsystem.moveIntakeMotorReversed(Constants.launchSpeed);
     }

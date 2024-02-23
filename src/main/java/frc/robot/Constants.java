@@ -74,13 +74,13 @@ public final class Constants {
     //ids
     public static final int encoderID = 0; //Changed due to rewire
     public static final int IntakeID = 21;//21 
-    public static final int PivotID = 19;//19 
+    public static final int PivotID = 37;//19 
     public static final int intakeLimitSwitchID = 9;
 
     public static final double k_pivotEncoderOffset = 230;
 
     //angles
-    public static final double groundAngle = 167 - -25;//doesn't like 0
+    public static final double groundAngle = 167 - -26;//doesn't like 0
     public static final double stowAngle = 167 - 163;
     public static final double sourceAngle = 167 - 55;
     public static final double ampAngle = 167 - 30;
@@ -199,8 +199,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(325.019531250);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
 
     // Back Left Module - Module 1 
@@ -217,8 +219,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(147.041015625);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
 
     // Front Right Module - Module 2
@@ -235,8 +239,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(174.8144);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
 
     // Front Left Module - Module 3
@@ -253,8 +259,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(284.326171875);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
   }
 

@@ -13,6 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.util.Color;
 //import edu.wpi.first.wpilibj.util.Color;
@@ -52,14 +53,17 @@ public class IntakeSubsystem extends SubsystemBase {
   //double intake_pivot_voltage = 0.0;
   public double intake_speed = 0.0;
 
+  private double intakekp = Constants.intake.intakePID.kp;
+
   public IntakeSubsystem(ColorChanger colorChanger) {
+    Preferences.initDouble("intakekp", intakekp);
     this.colorChanger = colorChanger;
     this.intakeEncoder = new DutyCycleEncoder(Constants.intake.encoderID);
     this.intakeLimitSwitch = new DigitalInput(Constants.intake.intakeLimitSwitchID);
 
     this.pidController = new PIDController(Constants.intake.intakePID.kp, Constants.intake.intakePID.ki, Constants.intake.intakePID.kd);
     // this.pidController.setD(Constants.intake.intakePID.kd);
-    // SendableRegistry.addChild("D", );
+    // SendableRegistry.addChild("D", d);
     // this.pidController.setI(Constants.intake.intakePID.ki);
     // this.pidController.setP(Constants.intake.intakePID.kp);
 
@@ -67,10 +71,14 @@ public class IntakeSubsystem extends SubsystemBase {
     
 
     this.pivotMotor = new CANSparkMax(Constants.intake.PivotID, CANSparkLowLevel.MotorType.kBrushless);
-
   }
    
-
+  public void loadPreferences() {
+    if (intakekp != Preferences.getDouble("intakekp", intakekp)) {
+      intakekp = Preferences.getDouble("intakekp", intakekp);
+      pidController.setP(intakekp);
+    }
+  }
   public double giveVoltage(double pivot_angle, double current_angle) {
     // Pivot control
     SmartDashboard.putNumber("originalAngle", current_angle);
@@ -243,15 +251,16 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    loadPreferences();
     SmartDashboard.putBoolean("limit switch", getIntakeHasNote());
     //This method will be called once per scheduler run
     if (!getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
       colorChanger.setCOLORWAVESLAVA();
     }
-    if (getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
+    else if (getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
       colorChanger.setLAWNGREEN();
     }
-    if (getIntakeHasNote()) {
+    else if (getIntakeHasNote()) {
       colorChanger.setRAINBOWOCEAN();
     }
     SmartDashboard.putNumber("encoder reading", getCurrentAngle());
