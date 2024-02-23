@@ -7,8 +7,10 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.intake;
 
 public class IntakeMotorSubsystem extends SubsystemBase {
 
@@ -30,8 +32,10 @@ public class IntakeMotorSubsystem extends SubsystemBase {
   public RelativeEncoder IntakeMotorEncoder;
 
   public SlewRateLimiter mSpeedLimiter = new SlewRateLimiter(1000);
+  public double intakeSpeed = Constants.launchSpeed;
 
   public IntakeMotorSubsystem() {
+    Preferences.initDouble("intakeSpeed", intakeSpeed);
     // super("IntakeMotorSubsystem");
 
   //  mPeriodicIO = new PeriodicIO();
@@ -61,7 +65,13 @@ public class IntakeMotorSubsystem extends SubsystemBase {
 
 
   /*---------------------------------- Custom Public Functions ----------------------------------*/
-
+  public double loadPreferences() {
+    if (Preferences.getDouble("intakeSpeed", intakeSpeed) != intakeSpeed) {
+      return Preferences.getDouble("intakeSpeed", intakeSpeed);
+        } else {
+           return intakeSpeed;
+         } 
+  }
   public void moveIntakeMotor(double rpm) {
     IntakeMotorMotor.setInverted(true);
     double limitedSpeed = mSpeedLimiter.calculate(rpm);

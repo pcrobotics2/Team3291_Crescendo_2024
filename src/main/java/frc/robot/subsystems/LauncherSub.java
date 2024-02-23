@@ -77,10 +77,10 @@ public class LauncherSub extends SubsystemBase {
 
   /*-------------------------------- Generic Subsystem Functions --------------------------------*/
   public double loadPreferences() {
-    if (Preferences.getDouble("launchSpeed", launchSpeed) != Constants.launchSpeed) {
+    if (Preferences.getDouble("launchSpeed", launchSpeed) != launchSpeed) {
     return Preferences.getDouble("launchSpeed", launchSpeed);
       } else {
-         return Constants.launchSpeed;
+         return launchSpeed;
        } 
   }
   public void stop() {

@@ -45,7 +45,7 @@ public class LaunchNoteCMD extends Command {
   @Override
   public void end(boolean interrupted) {
     launcherSub.stopLauncherSub();
-    intakeMotorSubsystem.moveIntakeMotor(0);//stops it
+    intakeMotorSubsystem.stopIntakeMotorSubsystem();//stops it
   }
 
   // Returns true when the command should end.

@@ -31,13 +31,13 @@ public class EjectCMD extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeMotorSubsystem.moveIntakeMotorReversed(Constants.intake.ejectSpeed);
+    intakeMotorSubsystem.moveIntakeMotorReversed(intakeMotorSubsystem.loadPreferences());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeMotorSubsystem.moveIntakeMotor(0);//stops it
+    intakeMotorSubsystem.stopIntakeMotorSubsystem();//stops it
 
   }
 

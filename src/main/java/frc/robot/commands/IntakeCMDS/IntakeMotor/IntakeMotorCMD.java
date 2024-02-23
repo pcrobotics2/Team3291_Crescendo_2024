@@ -34,7 +34,7 @@ public class IntakeMotorCMD extends Command {
   @Override
   public void execute() {
     if (!intakeSubsystem.getIntakeHasNote()) {
-      intakeMotorSubsystem.moveIntakeMotor(Constants.intake.intakeSpeed);
+      intakeMotorSubsystem.moveIntakeMotor(intakeMotorSubsystem.loadPreferences());
     }
     else {
       intakeMotorSubsystem.moveIntakeMotor(0);
@@ -50,7 +50,7 @@ public class IntakeMotorCMD extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeMotorSubsystem.moveIntakeMotor(0);//stops it
+    intakeMotorSubsystem.stopIntakeMotorSubsystem();//stops it
     //ColorChanger.setGOLD();
    // ColorChanger.setGOLD();
   }
