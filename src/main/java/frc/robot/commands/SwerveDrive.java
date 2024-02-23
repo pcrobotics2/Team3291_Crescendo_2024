@@ -89,11 +89,11 @@ public class SwerveDrive extends Command {
 
     if (backToggleInt == 0) {
     this.rotationVal = rotationLimiter.calculate(
-      MathUtil.applyDeadband(rotationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
+      MathUtil.applyDeadband(rotationSupplier.getAsDouble()/1.5, Swerve.stickDeadband));
       this.translationVal = translationLimiter.calculate(
-      MathUtil.applyDeadband(translationSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
+      MathUtil.applyDeadband(translationSupplier.getAsDouble()/1.5, Swerve.stickDeadband));
       this.strafeVal = strafeLimiter.calculate(
-      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/1.8, Swerve.stickDeadband));
+      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/1.5, Swerve.stickDeadband));
     }
     else if (backToggleInt == 2) {
       if (visionSubsystem.getTXSwerve() > Constants.Swerve.visionXDeadband || visionSubsystem.getTXSwerve() < -Constants.Swerve.visionXDeadband) {
@@ -118,7 +118,7 @@ public class SwerveDrive extends Command {
       this.strafeVal = 0.0;
     }
     swerveSubsystem.drive(
-      new Translation2d(translationVal, strafeVal).times(Swerve.maxSpeed), 
+      new Translation2d(-translationVal, strafeVal).times(Swerve.maxSpeed), 
       this.rotationVal * Swerve.maxAngularVelocity, 
       robotCentricSupplier.getAsBoolean(),
       true

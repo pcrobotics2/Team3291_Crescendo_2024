@@ -99,7 +99,7 @@ public final class Constants {
     public static final double visionXRange = 20;
     public static final double visionXDeadband = 1;
     public static final double visionXProportionalGain = 2;
-    public static final double stickDeadband = 0.5;//configure and mess around with later
+    public static final double stickDeadband = 0.1;//configure and mess around with later
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW- 
 
     public static final double trackWidth = Units.inchesToMeters(22.5);
