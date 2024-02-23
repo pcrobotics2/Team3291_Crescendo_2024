@@ -51,6 +51,7 @@ public class SwerveModule {
     // Used to get the current position and state (velocity) of the drive motor
     private RelativeEncoder driveEncoder;
 
+    private double angleMultiplier;
     /**
      * Currently defined, but not used in any calculations.   I'm assuming this was
      * first defined to be used for the angle motor, but we are doing that with the 
@@ -99,6 +100,7 @@ public class SwerveModule {
 
         //this.anglePid.enableContinuousInput(-Math.PI, Math.PI);
 
+        this.angleMultiplier = moduleConstants.angleMultiplier;
         // Initializing the CANCoder with the desired device ID
         this.angleEncoder = new CANCoder(moduleConstants.canCoderId);//CANcoder(moduleConstants.canCoderId);
         configAngleEncoder();
@@ -276,7 +278,7 @@ public class SwerveModule {
     }
 
     public Rotation2d getCanCoder() {
-        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition() * angleMultiplier);
     }
 
     public SwerveModuleState getState() {
@@ -285,7 +287,7 @@ public class SwerveModule {
 
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(
-            (this.driveEncoder.getPosition()), // * (Swerve.wheelCircumference / (Swerve.driveGearRatio * 42) Actually forgot where I got this from lmao
+            (this.driveEncoder.getPosition()), // * (Swerve.wheelCircumference / (Swerve.driveGearRatio * 42)// Actually forgot where I got this from lmao
             this.getCanCoder()
         );
     }

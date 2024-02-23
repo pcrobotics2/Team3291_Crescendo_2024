@@ -99,12 +99,12 @@ public final class Constants {
     public static final double visionXRange = 20;
     public static final double visionXDeadband = 1;
     public static final double visionXProportionalGain = 2;
-    public static final double stickDeadband = 0.1;//configure and mess around with later
+    public static final double stickDeadband = 0.5;//configure and mess around with later
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW- 
 
     public static final double trackWidth = Units.inchesToMeters(22.5);
     public static final double wheelBase = Units.inchesToMeters(22.5);
-    public static final double wheelDiameter = Units.inchesToMeters(4.0);
+    public static final double wheelDiameter = Units.inchesToMeters(3.9965);
     public static final double wheelCircumference = wheelDiameter * Math.PI;
     public static final double driveGearRatio = (6.75 / 1.0); // 6.75:1
     public static final double angleGearRatio = ((150/7) / 1.0); // 150/7:1
@@ -143,7 +143,11 @@ public final class Constants {
     /* Drive Motor Conversion Factors */
     // The conversion factor to multiply the native units by 
     public static final double driveConversionPositionFactor =
-        (wheelDiameter * Math.PI) / driveGearRatio;
+        (wheelDiameter * Math.PI)/ driveGearRatio;
+    public static final double driveConversionPositionFactor1 =
+        (wheelDiameter * Math.PI);
+    public static final double driveConversionPositionFactor2 =
+        (wheelDiameter * Math.PI)/ driveGearRatio*42;
 
     // The conversion factor to multiply the native units by 
     public static final double driveConversionVelocityFactor = driveConversionPositionFactor / 60.0;
@@ -195,8 +199,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(325.019531250);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
 
     // Back Left Module - Module 1 
@@ -213,8 +219,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(147.041015625);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
 
     // Front Right Module - Module 2
@@ -231,8 +239,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(174.8144);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
 
     // Front Left Module - Module 3
@@ -249,8 +259,10 @@ public final class Constants {
       // Wheel starting angle offset
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(284.326171875);
 
+      public static final double angleMultiplier = 1.00;
+
       // Constants in a nice package.
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
   }
 
