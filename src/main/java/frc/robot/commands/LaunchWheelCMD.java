@@ -31,7 +31,7 @@ public class LaunchWheelCMD extends Command {
     //   this.speed = Constants.launcherTargetVoltage;
     // }
     // launcherSub.setLaunchWheelsVoltage(-this.speed, this.speed);
-    launcherSub.setSpeed(Constants.launchSpeed);
+    launcherSub.setSpeed(launcherSub.loadPreferences());
   }
 
   // Called once the command ends or is interrupted.

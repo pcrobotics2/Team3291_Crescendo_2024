@@ -251,15 +251,16 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    loadPreferences();
     SmartDashboard.putBoolean("limit switch", getIntakeHasNote());
     //This method will be called once per scheduler run
     if (!getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
       colorChanger.setCOLORWAVESLAVA();
     }
-    if (getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
+    else if (getIntakeHasNote() && getCurrentAngle() < Constants.intake.stowAngle + Constants.angleDeadband && getCurrentAngle() > Constants.intake.stowAngle - Constants.angleDeadband) {
       colorChanger.setLAWNGREEN();
     }
-    if (getIntakeHasNote()) {
+    else if (getIntakeHasNote()) {
       colorChanger.setRAINBOWOCEAN();
     }
     SmartDashboard.putNumber("encoder reading", getCurrentAngle());

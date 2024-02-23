@@ -7,6 +7,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -33,11 +34,12 @@ public class LauncherSub extends SubsystemBase {
   public RelativeEncoder mRightLauncherSubEncoder;
 
   public SlewRateLimiter mSpeedLimiter = new SlewRateLimiter(1000);
-
+  public double launchSpeed = Constants.launchSpeed;
   public LauncherSub() {
     // super("LauncherSub");
 
   //  mPeriodicIO = new PeriodicIO();
+    Preferences.initDouble("launchSpeed", launchSpeed);
 
     mLeftLauncherSubMotor = new CANSparkMax(Constants.kLauncherSubLeftMotorId, MotorType.kBrushless);
     mRightLauncherSubMotor = new CANSparkMax(Constants.kLauncherSubRightMotorId, MotorType.kBrushless);
@@ -74,7 +76,13 @@ public class LauncherSub extends SubsystemBase {
 //  }
 
   /*-------------------------------- Generic Subsystem Functions --------------------------------*/
-
+  public double loadPreferences() {
+    if (Preferences.getDouble("launchSpeed", launchSpeed) != Constants.launchSpeed) {
+    return Preferences.getDouble("launchSpeed", launchSpeed);
+      } else {
+         return Constants.launchSpeed;
+       } 
+  }
   public void stop() {
     stopLauncherSub();
   }
