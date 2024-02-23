@@ -74,13 +74,13 @@ public final class Constants {
     //ids
     public static final int encoderID = 0; //Changed due to rewire
     public static final int IntakeID = 21;//21 
-    public static final int PivotID = 19;//19 
+    public static final int PivotID = 37;//19 
     public static final int intakeLimitSwitchID = 9;
 
     public static final double k_pivotEncoderOffset = 230;
 
     //angles
-    public static final double groundAngle = 167 - -25;//doesn't like 0
+    public static final double groundAngle = 167 - -26;//doesn't like 0
     public static final double stowAngle = 167 - 163;
     public static final double sourceAngle = 167 - 55;
     public static final double ampAngle = 167 - 30;
