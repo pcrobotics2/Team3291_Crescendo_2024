@@ -125,7 +125,7 @@ private final SendableChooser<Command> autoChooser;
         NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
         NamedCommands.registerCommand("ColorChangingCMD", new ColorChangingCMD(colorChanger));
         NamedCommands.registerCommand("DriveToApriltag", new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, true));
-        NamedCommands.registerCommand("LaunchCMD", new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, true));
+        NamedCommands.registerCommand("LaunchCMD", new LaunchNoteCMD(intakeMotorSubsystem, launcherSub).withTimeout(5));
 
     configureBindings();
 
@@ -211,8 +211,8 @@ private final SendableChooser<Command> autoChooser;
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
     
-    return new PathPlannerAuto("Launch Auto");
-    //return autoChooser.getSelected();
+    //return new PathPlannerAuto("Launch Auto");
+    return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
   }
   /**
