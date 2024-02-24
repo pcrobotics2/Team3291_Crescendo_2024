@@ -137,13 +137,13 @@ public class SwerveModule {
      */
     private void configDriveMotor() {
         // Set motor to original specs
-        this.driveMotor.restoreFactoryDefaults();
+        //this.driveMotor.restoreFactoryDefaults();
 
         // This sets the transmission rate of data all channels to be faster
         CANSparkMaxUtil.setCANSparkMaxBusUsage(driveMotor, Usage.kAll);
 
         // Sets the current limit to the drive motor in AMPs
-        this.driveMotor.setSmartCurrentLimit(Swerve.driveContinuousCurrentLimit);
+       // this.driveMotor.setSmartCurrentLimit(Swerve.driveContinuousCurrentLimit);
 
         // Invert drive motor (currently, false)
         this.driveMotor.setInverted(Swerve.driveInvert);
@@ -172,7 +172,7 @@ public class SwerveModule {
      */
     private void configAngleMotor() {
         // Set motor to the original specs
-        this.angleMotor.restoreFactoryDefaults();
+       // this.angleMotor.restoreFactoryDefaults();
 
         // Sets the transmission rate of the position channel as faster.
         CANSparkMaxUtil.setCANSparkMaxBusUsage(angleMotor, Usage.kPositionOnly);
@@ -180,7 +180,7 @@ public class SwerveModule {
         CANCoderUtil.setCANCoderBusUsage(angleEncoder, CCUsage.kMinimal);
 
         // Sets the current limit to the angle motor in AMPs
-        this.angleMotor.setSmartCurrentLimit(Swerve.angleContinuousCurrentLimit);
+      //  this.angleMotor.setSmartCurrentLimit(Swerve.angleContinuousCurrentLimit);
 
         // Invert angle motor (currently, true)
         this.angleMotor.setInverted(Swerve.angleInvert);
@@ -209,7 +209,7 @@ public class SwerveModule {
         SwerveModuleState currentState = this.getState();
 
         // What is the current direction (in degrees) the swerve module is facing?
-        double currentDegrees = (currentState.angle.getDegrees() - this.angleOffset.getDegrees());
+        double currentDegrees = (currentState.angle.getDegrees());
         
         // We want the current degrees between [-180, 180]. When looking at a circle
         // -190 is equivalent to 170 so the below ternaries convert numbers less than -180
@@ -278,7 +278,7 @@ public class SwerveModule {
     }
 
     public Rotation2d getCanCoder() {
-        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition() * angleMultiplier);
+        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition()  - this.angleOffset.getDegrees());
     }
 
     public SwerveModuleState getState() {

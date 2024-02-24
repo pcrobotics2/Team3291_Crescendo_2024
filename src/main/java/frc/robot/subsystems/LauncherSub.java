@@ -43,8 +43,8 @@ public class LauncherSub extends SubsystemBase {
 
     mLeftLauncherSubMotor = new CANSparkMax(Constants.kLauncherSubLeftMotorId, MotorType.kBrushless);
     mRightLauncherSubMotor = new CANSparkMax(Constants.kLauncherSubRightMotorId, MotorType.kBrushless);
-    mLeftLauncherSubMotor.restoreFactoryDefaults();
-    mRightLauncherSubMotor.restoreFactoryDefaults();
+   // mLeftLauncherSubMotor.restoreFactoryDefaults();
+   //mRightLauncherSubMotor.restoreFactoryDefaults();
 
     mLeftLauncherSubPID = mLeftLauncherSubMotor.getPIDController();
     mLeftLauncherSubPID.setP(Constants.kLauncherSubP);

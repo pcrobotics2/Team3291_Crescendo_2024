@@ -73,8 +73,8 @@ public final class Constants {
 
     //ids
     public static final int encoderID = 0; //Changed due to rewire
-    public static final int IntakeID = 22;//21 
-    public static final int PivotID = 37;//19 
+    public static final int IntakeID = 21;//21 
+    public static final int PivotID = 19;//19 
     public static final int intakeLimitSwitchID = 9;
 
     public static final double k_pivotEncoderOffset = 230;
