@@ -40,14 +40,14 @@ public final class Constants {
   public static final int rightClimberID = 15;//15
 
   public static final double feedSpeed = 0.4;   //0.40
-  public static final double launchSpeed = 5000 * 0.55;//5000 * percentage 
-  public static final double timeToWait = 0.25;
+  public static final double launchSpeed = 5000 * 0.65;//5000 * percentage 
+  public static final double timeToWait = 1;
   public static final double hangSpeed = 0.5;
   public static final double launcherTargetVoltage = launchSpeed * 12;
   public static final double gracePeriod = 0.3;
   
   public static final int LEDColors = 1;
-  public static final double angleDeadband = 1;
+  public static final double angleDeadband = 5;
 
   public static class buttonList {
     public static final int a = 1;
@@ -80,10 +80,10 @@ public final class Constants {
     public static final double k_pivotEncoderOffset = 230;
 
     //angles
-    public static final double groundAngle = 167 - -26;//doesn't like 0
-    public static final double stowAngle = 167 - 163;
+    public static final double groundAngle = 167 - -35;//doesn't like 0
+    public static final double stowAngle = 167 - 164;
     public static final double sourceAngle = 167 - 55;
-    public static final double ampAngle = 167 - 30;
+    public static final double ampAngle = 167 - 95;
 
     public static final double maxPivotVoltage = 4;
 

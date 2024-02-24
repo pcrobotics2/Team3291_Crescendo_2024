@@ -93,7 +93,7 @@ public class ClimbCMD extends Command {
       }
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
-    climberSubsystem.setClimberTogether(positiveSpeed, negativeSpeed);
+    climberSubsystem.setClimberTogether(0, negativeSpeed);
     }
     else if (this.hasChanged == 2) {
       if (colorToggleNumber == 2) {

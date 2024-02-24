@@ -67,7 +67,7 @@ public class IntakeSubsystem extends SubsystemBase {
     // this.pidController.setI(Constants.intake.intakePID.ki);
     // this.pidController.setP(Constants.intake.intakePID.kp);
 
-    //this.pidController.enableContinuousInput(0, 360);
+    this.pidController.enableContinuousInput(0, 360);
     
 
     this.pivotMotor = new CANSparkMax(Constants.intake.PivotID, CANSparkLowLevel.MotorType.kBrushless);
@@ -209,7 +209,16 @@ public class IntakeSubsystem extends SubsystemBase {
     System.out.println("stow angle target: " + pivot_angle);
     System.out.println("final voltage: " + giveVoltage(pivot_angle, getCurrentAngle()) + "\n\n");
     double voltage = giveVoltage(pivot_angle, getCurrentAngle());
-    pivotMotor.setVoltage(voltage);
+    if (getCurrentAngle() < 100 && voltage == -Constants.intake.maxPivotVoltage) {
+      pivotMotor.setVoltage(Constants.intake.maxPivotVoltage);
+    }
+    else if (getCurrentAngle() > 300) {
+      pivotMotor.setVoltage(-Constants.intake.maxPivotVoltage);
+
+    } else {
+      pivotMotor.setVoltage(voltage);
+    }
+    
     SmartDashboard.putNumber("getVoltage", voltage);
     System.out.println("s");
   }
@@ -242,8 +251,12 @@ public class IntakeSubsystem extends SubsystemBase {
     System.out.println("stow angle target: " + pivot_angle);
    System.out.println("final voltage: " + giveVoltage(pivot_angle, getCurrentAngle()) + "\n\n");
     double voltage = giveVoltage(pivot_angle, getCurrentAngle());
-    pivotMotor.setVoltage(voltage);
-    SmartDashboard.putNumber("getVoltage", voltage);
+   if (getCurrentAngle() > 90 && voltage == Constants.intake.maxPivotVoltage) {
+      pivotMotor.setVoltage(-Constants.intake.maxPivotVoltage);
+    }
+     else {
+      pivotMotor.setVoltage(voltage);
+    }    SmartDashboard.putNumber("getVoltage", voltage);
     System.out.println("s");
   }
 
@@ -264,6 +277,11 @@ public class IntakeSubsystem extends SubsystemBase {
       colorChanger.setRAINBOWOCEAN();
     }
     SmartDashboard.putNumber("encoder reading", getCurrentAngle());
+    SmartDashboard.putBoolean("atAngleGround", groundAtAngle());
+    SmartDashboard.putBoolean("atAngleAmp", ampAtAngle());
+    SmartDashboard.putBoolean("atAngleSource", sourceAtAngle());
+    SmartDashboard.putBoolean("atAngleStow", stowAtAngle());
+
   }
 }
   
