@@ -40,6 +40,7 @@ import frc.robot.commands.IntakeCMDS.IntakeMotor.IntakeMotorCMD;
 import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSub;
+import frc.robot.subsystems.PreferencesSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -67,6 +68,7 @@ private final SendableChooser<Command> autoChooser;
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.r3);
 
   //subsystems
+  public PreferencesSubsystem preferencesSubsystem = new PreferencesSubsystem("launchSpeed", Constants.launchSpeed);
   public VisionSubsystem visionSubsystem = new VisionSubsystem();
   public ColorChanger colorChanger = new ColorChanger();
   public LauncherSub launcherSub = new LauncherSub();
@@ -85,9 +87,10 @@ private final SendableChooser<Command> autoChooser;
         () -> aToggleButton.getAsBoolean(),
         () -> colorToggleButton.getAsBoolean()
       );
+
   //launcher
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
-  public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub);
+  public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub, preferencesSubsystem);
   //pivot motor
   public StowCMD stowCMD = new StowCMD(intakeSubsystem);
   public AmpCMD ampCMD = new AmpCMD(intakeSubsystem);
@@ -99,7 +102,7 @@ private final SendableChooser<Command> autoChooser;
   //intake motor + launcher
   public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
   
-  public DriveToApriltagAndShoot driveToApriltagAndShoot = new DriveToApriltagAndShoot(swerveSubsystem, visionSubsystem, intakeMotorSubsystem, launcherSub, 0);
+  public DriveToApriltagAndShoot driveToApriltagAndShoot = new DriveToApriltagAndShoot(swerveSubsystem, visionSubsystem, intakeMotorSubsystem, launcherSub, 0, preferencesSubsystem);
   public DriveToApriltag driveToApriltag = new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, false);
   
 
@@ -117,7 +120,7 @@ private final SendableChooser<Command> autoChooser;
         // NamedCommands.registerCommand("testStop", intakeMotorSubsystem.TestStartEndCommand(0.5));
         NamedCommands.registerCommand("EjectCMD", new EjectCMD(intakeMotorSubsystem).withTimeout(1));
         NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger).withTimeout(1));
-        NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub).withTimeout(1));
+        NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub, preferencesSubsystem).withTimeout(1));
         NamedCommands.registerCommand("FeedWheelCMD", new FeedWheelCMD(launcherSub).withTimeout(1));
         NamedCommands.registerCommand("AmpCMD", new AmpCMD(intakeSubsystem).until(intakeSubsystem::ampAtAngle));
         NamedCommands.registerCommand("SourceCMD", new SourceCMD(intakeSubsystem).until(intakeSubsystem::sourceAtAngle));
@@ -183,27 +186,6 @@ private final SendableChooser<Command> autoChooser;
         () -> backToggleButton.getAsBoolean()
       )
     );
-    // climberSubsystem.setDefaultCommand(
-    //   new ClimbCMD(
-    //     climberSubsystem,
-    //     colorChanger,
-    //     () -> controller0.getRawAxis(2),
-    //     () -> controller0.getRawAxis(3),
-    //     () -> aToggleButton.getAsBoolean(),
-    //     () -> colorToggleButton.getAsBoolean()
-    //   )
-    // );
-    
-    // controller0.button(Constants.buttonList.y).whileTrue(
-    //   intakeMotorSubsystem.startEnd(
-    //     ()->{
-    //       intakeMotorSubsystem.moveIntakeMotor(0.3);
-    //     }, 
-    //     ()->{
-    //       intakeMotorSubsystem.moveIntakeMotor(0);
-    //     }
-    //   )
-    // );
 
     SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
   }

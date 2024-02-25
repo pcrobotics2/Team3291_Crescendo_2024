@@ -54,9 +54,15 @@ public class IntakeSubsystem extends SubsystemBase {
   public double intake_speed = 0.0;
 
   private double intakekp = Constants.intake.intakePID.kp;
+  private double intakeki = Constants.intake.intakePID.ki;
+  private double intakekd = Constants.intake.intakePID.kd;
+
 
   public IntakeSubsystem(ColorChanger colorChanger) {
     Preferences.initDouble("intakekp", intakekp);
+    Preferences.initDouble("intakeki", intakeki);
+    Preferences.initDouble("intakekd", intakekd);
+
     this.colorChanger = colorChanger;
     this.intakeEncoder = new DutyCycleEncoder(Constants.intake.encoderID);
     this.intakeLimitSwitch = new DigitalInput(Constants.intake.intakeLimitSwitchID);
@@ -74,9 +80,17 @@ public class IntakeSubsystem extends SubsystemBase {
   }
    
   public void loadPreferences() {
-    if (intakekp != Preferences.getDouble("intakekp", intakekp)) {
+    if (Preferences.getDouble("intakekp", intakekp) != intakekp) {
       intakekp = Preferences.getDouble("intakekp", intakekp);
       pidController.setP(intakekp);
+    }
+    if (Preferences.getDouble("intakeki", intakeki) != intakeki) {
+      intakekp = Preferences.getDouble("intakeki", intakeki);
+      pidController.setI(intakeki);
+    }
+    if (Preferences.getDouble("intakekd", intakekd) != intakekd) {
+      intakekp = Preferences.getDouble("intakekd", intakekd);
+      pidController.setD(intakekd);
     }
   }
   public double giveVoltage(double pivot_angle, double current_angle) {

@@ -34,7 +34,7 @@ public class LaunchNoteCMD extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    launcherSub.setSpeed(launcherSub.loadPreferences());
+    launcherSub.setSpeed(Constants.launchSpeed);
     if (Timer.getFPGATimestamp() - timeCheck > Constants.intake.launchNoteTimeInSecs + Constants.gracePeriod) {
     intakeMotorSubsystem.moveIntakeMotorReversed(Constants.launchSpeed);
     }

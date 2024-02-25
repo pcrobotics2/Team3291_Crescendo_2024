@@ -34,12 +34,10 @@ public class LauncherSub extends SubsystemBase {
   public RelativeEncoder mRightLauncherSubEncoder;
 
   public SlewRateLimiter mSpeedLimiter = new SlewRateLimiter(1000);
-  public double launchSpeed = Constants.launchSpeed;
   public LauncherSub() {
     // super("LauncherSub");
 
   //  mPeriodicIO = new PeriodicIO();
-    Preferences.initDouble("launchSpeed", launchSpeed);
 
     mLeftLauncherSubMotor = new CANSparkMax(Constants.kLauncherSubLeftMotorId, MotorType.kBrushless);
     mRightLauncherSubMotor = new CANSparkMax(Constants.kLauncherSubRightMotorId, MotorType.kBrushless);
@@ -76,13 +74,7 @@ public class LauncherSub extends SubsystemBase {
 //  }
 
   /*-------------------------------- Generic Subsystem Functions --------------------------------*/
-  public double loadPreferences() {
-    if (Preferences.getDouble("launchSpeed", launchSpeed) != launchSpeed) {
-    return Preferences.getDouble("launchSpeed", launchSpeed);
-      } else {
-         return launchSpeed;
-       } 
-  }
+
   public void stop() {
     stopLauncherSub();
   }
