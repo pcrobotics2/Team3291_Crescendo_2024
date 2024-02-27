@@ -136,7 +136,7 @@ private final SendableChooser<Command> autoChooser;
     controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
 
     controller1.button(Constants.buttonList.back).whileTrue(driveToApriltagAndShoot);
-    controller1.button(Constants.buttonList.start).whileTrue(driveToApriltag);
+    //controller1.button(Constants.buttonList.start).whileTrue(driveToApriltag);
    
     //intake
 
