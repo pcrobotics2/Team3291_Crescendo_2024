@@ -96,8 +96,8 @@ public class SwerveSubsystem extends SubsystemBase {
             this::getSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                    new PIDConstants(Constants.Swerve.driveKP, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(Constants.Swerve.driveKP, 0.0, 0.0), // Rotation PID constants
+                    new PIDConstants(5.00001, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.00001, 0.0, 0.0), // Rotation PID constants
                     Constants.Swerve.maxSpeed, // Max module speed, in m/s
                     0.38166088514508, // Drive base radius in meters. Distance from robot center to furthest module.
                     new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -125,6 +125,7 @@ public class SwerveSubsystem extends SubsystemBase {
 );
 
     resetPoseEstimator(new Pose2d(0,0, new Rotation2d()));//If this is way wrong and fucks everything up, my bad guys
+    resetOdometry(new Pose2d(0,0, new Rotation2d()));
 
 
   }
@@ -210,8 +211,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
     public Pose2d getPose() {
-      //return swerveOdometry.getPoseMeters();
-      return m_poseEstimator.getEstimatedPosition();// both return the estimated position on the field 
+      return swerveOdometry.getPoseMeters();
+      //return m_poseEstimator.getEstimatedPosition();// both return the estimated position on the field 
   }
 
   public void resetPoseEstimator(Pose2d pose){
