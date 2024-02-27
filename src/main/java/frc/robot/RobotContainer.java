@@ -2,7 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
 package frc.robot;
+
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -10,6 +12,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,6 +51,9 @@ import frc.robot.subsystems.ColorChanger;
 
 
 
+
+
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -56,10 +62,12 @@ import frc.robot.subsystems.ColorChanger;
  */
 public class RobotContainer {
 
+
 private final SendableChooser<Command> autoChooser;
   //controllers
   public CommandJoystick controller0 = new CommandJoystick(0);
-  public CommandJoystick controller1 = new CommandJoystick(1); 
+  public CommandJoystick controller1 = new CommandJoystick(1);
+
 
   //buttons
   public final JoystickButton backToggleButton = new JoystickButton(controller0.getHID(), Constants.buttonList.back);
@@ -67,16 +75,18 @@ private final SendableChooser<Command> autoChooser;
   public final JoystickButton colorToggleButton = new JoystickButton(controller1.getHID(), Constants.buttonList.l3);
   public final JoystickButton robotCentricButton = new JoystickButton(controller0.getHID(), Constants.buttonList.r3);
 
+
   //subsystems
-  public PreferencesSubsystem preferencesSubsystem = new PreferencesSubsystem("launchSpeed", Constants.launchSpeed);
+  public PreferencesSubsystem preferencesSubsystem = new PreferencesSubsystem();
   public VisionSubsystem visionSubsystem = new VisionSubsystem();
   public ColorChanger colorChanger = new ColorChanger();
   public LauncherSub launcherSub = new LauncherSub();
   public ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public IntakeMotorSubsystem intakeMotorSubsystem = new IntakeMotorSubsystem();
   private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem(colorChanger);//below colorChanger
+  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem(colorChanger, preferencesSubsystem);//below colorChanger
   //public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+
 
   //commands
   public ClimbCMD climbCMD = new ClimbCMD(
@@ -88,6 +98,7 @@ private final SendableChooser<Command> autoChooser;
         () -> colorToggleButton.getAsBoolean()
       );
 
+
   //launcher
   public FeedWheelCMD feedWheelCMD = new FeedWheelCMD(launcherSub);
   public LaunchWheelCMD launchWheelCMD = new LaunchWheelCMD(launcherSub, preferencesSubsystem);
@@ -97,29 +108,34 @@ private final SendableChooser<Command> autoChooser;
   public GroundCMD groundCMD = new GroundCMD(intakeSubsystem);
   public SourceCMD sourceCMD = new SourceCMD(intakeSubsystem);
   //intake motor
-  public EjectCMD ejectCMD = new EjectCMD(intakeMotorSubsystem);
-  public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger); 
+  public EjectCMD ejectCMD = new EjectCMD(intakeMotorSubsystem, preferencesSubsystem);
+  public IntakeMotorCMD intakeMotorCMD = new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger, preferencesSubsystem);
   //intake motor + launcher
-  public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub);
-  
+  public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub, preferencesSubsystem);
+ 
   public DriveToApriltagAndShoot driveToApriltagAndShoot = new DriveToApriltagAndShoot(swerveSubsystem, visionSubsystem, intakeMotorSubsystem, launcherSub, 0, preferencesSubsystem);
   public DriveToApriltag driveToApriltag = new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, false);
-  
+ 
+
+
+
 
 
 
   //subsystems\\
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
  // Subsystem initialization
         // intakeMotorSubsystem = new IntakeMotorSubsystem();
 
+
         // // Register Named Commands
         // NamedCommands.registerCommand("test", intakeMotorSubsystem.TestStartEndCommand(-0.1));
         // NamedCommands.registerCommand("testStop", intakeMotorSubsystem.TestStartEndCommand(0.5));
-        NamedCommands.registerCommand("EjectCMD", new EjectCMD(intakeMotorSubsystem).withTimeout(1));
-        NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger).withTimeout(1));
+        NamedCommands.registerCommand("EjectCMD", new EjectCMD(intakeMotorSubsystem, preferencesSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger, preferencesSubsystem).withTimeout(1));
         NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub, preferencesSubsystem).withTimeout(1));
         NamedCommands.registerCommand("FeedWheelCMD", new FeedWheelCMD(launcherSub).withTimeout(1));
         NamedCommands.registerCommand("AmpCMD", new AmpCMD(intakeSubsystem).until(intakeSubsystem::ampAtAngle));
@@ -128,41 +144,50 @@ private final SendableChooser<Command> autoChooser;
         NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
         NamedCommands.registerCommand("ColorChangingCMD", new ColorChangingCMD(colorChanger));
         NamedCommands.registerCommand("DriveToApriltag", new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, true));
-        NamedCommands.registerCommand("LaunchCMD", new LaunchNoteCMD(intakeMotorSubsystem, launcherSub).withTimeout(5));
+        NamedCommands.registerCommand("LaunchCMD", new LaunchNoteCMD(intakeMotorSubsystem, launcherSub, preferencesSubsystem).withTimeout(5));
+
 
     configureBindings();
 
+
     controller0.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller0.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
-    
+   
     controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+
 
     controller1.button(Constants.buttonList.back).whileTrue(driveToApriltagAndShoot);
     //controller1.button(Constants.buttonList.start).whileTrue(driveToApriltag);
    
     //intake
 
+
     controller1.povDown().whileTrue(groundCMD);
     controller1.povUp().whileTrue(stowCMD);
     controller1.povLeft().whileTrue(sourceCMD);
     controller1.povRight().whileTrue(ampCMD);
 
+
     controller1.button(Constants.buttonList.rb).whileTrue(ejectCMD);//this took things in
     controller1.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);//this ejected
+
 
     controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
     controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
 
+
     controller1.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
-    
+   
     controller1.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
-    
+   
     //Autonomous
   autoChooser = AutoBuilder.buildAutoChooser();
 
+
   SmartDashboard.putData("Auto Chooser", autoChooser);
   }
+
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -187,12 +212,13 @@ private final SendableChooser<Command> autoChooser;
       )
     );
 
+
     SmartDashboard.putData("TestAuto", new PathPlannerAuto("TestAuto"));
   }
                                                                                              
   public Command getAutonomousCommand() {
     // TODO Auto-generated method stub
-    
+   
     //return new PathPlannerAuto("Launch Auto");
     return autoChooser.getSelected();
     //return new MildAuto(swerveSubsystem);
@@ -203,3 +229,6 @@ private final SendableChooser<Command> autoChooser;
    * @return the command to run in autonomous
    */
 }
+
+
+
