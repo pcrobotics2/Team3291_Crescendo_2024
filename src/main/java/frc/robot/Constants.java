@@ -177,6 +177,16 @@ public final class Constants {
     public static final double driveKI = 0.000000001;
     public static final double driveKD = 0.00045;
 
+    // Autonomous Drive Motor PID Values
+    public static final double autoDriveKP = 5.0001;
+    public static final double autoDriveKI = 0.0;
+    public static final double autoDriveKD = 0.0;
+
+    // Autonomous Angle Motor PID Values
+    public static final double autoAngleKP = 5.0001;
+    public static final double autoAngleKI = 0.0;
+    public static final double autoAngleKD = 0.0;
+
     //feedforward constants
     public static final double ffkS = 0.667;
     public static final double ffkV = 2.44;
