@@ -173,9 +173,9 @@ public final class Constants {
     public static final double angleKFF = 0.0;
 
     // Drive Motor PID Values
-    public static final double driveKP = 0.01;
-    public static final double driveKI = 0.0;
-    public static final double driveKD = 0.0;
+    public static final double driveKP = 0.09;
+    public static final double driveKI = 0.000000001;
+    public static final double driveKD = 0.00045;
 
     //feedforward constants
     public static final double ffkS = 0.667;

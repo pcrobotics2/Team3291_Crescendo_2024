@@ -51,8 +51,6 @@ public class VisionSubsystem extends SubsystemBase {
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
     NetworkTableEntry targetpose_cameraspace = table.getEntry("targetpose_cameraspace");
-
-    this.testMotor = new CANSparkMax(42, MotorType.kBrushless); //7
     
     //read values periodically
     double x = tx.getDouble(0.0);
@@ -152,7 +150,6 @@ public double proportionalAiming()
   }
 
   
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
