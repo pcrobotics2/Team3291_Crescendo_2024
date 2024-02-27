@@ -7,6 +7,7 @@ package frc.robot.commands;
 import frc.robot.commands.DriveToApriltag;
 import frc.robot.subsystems.IntakeMotorSubsystem;
 import frc.robot.subsystems.LauncherSub;
+import frc.robot.subsystems.PreferencesSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -16,12 +17,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DriveToApriltagAndShoot extends SequentialCommandGroup {
   /** Creates a new DriveToApriltagAndShoot. */
-  public DriveToApriltagAndShoot(SwerveSubsystem swerveSubsystem, VisionSubsystem visionSubsystem, IntakeMotorSubsystem intakeMotorSubsystem, LauncherSub launcherSub, int desiredId) {
+  public DriveToApriltagAndShoot(SwerveSubsystem swerveSubsystem, VisionSubsystem visionSubsystem, IntakeMotorSubsystem intakeMotorSubsystem, LauncherSub launcherSub, int desiredId, PreferencesSubsystem preferencesSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new DriveToApriltag(swerveSubsystem, visionSubsystem, desiredId, true),
-      new LaunchWheelCMD(launcherSub).withTimeout(5)
+      new LaunchWheelCMD(launcherSub, preferencesSubsystem).withTimeout(5)
     );
   }
 }

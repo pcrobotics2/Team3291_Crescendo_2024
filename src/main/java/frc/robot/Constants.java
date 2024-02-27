@@ -24,7 +24,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
-  public static final int kLauncherSubLeftMotorId = 18;
+  public static final int kLauncherSubLeftMotorId = 22;
   public static final int kLauncherSubRightMotorId = 14;
 
   public static final double kLauncherSubP = 0.00005;
@@ -173,9 +173,9 @@ public final class Constants {
     public static final double angleKFF = 0.0;
 
     // Drive Motor PID Values
-    public static final double driveKP = 0.01;
-    public static final double driveKI = 0.0;
-    public static final double driveKD = 0.0;
+    public static final double driveKP = 0.09;
+    public static final double driveKI = 0.000000001;
+    public static final double driveKD = 0.00045;
 
     //feedforward constants
     public static final double ffkS = 0.667;

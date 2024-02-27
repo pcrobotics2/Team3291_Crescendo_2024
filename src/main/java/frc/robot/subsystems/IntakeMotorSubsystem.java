@@ -15,16 +15,6 @@ import frc.robot.Constants.intake;
 public class IntakeMotorSubsystem extends SubsystemBase {
 
   /*-------------------------------- public instance variables ---------------------------------*/
-  //public static IntakeMotorSubsystem mInstance;
-  //public PeriodicIO mPeriodicIO;
-
- // public static IntakeMotorSubsystem getInstance() {
- //   if (mInstance == null) {
-   //   mInstance = new IntakeMotorSubsystem();
-    //}
-    //return mInstance;
-  //}
-
   public CANSparkMax IntakeMotorMotor;
 
   public SparkPIDController IntakeMotorPID;
@@ -32,13 +22,10 @@ public class IntakeMotorSubsystem extends SubsystemBase {
   public RelativeEncoder IntakeMotorEncoder;
 
   public SlewRateLimiter mSpeedLimiter = new SlewRateLimiter(1000);
-  public double intakeSpeed = Constants.launchSpeed;
+  public double intakeSpeed = Constants.intake.ejectSpeed;
 
   public IntakeMotorSubsystem() {
     Preferences.initDouble("intakeSpeed", intakeSpeed);
-    // super("IntakeMotorSubsystem");
-
-  //  mPeriodicIO = new PeriodicIO();
 
     IntakeMotorMotor = new CANSparkMax(Constants.intake.IntakeID, MotorType.kBrushless);
    // IntakeMotorMotor.restoreFactoryDefaults();
@@ -57,12 +44,6 @@ public class IntakeMotorSubsystem extends SubsystemBase {
     IntakeMotorMotor.setInverted(true);
 
   }
-
-//  public static class PeriodicIO {
-//    double IntakeMotorSubsystem_rpm = 0.0;
-//  }
-
-
 
   /*---------------------------------- Custom Public Functions ----------------------------------*/
   public double loadPreferences() {
