@@ -18,9 +18,34 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Medium Middle"
+            "name": "GroundCMD"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Medium Middle"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeCMD"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StowCMD"
           }
         },
         {

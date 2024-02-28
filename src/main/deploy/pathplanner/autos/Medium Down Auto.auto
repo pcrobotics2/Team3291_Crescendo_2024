@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.8293658293477721,
+      "x": 0.8,
       "y": 4.318634608833198
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Medium Up"
+                  "pathName": "Medium Path Down"
                 }
               },
               {
