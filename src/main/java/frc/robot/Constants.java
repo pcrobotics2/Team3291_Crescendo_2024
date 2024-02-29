@@ -41,7 +41,7 @@ public final class Constants {
 
   public static final double feedSpeed = 0.4;   //0.40
   public static final double launchSpeed = 5000 * 0.65;//5000 * percentage 
-  public static final double timeToWait = 0.1;
+  public static final double timeToWait = 2;
   public static final double hangSpeed = 0.5;
   public static final double launcherTargetVoltage = launchSpeed * 12;
   public static final double gracePeriod = 0.3;
