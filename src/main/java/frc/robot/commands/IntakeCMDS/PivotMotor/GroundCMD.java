@@ -2,16 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.IntakeCMDS;
+package frc.robot.commands.IntakeCMDS.PivotMotor;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class SourceCMD extends Command {
-  /** Creates a new SourceCMD. */
-  IntakeSubsystem intakeSubsystem;
-  boolean stowed; //checks for note then stows
-  public SourceCMD(IntakeSubsystem intakeSubsystem) {
+public class GroundCMD extends Command {
+  /** Creates a new GroundCMD. */
+  private final IntakeSubsystem intakeSubsystem;
+  private boolean stowed; //checks for note then stows
+  public GroundCMD(IntakeSubsystem intakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
     addRequirements(intakeSubsystem);
@@ -20,16 +20,19 @@ public class SourceCMD extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    intakeSubsystem.goToGround();
     this.stowed = false;
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (intakeSubsystem.getIntakeHasNote() == false && this.stowed == false) {
-      intakeSubsystem.goToSource();
+    intakeSubsystem.goToGround();
     }
     else {
+
       intakeSubsystem.goToStow();
       this.stowed = true;
     }

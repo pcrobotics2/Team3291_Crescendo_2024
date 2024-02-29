@@ -26,7 +26,6 @@ import frc.robot.subsystems.PreferencesSubsystem;
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
 
-
   public DutyCycleEncoder intakeEncoder;
   public DigitalInput intakeLimitSwitch;
   public PIDController pidController;
@@ -41,24 +40,11 @@ public class IntakeSubsystem extends SubsystemBase {
     AMP,
     STOW
   }
-  public enum IntakeState {
-    NONE,
-    INTAKE,
-    EJECT,
-    PULSE,
-    SHOOTER
-  }
-
 
   // Input: Desired state
   public PivotTarget pivot_target = PivotTarget.STOW;
-  public IntakeState intake_state = IntakeState.NONE;
-
 
   // Output: Motor set values
-  //double intake_pivot_voltage = 0.0;
-  public double intake_speed = 0.0;
-
 
   private double intakekp = Constants.intake.intakePID.kp;
   private double intakeki = Constants.intake.intakePID.ki;
@@ -110,22 +96,17 @@ public class IntakeSubsystem extends SubsystemBase {
   public double giveVoltage(double pivot_angle, double current_angle) {
     // Pivot control
     SmartDashboard.putNumber("originalAngle", current_angle);
-    //double pivot_angle = pivotTargetToAngle(pivot_target);
    
     //double angle = Math.abs(360 - current_angle); //reverses it
     double angle = current_angle;
     SmartDashboard.putNumber("updatedAngle", angle);
 
-
     double intake_pivot_voltage = pidController.calculate(angle, pivot_angle);
-
 
     // If the pivot is at exactly 0.0, it's probably not connected, so disable it
     SmartDashboard.putNumber("pid output", intake_pivot_voltage);
-
-
-    //SmartDashboard.putNumber("intake_pivot_voltage", intake_pivot_voltage);
     System.out.println("error: " + intake_pivot_voltage);
+
     //double adjustedIntakePivotVoltage = 10 - Math.abs(intake_pivot_voltage);
     double adjustedIntakePivotVoltage = intake_pivot_voltage; //error reversed for voltage
     if (intakeEncoder.get() == 0.0) {
@@ -138,27 +119,15 @@ public class IntakeSubsystem extends SubsystemBase {
       adjustedIntakePivotVoltage = -Constants.intake.maxPivotVoltage;
     }
    if (!ampAtAngle() && !sourceAtAngle() && !stowAtAngle() && !groundAtAngle()) {
-    //adjustedIntakePivotVoltage += Math.cos(167 - angle) * Constants.intake.intakePID.kcos;
+    //adjustedIntakePivotVoltage += Math.cos(167 - angle) * Constants.intake.intakePID.kcos; //feedforward
    }
-    System.out.println("division error: " + adjustedIntakePivotVoltage);
+    System.out.println("final voltage: " + adjustedIntakePivotVoltage);
     return adjustedIntakePivotVoltage;
   }
-/*
-  @Override
-  public void writePeriodicOutputs() {
-    mPivotMotor.setVoltage(m_periodicIO.intake_pivot_voltage);
-
-
-    mIntakeMotor.set(m_periodicIO.intake_speed);
-  }
-*/
  
   public void stopIntake() {
     pivotMotor.set(0);
   }
-
-
-
 
   public double pivotTargetToAngle(PivotTarget target) {
     switch (target) {
@@ -177,33 +146,21 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
 
-/*   public IntakeState getIntakeState() {
-    return m_periodicIO.intake_state;
-  }
-*/
-  // public double getPivotAngleDegrees() {
-  //   //SmartDashboard.putNumber("encoder", intakeEncoder.getAbsolutePosition());
-  //   System.out.println("encoder position:" + intakeEncoder.getAbsolutePosition());
-  //   double value = intakeEncoder.getAbsolutePosition() - Constants.intake.k_pivotEncoderOffset;
-  //   value *= 360;
-  //   //SmartDashboard.putNumber("angle value", value);
-  //   System.out.println("angled from encoder:" + value);
-  //   return value;
-  // }
   public double getCurrentAngle() {
     double value = intakeEncoder.getAbsolutePosition();
     value *= 360;
-    value = value + Constants.intake.k_pivotEncoderOffset;
+    value += Constants.intake.k_pivotEncoderOffset;
     if (value > 360) {
       value %= 360;
     }
     return value;
   }
+
   public boolean getIntakeHasNote() {
     //must be inverted
     return !intakeLimitSwitch.get();
   }
-   
+   //check if at angle
   public boolean ampAtAngle() {
     boolean value = false;
     if (getCurrentAngle() < preferencesSubsystem.ampAngle + Constants.angleDeadband && getCurrentAngle() > preferencesSubsystem.ampAngle - Constants.angleDeadband) {
@@ -235,8 +192,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
   public void goToGround() {
-
-
     //  if (getIntakeHasNote()) {
     //   goToStow();
     // }
@@ -294,9 +249,10 @@ public class IntakeSubsystem extends SubsystemBase {
    if (getCurrentAngle() > 90 && voltage == Constants.intake.maxPivotVoltage) {
       pivotMotor.setVoltage(-Constants.intake.maxPivotVoltage);
     }
-     else {
-      pivotMotor.setVoltage(voltage);
-    }    SmartDashboard.putNumber("getVoltage", voltage);
+      else {
+        pivotMotor.setVoltage(voltage);
+      }   
+    SmartDashboard.putNumber("getVoltage", voltage);
     System.out.println("s");
   }
 
@@ -324,8 +280,6 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("atAngleAmp", ampAtAngle());
     SmartDashboard.putBoolean("atAngleSource", sourceAtAngle());
     SmartDashboard.putBoolean("atAngleStow", stowAtAngle());
-
-
   }
 }
  
