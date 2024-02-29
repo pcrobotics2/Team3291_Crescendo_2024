@@ -96,21 +96,21 @@ public class SwerveDrive extends Command {
       MathUtil.applyDeadband(strafeSupplier.getAsDouble()/1.5, Swerve.stickDeadband));
     }
     else if (backToggleInt == 2) {
-      if (visionSubsystem.getTXSwerve() > Constants.Swerve.visionXDeadband || visionSubsystem.getTXSwerve() < -Constants.Swerve.visionXDeadband) {
-        if (visionSubsystem.getTXSwerve() > Constants.Swerve.visionXRange) {
-        this.visionTX = Constants.Swerve.visionXRange;
+      if (visionSubsystem.getTXSwerve() > Constants.Vision.XDeadband || visionSubsystem.getTXSwerve() < -Constants.Vision.XDeadband) {
+        if (visionSubsystem.getTXSwerve() > Constants.Vision.XDeadband) {
+        this.visionTX = Constants.Vision.XDeadband;
         }
-          else if (visionSubsystem.getTXSwerve() < -Constants.Swerve.visionXRange) {
-            this.visionTX = -Constants.Swerve.visionXRange;
+          else if (visionSubsystem.getTXSwerve() < -Constants.Vision.XDeadband) {
+            this.visionTX = -Constants.Vision.XDeadband;
           }
             else {
-              this.visionTX = visionSubsystem.getTXSwerve() * Constants.Swerve.visionXProportionalGain;
+              this.visionTX = visionSubsystem.getTXSwerve() * Constants.Vision.XProportionalGain;
             }
       }
       else {
-        this.visionTX = Constants.Swerve.visionXOffset;
+        this.visionTX = Constants.Vision.XOffset;
       }
-      double visionOutput = (visionTX - Constants.Swerve.visionXOffset)/Constants.Swerve.visionXRange;
+      double visionOutput = (visionTX - Constants.Vision.XOffset)/Constants.Vision.XRange;
       this.rotationVal = rotationLimiter.calculate(
       MathUtil.applyDeadband(visionOutput, Swerve.stickDeadband));
 

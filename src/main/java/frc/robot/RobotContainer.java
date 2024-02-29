@@ -114,7 +114,7 @@ private final SendableChooser<Command> autoChooser;
   public LaunchNoteCMD launchNoteCMD = new LaunchNoteCMD(intakeMotorSubsystem, launcherSub, preferencesSubsystem);
  
   public DriveToApriltagAndShoot driveToApriltagAndShoot = new DriveToApriltagAndShoot(swerveSubsystem, visionSubsystem, intakeMotorSubsystem, launcherSub, 0, preferencesSubsystem);
-  public DriveToApriltag driveToApriltag = new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, false);
+  public DriveToApriltag driveToApriltag = new DriveToApriltag(swerveSubsystem, visionSubsystem);
  
 
 
@@ -143,7 +143,7 @@ private final SendableChooser<Command> autoChooser;
         NamedCommands.registerCommand("GroundCMD", new GroundCMD(intakeSubsystem).until(intakeSubsystem::groundAtAngle));
         NamedCommands.registerCommand("StowCMD", new StowCMD(intakeSubsystem).until(intakeSubsystem::stowAtAngle));
         NamedCommands.registerCommand("ColorChangingCMD", new ColorChangingCMD(colorChanger));
-        NamedCommands.registerCommand("DriveToApriltag", new DriveToApriltag(swerveSubsystem, visionSubsystem, 0, true));
+        NamedCommands.registerCommand("DriveToApriltag", new DriveToApriltag(swerveSubsystem, visionSubsystem));
         NamedCommands.registerCommand("LaunchNoteCMD", new LaunchNoteCMD(intakeMotorSubsystem, launcherSub, preferencesSubsystem).withTimeout(5));
 
 

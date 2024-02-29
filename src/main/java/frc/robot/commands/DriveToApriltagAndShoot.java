@@ -21,7 +21,7 @@ public class DriveToApriltagAndShoot extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveToApriltag(swerveSubsystem, visionSubsystem, desiredId, true),
+      new DriveToApriltag(swerveSubsystem, visionSubsystem),
       new LaunchWheelCMD(launcherSub, preferencesSubsystem).withTimeout(5)
     );
   }

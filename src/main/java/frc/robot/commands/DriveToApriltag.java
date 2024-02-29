@@ -28,21 +28,16 @@ public class DriveToApriltag extends Command {
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(Swerve.kMaxTranslationAcceleration);
   //private SlewRateLimiter strafeLimiter = new SlewRateLimiter(Swerve.kMaxStrafeAcceleration);
   private SlewRateLimiter rotationLimiter = new SlewRateLimiter(Swerve.kMaxRotationAcceleration);
-  private int apriltagID;
-  private boolean toSpeaker;
 
   /** Creates a new SwerveDrive. */
   public DriveToApriltag(
     SwerveSubsystem swerveSubsystem,
-    VisionSubsystem visionSubsystem,
-    int apriltagID,
-    boolean toSpeaker
+    VisionSubsystem visionSubsystem
+    //boolean targetLocation
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.visionSubsystem = visionSubsystem;
     this.swerveSubsystem = swerveSubsystem;
-    this.apriltagID = apriltagID;
-    this.toSpeaker = toSpeaker;
     addRequirements(swerveSubsystem, visionSubsystem);
   }
 
@@ -55,7 +50,16 @@ public class DriveToApriltag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    int targetLocation;
     if (visionSubsystem.isThereATarget() == true) {
+
+      if (visionSubsystem.getApriltagId() == 7 || visionSubsystem.getApriltagId() == 4 || visionSubsystem.getApriltagId() == 3 || visionSubsystem.getApriltagId() == 8){
+        targetLocation = 1;
+      } else if (visionSubsystem.getApriltagId() == 6 || visionSubsystem.getApriltagId() == 5){
+        targetLocation = 3;//change later if add amp
+      } else {
+        targetLocation = 3;
+      }
 
       if (visionSubsystem.getTXSwerve() > Constants.Vision.XDeadband || visionSubsystem.getTXSwerve() < -Constants.Vision.XDeadband) {
         if (visionSubsystem.getTXSwerve() > Constants.Vision.XRange) {
@@ -75,11 +79,16 @@ public class DriveToApriltag extends Command {
       double visionXOutput = (visionTX - Constants.Vision.XOffset)/Constants.Vision.XRange;
       this.rotationVal = rotationLimiter.calculate(visionXOutput);
 
-      if (toSpeaker = true) {
+      if (targetLocation == 1) {
         this.translationVal = translationLimiter.calculate(visionSubsystem.getDistanceToSpeaker());
-      } else {
+      } else if ( targetLocation == 2) {
         this.translationVal = translationLimiter.calculate(visionSubsystem.getLimelightSpeed());
+      } else {
+        this.translationVal = 0;
+        this.rotationVal = rotationLimiter.calculate(Constants.Vision.findAprilTagTurnSpeed);
       }
+
+      
       this.strafeVal = 0.0;
 
     swerveSubsystem.drive(
@@ -110,8 +119,10 @@ public class DriveToApriltag extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    double txTarget = MathUtil.applyDeadband(visionSubsystem.getTXSwerve(), Constants.Vision.XDeadband);
+    double tyTarget = MathUtil.applyDeadband(visionSubsystem.getTYSwerve(), Constants.Vision.XDeadband);
 
-    if (rotationVal >= 0.1 && Math.abs(this.translationVal) >= 0.1) {
+    if (txTarget == Constants.Vision.XOffset && tyTarget == Constants.Vision.yTargetValue) {
       return true;
     }
     return false;

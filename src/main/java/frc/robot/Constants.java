@@ -267,6 +267,16 @@ public final class Constants {
     public static final double XRange = 20;
     public static final double XDeadband = 1;
     public static final double XProportionalGain = 2;
+
+    public static final double desiredDistanceSpeakerInches = 37.5 + 6;//37.5 is length of subwoofer from limelight
+    //public static final double desiredDistanceAmpInches = 37.5 + 6;//37.5 is length of subwoofer from limelight
+    public static final double limelightMountAngleDegrees = 28.8;
+    public static final double limelightLensHeightInches = 16.875;
+    public static final double goalHeightInches = 57.125;
+
+    public static final double findAprilTagTurnSpeed = 0.1;
+    public static final double yTargetValue = 1;
+
   }
 
     public static final class AutoConstants {
