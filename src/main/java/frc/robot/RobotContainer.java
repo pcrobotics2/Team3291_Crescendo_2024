@@ -53,7 +53,6 @@ import frc.robot.subsystems.ColorChanger;
 
 
 
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -154,7 +153,7 @@ private final SendableChooser<Command> autoChooser;
     controller0.povLeft().whileTrue(sourceCMD);
     controller0.povRight().whileTrue(ampCMD);
 
-    controller0.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
+   // controller0.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
     controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
 
     //Controller1
@@ -176,6 +175,7 @@ private final SendableChooser<Command> autoChooser;
     //Autonomous
     autoChooser = AutoBuilder.buildAutoChooser();
 
+    
   SmartDashboard.putData("AutoChooser", autoChooser);
 
   }
