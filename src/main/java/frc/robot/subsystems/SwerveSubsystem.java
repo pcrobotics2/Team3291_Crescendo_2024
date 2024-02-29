@@ -124,7 +124,7 @@ public class SwerveSubsystem extends SubsystemBase {
     new Pose2d(0, 0, Rotation2d.fromDegrees(0)) // TODO: CLARIFY THIS WORKS
 );
 
-    resetPoseEstimator(new Pose2d(0,0, new Rotation2d()));//If this is way wrong and fucks everything up, my bad guys
+    resetPoseEstimator(new Pose2d(0,0, new Rotation2d()));//If this is way wrong and everything up, my bad guys
     resetOdometry(new Pose2d(0,0, new Rotation2d()));
 
 
