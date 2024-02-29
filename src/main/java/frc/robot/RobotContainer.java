@@ -176,7 +176,7 @@ private final SendableChooser<Command> autoChooser;
     //Autonomous
     autoChooser = AutoBuilder.buildAutoChooser();
 
-  SmartDashboard.putData("Autonomous Choice", autoChooser);
+  SmartDashboard.putData("AutoChooser", autoChooser);
 
   }
 
