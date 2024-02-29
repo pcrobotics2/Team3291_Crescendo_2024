@@ -55,27 +55,27 @@ public class DriveToApriltag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (visionSubsystem.isThereATarget() == true){
+    if (visionSubsystem.isThereATarget() == true) {
 
-      if (visionSubsystem.getTXSwerve() > 1 || visionSubsystem.getTXSwerve() < -1) {
-      if (visionSubsystem.getTXSwerve() > 20) {
-        this.visionTX = 20;
-      }
-      if (visionSubsystem.getTXSwerve() < -20) {
-        this.visionTX = -20;
-      }
-      else {
-        this.visionTX = visionSubsystem.getTXSwerve();
-      }
+      if (visionSubsystem.getTXSwerve() > Constants.Vision.XDeadband || visionSubsystem.getTXSwerve() < -Constants.Vision.XDeadband) {
+        if (visionSubsystem.getTXSwerve() > Constants.Vision.XRange) {
+          this.visionTX = Constants.Vision.XRange;
+        }
+        if (visionSubsystem.getTXSwerve() < -Constants.Vision.XRange) {
+          this.visionTX = -Constants.Vision.XRange;
+        }
+        else {
+         this.visionTX = visionSubsystem.getTXSwerve();
+        }
     }
       else {
-        this.visionTX = Constants.Swerve.visionXOffset;
+        this.visionTX = Constants.Vision.XOffset;
       }
 
-      double visionOutput = (visionTX - Constants.Swerve.visionXOffset)/20;
-      this.rotationVal = rotationLimiter.calculate(visionOutput);
+      double visionXOutput = (visionTX - Constants.Vision.XOffset)/Constants.Vision.XRange;
+      this.rotationVal = rotationLimiter.calculate(visionXOutput);
 
-      if (toSpeaker = true){
+      if (toSpeaker = true) {
         this.translationVal = translationLimiter.calculate(visionSubsystem.getDistanceToSpeaker());
       } else {
         this.translationVal = translationLimiter.calculate(visionSubsystem.getLimelightSpeed());
@@ -111,7 +111,7 @@ public class DriveToApriltag extends Command {
   @Override
   public boolean isFinished() {
 
-    if (rotationVal >= 0.1 && Math.abs(this.translationVal) >= 0.1){
+    if (rotationVal >= 0.1 && Math.abs(this.translationVal) >= 0.1) {
       return true;
     }
     return false;

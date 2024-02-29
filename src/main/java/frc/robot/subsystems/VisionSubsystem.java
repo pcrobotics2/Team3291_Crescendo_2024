@@ -77,8 +77,7 @@ public class VisionSubsystem extends SubsystemBase {
 
   }
 
-public double proportionalAiming()
-  {    
+public double proportionalAiming() {    
     // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
     // your limelight 3 feed, tx should return roughly 21 degrees.
     double targetingAngularVelocity = LimelightHelpers.getTX("limelight");
@@ -96,8 +95,7 @@ public double proportionalAiming()
   // simple proportional ranging control with Limelight's "ty" value
   // this works best if your Limelight's mount height and target mount height are different.
   // if your limelight and target are mounted at the same or similar heights, use "ta" (area) for target ranging rather than "ty"
-  public double getLimelightSpeed()
-  {    
+  public double getLimelightSpeed() {    
     double kP = .1;
     double targetingForwardSpeed = LimelightHelpers.getTY("limelight") * kP;
     targetingForwardSpeed *= -1.0;
@@ -105,7 +103,7 @@ public double proportionalAiming()
   }
 
   //formula to get the distance from a certain point, to then use in percise movement (you lowkey could just use the formula above but like this works too)
-  public double getDistanceToSpeaker(){
+  public double getDistanceToSpeaker() {
     double ty = LimelightHelpers.getTY("limelight");
     double targetOffsetAngle_Vertical = ty;//offset from the crosshair
 
@@ -138,7 +136,7 @@ public double proportionalAiming()
   }
 
   //checks if the intended apriltag id has been found
-  public boolean isThereATarget(){
+  public boolean isThereATarget() {
 
     if (LimelightHelpers.getTV("limelight") == true){
       return true;

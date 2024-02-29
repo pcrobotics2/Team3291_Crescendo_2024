@@ -95,10 +95,7 @@ public final class Constants {
 
 
   public static class Swerve {
-    public static final double visionXOffset = 0;
-    public static final double visionXRange = 20;
-    public static final double visionXDeadband = 1;
-    public static final double visionXProportionalGain = 2;
+   
     public static final double stickDeadband = 0.1;//configure and mess around with later
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW- 
 
@@ -264,6 +261,12 @@ public final class Constants {
       // Constants in a nice package.
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, angleMultiplier);
     }
+  }
+  public static final class Vision {
+    public static final double XOffset = 0;
+    public static final double XRange = 20;
+    public static final double XDeadband = 1;
+    public static final double XProportionalGain = 2;
   }
 
     public static final class AutoConstants {
