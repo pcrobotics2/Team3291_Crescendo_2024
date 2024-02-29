@@ -24,7 +24,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
-  public static final int kLauncherSubLeftMotorId = 22;
+  public static final int kLauncherSubLeftMotorId = 18;
   public static final int kLauncherSubRightMotorId = 14;
 
   public static final double kLauncherSubP = 0.00005;
@@ -41,7 +41,7 @@ public final class Constants {
 
   public static final double feedSpeed = 0.4;   //0.40
   public static final double launchSpeed = 5000 * 0.65;//5000 * percentage 
-  public static final double timeToWait = 1;
+  public static final double timeToWait = 0.1;
   public static final double hangSpeed = 0.5;
   public static final double launcherTargetVoltage = launchSpeed * 12;
   public static final double gracePeriod = 0.3;
