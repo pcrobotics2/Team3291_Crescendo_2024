@@ -24,7 +24,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
-  public static final int kLauncherSubLeftMotorId = 22;
+  public static final int kLauncherSubLeftMotorId = 18;
   public static final int kLauncherSubRightMotorId = 14;
 
   public static final double kLauncherSubP = 0.00005;

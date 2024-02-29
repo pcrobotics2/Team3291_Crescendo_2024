@@ -54,29 +54,5 @@
     "properties": {
       "persistent": true
     }
-  },
-  {
-    "name": "/Preferences/intakekp",
-    "type": "double",
-    "value": 0.1,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/intakeki",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/intakekd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
   }
 ]

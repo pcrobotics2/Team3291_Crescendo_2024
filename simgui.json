@@ -4,6 +4,7 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Alliance": "String Chooser",
       "/SmartDashboard/Auto Chooser": "String Chooser",
+      "/SmartDashboard/Autonomous Choice": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/TestAuto": "Command"
     },
