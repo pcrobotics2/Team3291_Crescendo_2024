@@ -295,7 +295,8 @@ public final class Constants {
   }
 
   public final static class Lighting {
-    public final static int lightingPort = 1;
+    public final static int lightingPort = 2;
+    public final static int m_ledBuffer = 200;
 
     public static enum Colors {
      RAINBOWRAINBOW  ("Rainbow Palette", -0.99),
