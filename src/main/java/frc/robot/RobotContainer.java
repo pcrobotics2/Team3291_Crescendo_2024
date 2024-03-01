@@ -128,7 +128,7 @@ private final SendableChooser<Command> autoChooser;
     
         // Register Named Commands
         NamedCommands.registerCommand("EjectCMD", new EjectCMD(intakeMotorSubsystem, preferencesSubsystem).withTimeout(1));
-        NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger, preferencesSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("IntakeMotorCMD", new IntakeMotorCMD(intakeMotorSubsystem, intakeSubsystem, colorChanger, preferencesSubsystem).withTimeout(5));
         NamedCommands.registerCommand("LaunchWheelCMD", new LaunchWheelCMD(launcherSub, preferencesSubsystem).withTimeout(1));
         NamedCommands.registerCommand("FeedWheelCMD", new FeedWheelCMD(launcherSub).withTimeout(1));
         NamedCommands.registerCommand("AmpCMD", new AmpCMD(intakeSubsystem).until(intakeSubsystem::ampAtAngle));
@@ -145,31 +145,31 @@ private final SendableChooser<Command> autoChooser;
     controller0.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
     controller0.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
   
-    controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
-    controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
+    // controller0.button(Constants.buttonList.rb).whileTrue(ejectCMD);
+    // controller0.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);
 
-    controller0.povDown().whileTrue(groundCMD);
-    controller0.povUp().whileTrue(stowCMD);
-    controller0.povLeft().whileTrue(sourceCMD);
-    controller0.povRight().whileTrue(ampCMD);
+    // controller0.povDown().whileTrue(groundCMD);
+    // controller0.povUp().whileTrue(stowCMD);
+    // controller0.povLeft().whileTrue(sourceCMD);
+    // controller0.povRight().whileTrue(ampCMD);
 
    // controller0.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
-    controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
+    //controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
 
     //Controller1
-    controller1.button(Constants.buttonList.back).whileTrue(driveToApriltagAndShoot);
-    controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
-    controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
+    // controller1.button(Constants.buttonList.back).whileTrue(driveToApriltagAndShoot);
+     controller1.button(Constants.buttonList.b).whileTrue(launchWheelCMD);
+     controller1.button(Constants.buttonList.x).whileTrue(feedWheelCMD);
     
-    controller1.povDown().whileTrue(groundCMD);
-    controller1.povUp().whileTrue(stowCMD);
-    controller1.povLeft().whileTrue(sourceCMD);
-    controller1.povRight().whileTrue(ampCMD);
+    // controller1.povDown().whileTrue(groundCMD);
+    // controller1.povUp().whileTrue(stowCMD);
+    // controller1.povLeft().whileTrue(sourceCMD);
+    // controller1.povRight().whileTrue(ampCMD);
    
-    controller1.button(Constants.buttonList.rb).whileTrue(ejectCMD);//This ejects notes
-    controller1.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);//This takes notes in
-    //controller1.button(Constants.buttonList.start).whileTrue(driveToApriltag);
-    controller1.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
+    // controller1.button(Constants.buttonList.rb).whileTrue(ejectCMD);//This ejects notes
+    // controller1.button(Constants.buttonList.lb).whileTrue(intakeMotorCMD);//This takes notes in
+    // //controller1.button(Constants.buttonList.start).whileTrue(driveToApriltag);
+     controller1.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
     controller1.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
    
     //Autonomous

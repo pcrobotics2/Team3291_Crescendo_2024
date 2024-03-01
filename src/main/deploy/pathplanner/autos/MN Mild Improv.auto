@@ -1,0 +1,25 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7029193205305838,
+      "y": 4.37
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MN Mild Improved"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "MN Mild",
+  "choreoAuto": false
+}

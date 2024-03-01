@@ -93,7 +93,7 @@ public class SwerveDrive extends Command {
       this.translationVal = translationLimiter.calculate(
       MathUtil.applyDeadband(translationSupplier.getAsDouble(), Swerve.stickDeadband));
       this.strafeVal = strafeLimiter.calculate(
-      MathUtil.applyDeadband(strafeSupplier.getAsDouble(), Swerve.stickDeadband));
+      MathUtil.applyDeadband(strafeSupplier.getAsDouble() * 1.25, Swerve.stickDeadband));
     }
     else if (backToggleInt == 2) {
       if (visionSubsystem.getTXSwerve() > Constants.Vision.XDeadband || visionSubsystem.getTXSwerve() < -Constants.Vision.XDeadband) {
