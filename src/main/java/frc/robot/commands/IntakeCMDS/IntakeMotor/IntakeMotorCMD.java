@@ -48,7 +48,7 @@ public class IntakeMotorCMD extends Command {
       intakeMotorSubsystem.moveIntakeMotor(0);
     }
     if (intakeSubsystem.getCurrentAngle() < preferencesSubsystem.groundAngle + Constants.angleDeadband && intakeSubsystem.getCurrentAngle() > preferencesSubsystem.groundAngle - Constants.angleDeadband) {
-      colorChanger.setGOLD();
+      colorChanger.setGold();
     }
     // if (!intakeSubsystem.getIntakeHasNote()) {
     // intakeMotorSubsystem.moveIntakeMotor(-1 * Constants.intake.intakeSpeed);
