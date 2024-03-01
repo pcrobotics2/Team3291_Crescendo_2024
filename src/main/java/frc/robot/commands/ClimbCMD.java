@@ -89,7 +89,7 @@ public class ClimbCMD extends Command {
 
     if (this.hasChanged == 0) {
       if (this.colorToggleNumber == 2) {
-    colorChanger.setRED();
+    colorChanger.setRed();
       }
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
@@ -97,7 +97,7 @@ public class ClimbCMD extends Command {
     }
     else if (this.hasChanged == 2) {
       if (colorToggleNumber == 2) {
-    colorChanger.setVIOLET();
+    colorChanger.setPurple();
       }
     double positiveSpeed = positiveSupplier.getAsDouble();
     double negativeSpeed = negativeSupplier.getAsDouble();
