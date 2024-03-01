@@ -15,30 +15,16 @@ import frc.robot.Constants.Lighting;
 import frc.robot.Constants.Lighting.Colors;
 
 public class ColorChanger extends SubsystemBase { 
-  public Spark lighting;
 
-  public final SendableChooser<Constants.Lighting.Colors> lighting_chooser =  new SendableChooser<>();
-
-  public AddressableLED m_led = new AddressableLED(Constants.Lighting.lightingPort);//pwm port 2
+  public AddressableLED m_led = new AddressableLED(2);//pwm port 2
 
     // Reuse buffer
     // Default to a length of 60, start empty output
     // Length is expensive to set, so only set it once, then just update data
-  public AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(Constants.Lighting.lightingPort );
+  public AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(200);
 
   /** Creates a new ColorChanger. */
  public ColorChanger() {
- 
-    lighting = new Spark(Constants.Lighting.lightingPort);
-
-    lighting.set(Constants.Lighting.startingColor.getColorValue());
-
-    lighting_chooser.setDefaultOption(Constants.Lighting.startingColor.getColorName(), Constants.Lighting.startingColor);
-
-    for (Colors c : Colors.values()) {
-      lighting_chooser.addOption(c.getColorName(), c);
-    }
-    SmartDashboard.putData("Alliance", lighting_chooser);
 
     m_led.setLength(m_ledBuffer.getLength());
 
@@ -46,18 +32,6 @@ public class ColorChanger extends SubsystemBase {
     m_led.setData(m_ledBuffer);
     m_led.start();
   }
-
-  public void blink(){
-    Colors selectedColor = lighting_chooser.getSelected();
-
-    lighting.set(selectedColor.getColorValue());
-    lighting.set(0.99);
-  }
- 
-  public void defaultDisable() {
-    lighting.set(Constants.Lighting.disableColor.getColorValue());
-  }
-
 
 public void setRAINBOWRAINBOW() {
         // For every pixel
