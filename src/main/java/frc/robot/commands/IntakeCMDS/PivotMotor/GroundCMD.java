@@ -33,7 +33,7 @@ public class GroundCMD extends Command {
     }
     else {
 
-      intakeSubsystem.goToStow();
+      intakeSubsystem.goToGround();
       this.stowed = true;
     }
   }
