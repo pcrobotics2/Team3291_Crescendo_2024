@@ -16,6 +16,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public CANSparkMax leftclimber;
   public CANSparkMax rightclimber;
+  public ColorChanger colorChanger;
   
   public ClimberSubsystem() {
     
@@ -35,6 +36,7 @@ public void setClimberIndividual(double positiveSpeed, double negativeSpeed) {
 public void setClimberTogether(double positiveSpeed, double negativeSpeed) {
  leftclimber.set(positiveSpeed - negativeSpeed); 
  rightclimber.set(-1 * (positiveSpeed - negativeSpeed));
+ colorChanger.setOrange();
 }
 
 public void stop() {

@@ -130,6 +130,17 @@ public void setRAINBOWRAINBOW() {
 
     }
 
+    public void setOrange(){
+
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            // Sets the specified LED to the HSV values for red
+            m_ledBuffer.setRGB(i, 252, 136, 3);
+         }
+         
+         m_led.setData(m_ledBuffer);
+
+    }
+
   @Override
   public void periodic() {
     //This method will be called once per scheduler run
