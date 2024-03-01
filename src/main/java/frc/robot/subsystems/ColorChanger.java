@@ -25,6 +25,11 @@ public class ColorChanger extends SubsystemBase {
 
   /** Creates a new ColorChanger. */
  public ColorChanger() {
+<<<<<<< HEAD
+=======
+ 
+   
+>>>>>>> 1461463a2f2f89542b3470ed08837fab7373a395
 
     m_led.setLength(m_ledBuffer.getLength());
 
@@ -115,11 +120,17 @@ public void setRAINBOWRAINBOW() {
          m_led.setData(m_ledBuffer);
 
     }
+   
+
     public void setOrange(){
 
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             // Sets the specified LED to the HSV values for red
+<<<<<<< HEAD
             m_ledBuffer.setRGB(i, 235, 165, 3);
+=======
+            m_ledBuffer.setRGB(i, 252, 136, 3);
+>>>>>>> 1461463a2f2f89542b3470ed08837fab7373a395
          }
          
          m_led.setData(m_ledBuffer);

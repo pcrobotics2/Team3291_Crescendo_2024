@@ -21,6 +21,7 @@ public class PreferencesSubsystem extends SubsystemBase {
   public double stowAngle = Constants.intake.stowAngle;
   public double sourceAngle = Constants.intake.sourceAngle;
   public double ampAngle = Constants.intake.ampAngle;
+  public double maxPivotVoltage = Constants.intake.maxPivotVoltage;
 
 
   public PreferencesSubsystem() {
@@ -31,6 +32,7 @@ public class PreferencesSubsystem extends SubsystemBase {
     Preferences.initDouble("stowAngle", stowAngle);
     Preferences.initDouble("sourceAngle", sourceAngle);
     Preferences.initDouble("ampAngle", ampAngle);
+    Preferences.initDouble("maxPivotVoltage", maxPivotVoltage);
   }
 
 
@@ -68,6 +70,9 @@ public class PreferencesSubsystem extends SubsystemBase {
 
     if (Preferences.getDouble("ampAngle", ampAngle) != ampAngle) {
       ampAngle = Preferences.getDouble("ampAngle", ampAngle);
+    }
+    if (Preferences.getDouble("maxPivotVoltage", maxPivotVoltage) != maxPivotVoltage) {
+      maxPivotVoltage = Preferences.getDouble("maxPivotVoltage", maxPivotVoltage);
     }
   }
 
