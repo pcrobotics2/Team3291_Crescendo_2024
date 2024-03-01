@@ -32,6 +32,7 @@ public class ClimberSubsystem extends SubsystemBase {
 public void setClimberIndividual(double positiveSpeed, double negativeSpeed) {
  leftclimber.set(-positiveSpeed); 
  rightclimber.set(-negativeSpeed);
+ colorChanger.setPurple();
 }
 public void setClimberTogether(double positiveSpeed, double negativeSpeed) {
  leftclimber.set(positiveSpeed - negativeSpeed); 
