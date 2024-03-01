@@ -112,11 +112,11 @@ public class IntakeSubsystem extends SubsystemBase {
     if (intakeEncoder.get() == 0.0) {
       adjustedIntakePivotVoltage = 0.0;
     }
-    if (adjustedIntakePivotVoltage > Constants.intake.maxPivotVoltage) {
-      adjustedIntakePivotVoltage = Constants.intake.maxPivotVoltage;
+    if (adjustedIntakePivotVoltage > preferencesSubsystem.maxPivotVoltage) {
+      adjustedIntakePivotVoltage = preferencesSubsystem.maxPivotVoltage;
     }
-    if (adjustedIntakePivotVoltage < -Constants.intake.maxPivotVoltage) {
-      adjustedIntakePivotVoltage = -Constants.intake.maxPivotVoltage;
+    if (adjustedIntakePivotVoltage < -preferencesSubsystem.maxPivotVoltage) {
+      adjustedIntakePivotVoltage = -preferencesSubsystem.maxPivotVoltage;
     }
    if (!ampAtAngle() && !sourceAtAngle() && !stowAtAngle() && !groundAtAngle()) {
     //adjustedIntakePivotVoltage += Math.cos(167 - angle) * Constants.intake.intakePID.kcos; //feedforward
@@ -200,11 +200,11 @@ public class IntakeSubsystem extends SubsystemBase {
     System.out.println("stow angle target: " + pivot_angle);
     System.out.println("final voltage: " + giveVoltage(pivot_angle, getCurrentAngle()) + "\n\n");
     double voltage = giveVoltage(pivot_angle, getCurrentAngle());
-    if (getCurrentAngle() < 100 && voltage == -Constants.intake.maxPivotVoltage) {
-      pivotMotor.setVoltage(Constants.intake.maxPivotVoltage);
+    if (getCurrentAngle() < 100 && voltage == -preferencesSubsystem.maxPivotVoltage) {
+      pivotMotor.setVoltage(preferencesSubsystem.maxPivotVoltage);
     }
     else if (getCurrentAngle() > 300) {
-      pivotMotor.setVoltage(-Constants.intake.maxPivotVoltage);
+      pivotMotor.setVoltage(-preferencesSubsystem.maxPivotVoltage);
 
 
     } else {
@@ -246,8 +246,8 @@ public class IntakeSubsystem extends SubsystemBase {
     System.out.println("stow angle target: " + pivot_angle);
    System.out.println("final voltage: " + giveVoltage(pivot_angle, getCurrentAngle()) + "\n\n");
     double voltage = giveVoltage(pivot_angle, getCurrentAngle());
-   if (getCurrentAngle() > 90 && voltage == Constants.intake.maxPivotVoltage) {
-      pivotMotor.setVoltage(-Constants.intake.maxPivotVoltage);
+   if (getCurrentAngle() > 90 && voltage == preferencesSubsystem.maxPivotVoltage) {
+      pivotMotor.setVoltage(-preferencesSubsystem.maxPivotVoltage);
     }
       else {
         pivotMotor.setVoltage(voltage);

@@ -28,7 +28,8 @@
     "type": "double",
     "value": 202.0,
     "properties": {
-      "persistent": true
+      "persistent": true,
+      "retained": true
     }
   },
   {
@@ -53,6 +54,39 @@
     "value": 72.0,
     "properties": {
       "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/intakekp",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/intakeki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/intakekd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/maxPivotVoltage",
+    "type": "double",
+    "value": 5.0,
+    "properties": {
+      "persistent": true,
+      "retained": true
     }
   }
 ]

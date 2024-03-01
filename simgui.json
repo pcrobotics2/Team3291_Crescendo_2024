@@ -1,9 +1,24 @@
 {
+  "HALProvider": {
+    "Other Devices": {
+      "DutyCycleEncoder[0]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [19]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Alliance": "String Chooser",
       "/SmartDashboard/Auto Chooser": "String Chooser",
+      "/SmartDashboard/AutoChooser": "String Chooser",
       "/SmartDashboard/Autonomous Choice": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/TestAuto": "Command"

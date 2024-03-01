@@ -29,16 +29,7 @@ public class ColorChanger extends SubsystemBase {
   /** Creates a new ColorChanger. */
  public ColorChanger() {
  
-    lighting = new Spark(Constants.Lighting.lightingPort);
-
-    lighting.set(Constants.Lighting.startingColor.getColorValue());
-
-    lighting_chooser.setDefaultOption(Constants.Lighting.startingColor.getColorName(), Constants.Lighting.startingColor);
-
-    for (Colors c : Colors.values()) {
-      lighting_chooser.addOption(c.getColorName(), c);
-    }
-    SmartDashboard.putData("Alliance", lighting_chooser);
+   
 
     m_led.setLength(m_ledBuffer.getLength());
 
