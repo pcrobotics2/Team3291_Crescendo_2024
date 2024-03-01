@@ -85,7 +85,7 @@ public final class Constants {
     public static final double sourceAngle = 167 - 55;
     public static final double ampAngle = 167 - 95;
 
-    public static final double maxPivotVoltage = 4;
+    public static final double maxPivotVoltage = 8;
 
     public static final double ejectSpeed = 0.5 * 5000;
     public static final double intakeSpeed = 0.7 * 5000;

@@ -153,7 +153,7 @@ private final SendableChooser<Command> autoChooser;
     controller0.povLeft().whileTrue(sourceCMD);
     controller0.povRight().whileTrue(ampCMD);
 
-   // controller0.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
+    controller0.button(Constants.buttonList.start).toggleOnTrue(climbCMD);
     controller0.button(Constants.buttonList.y).toggleOnTrue(launchNoteCMD);
 
     //Controller1
