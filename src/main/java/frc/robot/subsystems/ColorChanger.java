@@ -76,7 +76,7 @@ public void setRAINBOWRAINBOW() {
 
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             // Sets the specified LED to the HSV values for red
-            m_ledBuffer.setRGB(i, 114, 206, 252);
+            m_ledBuffer.setRGB(i, 111, 206, 255);
          }
          
          m_led.setData(m_ledBuffer);
@@ -87,7 +87,18 @@ public void setRAINBOWRAINBOW() {
 
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             // Sets the specified LED to the HSV values for red
-            m_ledBuffer.setRGB(i, 165, 48, 255);
+            m_ledBuffer.setRGB(i, 200, 48, 255);
+         }
+         
+         m_led.setData(m_ledBuffer);
+
+    }
+
+    public void setColor(){
+
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            // Sets the specified LED to the HSV values for red
+            m_ledBuffer.setRGB(i, 56, 78, 155);
          }
          
          m_led.setData(m_ledBuffer);
@@ -108,7 +119,7 @@ public void setRAINBOWRAINBOW() {
 
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             // Sets the specified LED to the HSV values for red
-            m_ledBuffer.setRGB(i, 255, 165, 0);
+            m_ledBuffer.setRGB(i, 235, 165, 3);
          }
          
          m_led.setData(m_ledBuffer);

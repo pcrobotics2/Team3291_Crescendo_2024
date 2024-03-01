@@ -89,11 +89,11 @@ public class SwerveDrive extends Command {
 
     if (backToggleInt == 0) {
     this.rotationVal = rotationLimiter.calculate(
-      MathUtil.applyDeadband(rotationSupplier.getAsDouble()/1.2, Swerve.stickDeadband));
+      MathUtil.applyDeadband(rotationSupplier.getAsDouble(), Swerve.stickDeadband));
       this.translationVal = translationLimiter.calculate(
-      MathUtil.applyDeadband(translationSupplier.getAsDouble()/1.2, Swerve.stickDeadband));
+      MathUtil.applyDeadband(translationSupplier.getAsDouble(), Swerve.stickDeadband));
       this.strafeVal = strafeLimiter.calculate(
-      MathUtil.applyDeadband(strafeSupplier.getAsDouble()/1.2, Swerve.stickDeadband));
+      MathUtil.applyDeadband(strafeSupplier.getAsDouble(), Swerve.stickDeadband));
     }
     else if (backToggleInt == 2) {
       if (visionSubsystem.getTXSwerve() > Constants.Vision.XDeadband || visionSubsystem.getTXSwerve() < -Constants.Vision.XDeadband) {
