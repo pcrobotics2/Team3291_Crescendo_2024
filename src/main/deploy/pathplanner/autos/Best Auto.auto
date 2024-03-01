@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.48,
-      "y": 2.0
+      "x": 2,
+      "y": 7.0
     },
     "rotation": 0
   },
@@ -12,9 +12,15 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "LaunchNoteCMD"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Mild Auto Blue"
+            "pathName": "Best Path"
           }
         }
       ]

@@ -273,7 +273,7 @@ public class IntakeSubsystem extends SubsystemBase {
       colorChanger.setGreen();
     }
     else if (getIntakeHasNote()) {
-      colorChanger.setRAINBOWRAINBOW();
+      colorChanger.setBlue();
     }
     SmartDashboard.putNumber("encoder reading", getCurrentAngle());
     SmartDashboard.putBoolean("atAngleGround", groundAtAngle());

@@ -19,12 +19,12 @@ public class ColorChanger extends SubsystemBase {
 
   public final SendableChooser<Constants.Lighting.Colors> lighting_chooser =  new SendableChooser<>();
 
-  public AddressableLED m_led = new AddressableLED(2);//pwm port 2
+  public AddressableLED m_led = new AddressableLED(Constants.Lighting.lightingPort);//pwm port 2
 
     // Reuse buffer
     // Default to a length of 60, start empty output
     // Length is expensive to set, so only set it once, then just update data
-  public AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(60);
+  public AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(Constants.Lighting.lightingPort );
 
   /** Creates a new ColorChanger. */
  public ColorChanger() {
@@ -73,6 +73,7 @@ public void setRAINBOWRAINBOW() {
         m_rainbowFirstPixelHue  += 3;
         // Check bounds
         m_rainbowFirstPixelHue %= 180;
+        m_led.setData(m_ledBuffer);
 }
 
     public void setRed(){
@@ -124,6 +125,16 @@ public void setRAINBOWRAINBOW() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             // Sets the specified LED to the HSV values for red
             m_ledBuffer.setRGB(i, 212, 178, 25);
+         }
+         
+         m_led.setData(m_ledBuffer);
+
+    }
+    public void setOrange(){
+
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            // Sets the specified LED to the HSV values for red
+            m_ledBuffer.setRGB(i, 255, 165, 0);
          }
          
          m_led.setData(m_ledBuffer);

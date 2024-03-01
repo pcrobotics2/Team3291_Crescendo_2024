@@ -41,7 +41,7 @@ public final class Constants {
 
   public static final double feedSpeed = 0.4;   //0.40
   public static final double launchSpeed = 5000 * 0.65;//5000 * percentage 
-  public static final double timeToWait = 2;
+  public static final double timeToWait = 1;
   public static final double hangSpeed = 0.5;
   public static final double launcherTargetVoltage = launchSpeed * 12;
   public static final double gracePeriod = 0.3;
@@ -295,7 +295,8 @@ public final class Constants {
   }
 
   public final static class Lighting {
-    public final static int lightingPort = 1;
+    public final static int lightingPort = 2;
+    public final static int m_ledBuffer = 200;
 
     public static enum Colors {
      RAINBOWRAINBOW  ("Rainbow Palette", -0.99),
