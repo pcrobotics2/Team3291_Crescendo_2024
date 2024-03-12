@@ -22,6 +22,7 @@ public class ClimberSubsystem extends SubsystemBase {
     
     this.leftclimber = new CANSparkMax(Constants.leftClimberID, MotorType.kBrushless);//
     this.rightclimber = new CANSparkMax(Constants.rightClimberID, MotorType.kBrushless);//
+    this.colorChanger = new ColorChanger();
    
   }
    
@@ -32,12 +33,12 @@ public class ClimberSubsystem extends SubsystemBase {
 public void setClimberIndividual(double positiveSpeed, double negativeSpeed) {
  leftclimber.set(-positiveSpeed); 
  rightclimber.set(-negativeSpeed);
- colorChanger.setPurple();
+ //colorChanger.setPurple();
 }
 public void setClimberTogether(double positiveSpeed, double negativeSpeed) {
  leftclimber.set(positiveSpeed - negativeSpeed); 
  rightclimber.set(-1 * (positiveSpeed - negativeSpeed));
- colorChanger.setOrange();
+ //colorChanger.setOrange();
 }
 
 public void stop() {
